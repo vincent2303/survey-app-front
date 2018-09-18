@@ -3,36 +3,43 @@ import { Card, Typography } from '@material-ui/core'
 import { Radar } from 'react-chartjs-2'
 import defaults from 'react-chartjs-2'
 
-const data = {
-    labels: ['question1', 'question2', 'question3', 'question4', 'question5'],
-    datasets: [{
-        data: [0.3, 0.2, 0.8 , -0.2, 0.5],
-        borderColor: '#2c3e50',
-        borderWidth: 1,
-        pointRadius: 8,
-        pointHoverRadius: 7,
-        pointBackgroundColor: '#2c3e50',
-    }]
-}
 
-const options = {
-    legend: {
-        display: false
-    },
-    scale: {
-        ticks: {
-            display: false,
-            maxTicksLimit: 3,
-            min: -1,
-            max: 1,
-        },
-        pointLabels:{
-            display: false
-         },
+const SoftRadar = ({thematique}) => {
+    const data = {
+        labels: [],
+        datasets: [{
+            data: [],
+            pointRadius: 6,
+            pointHoverRadius: 5,
+            pointBorderColor: 'white',
+            pointBorderWidth: 2,
+            borderWidth: 2,
+            lineTension: 0,
+            pointBackgroundColor: thematique.backgroundCOlor,
+            borderColor: 'white',
+        }]
     }
-}
-
-const SoftRadar = ({input}) => {
+    
+    const options = {
+        legend: {
+            display: false
+        },
+        scale: {
+            ticks: {
+                display: false,
+                maxTicksLimit: 3,
+                min: -1,
+                max: 1,
+            },
+            pointLabels:{
+                display: false
+             },
+        }
+    };
+    thematique.questionList.forEach(question => {
+        data.labels.push(question.text)
+        data.datasets[0].data.push(question.average)
+    });
     return (
         <Radar data={data} options={options} />
 )}

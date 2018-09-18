@@ -4,7 +4,7 @@ import SoftRadar from './Displayers/SoftRadar';
 
 const ThematiqueDisplayer = ({thematique}) => {
     return (
-        <Paper>
+        <Paper style={{backgroundColor: thematique.backgroundColor}} >
             {thematique.title}
             <SoftRadar thematique={thematique} />
         </Paper>

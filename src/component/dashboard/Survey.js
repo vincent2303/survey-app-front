@@ -123,7 +123,7 @@ class Survey extends React.Component {
    
     render() {
       return (
-            <Grid container direction='column' justify='flex-start' alignItems='center' style={{height:'100vh', backgroundColor:'#2c3e50'}} >
+            <Grid container direction='column' justify='flex-start' alignItems='center' style={{backgroundColor:'#2c3e50'}} >
               <Grid item >
                 <Paper style={{width:'20vw',  textAlign:'center', padding:'2vh', marginTop: '10vh'}} >
                     <Typography style={{ fontFamily: 'Roboto', fontSize: '2.5em', color: '#2c3e50', fontWeight: 100, textAlign:'center'}} > Pick a date </Typography>

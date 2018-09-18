@@ -3,7 +3,6 @@ import {AppBar, Toolbar, Typography, Grid, Tabs, Tab} from '@material-ui/core';
 import GeneralStat from './GeneralStat'
 import Survey from './Survey';
 import Admin from './Survey/Admin';
-
 const admin_name = "Vincent";
 const labelStyle = {
     color:'#2c3e50'

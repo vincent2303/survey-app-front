@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import './Admin.css';
-import Login from '../../Login';
 import Adder from './Adder';
 import AdminAdder from './AdminAdder';
 import PropTypes from 'prop-types';

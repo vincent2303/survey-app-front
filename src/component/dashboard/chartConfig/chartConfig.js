@@ -149,7 +149,6 @@ const type_doubleCircleLine_constructor = function(inputData){ // soft circle gr
             pointBorderColor: '#16a085',
             pointBorderWidth: 3,
             borderWidth: 3,
-            lineTension: 0,
             borderColor: '#16a085',
             pointBackgroundColor: inputData.boxColor
         },
@@ -162,7 +161,6 @@ const type_doubleCircleLine_constructor = function(inputData){ // soft circle gr
             pointBorderColor: '#2980b9',
             pointBorderWidth: 3,
             borderWidth: 3,
-            lineTension: 0,
             borderColor: '#2980b9',
             pointBackgroundColor: inputData.boxColor
         }],

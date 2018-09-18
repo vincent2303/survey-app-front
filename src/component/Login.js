@@ -45,7 +45,7 @@ class Login extends Component {
         console.log(this.state.pseudo, this.state.password)
         axios.post("http://localhost:4200/admin/login", {pseudo: this.state.pseudo, password: this.state.password}).then(res=>{
             console.log(res);
-            if(res.status != 200){
+            if(res.status !== 200){
                 console.log("error", res.body)
             } else {
                 console.log("succes", res.data)

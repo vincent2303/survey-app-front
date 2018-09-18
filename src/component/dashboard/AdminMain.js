@@ -4,7 +4,6 @@ import GeneralStat from './GeneralStat'
 import Survey from './Survey';
 import Admin from './Survey/Admin';
 
-const value = 0;
 const admin_name = "Vincent";
 const labelStyle = {
     color:'#2c3e50'

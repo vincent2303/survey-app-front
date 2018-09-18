@@ -1,7 +1,5 @@
 import React from 'react'
-import { Card, Typography } from '@material-ui/core'
 import { Radar } from 'react-chartjs-2'
-import defaults from 'react-chartjs-2'
 
 
 const SoftRadar = ({thematique}) => {

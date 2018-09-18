@@ -2,7 +2,8 @@
 import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
-  Route
+  Route,
+  Redirect
 } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
@@ -22,8 +23,15 @@ const styles = {
 
 class App extends Component {
   state = {
-    anchorEl: null,
+    redirect: false,
   };
+  constructor(){
+    super()
+    console.log(window.location.href.includes("login"));
+    if(!window.location.href.includes("login") || !window.location.href.includes("sondage")){
+      this.state.redirect = true;
+    }
+  }
 
   handleMenu = event => {
     this.setState({ anchorEl: event.currentTarget });
@@ -33,14 +41,15 @@ class App extends Component {
     this.setState({ anchorEl: null });
   };
   render() {
-    const { classes } = this.props;
-
     return (
       <Router>
-      <div className={classes.root}>
+      <div>
         <Route path="/login" component={Login} />
         <Route path="/sondage" component={Sondage} />
         <Route path="/admin" component={AdminMain} />
+        { !this.state.redirect &&
+        <Redirect to="/admin" />
+        }
       </div>
       </Router>
     );

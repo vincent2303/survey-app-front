@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router'
 import axios from 'axios';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -38,7 +39,7 @@ class Login extends Component {
     state={
         pseudo:"",
         mp: "",
-        showPassword: false
+        redirect: false
     }
 
     handleClick = ()=>{
@@ -50,6 +51,7 @@ class Login extends Component {
             } else {
                 console.log("succes", res.data)
                 localStorage.setItem('token', res.data.token);
+                this.setState({redirect: true});
             }
         })
     }
@@ -81,7 +83,8 @@ class Login extends Component {
         const { classes } = this.props;
 
         return(
-            <div>
+        <div>
+        {this.state.redirect && <Redirect to="/admin" />}
         <Grid
           container
           justify="center"

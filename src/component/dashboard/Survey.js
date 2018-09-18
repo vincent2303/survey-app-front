@@ -131,7 +131,7 @@ class Survey extends React.Component {
                 </Paper>
               </Grid>
               <Grid item style={{width:'97%'}} >
-                <GridList spacing={20} cellHeight={'auto'} cols={3} style={{marginTop:'3vh'}} >
+                <GridList spacing={20} cellHeight={'auto'} cols={3} style={{marginTop:'10vh'}} >
                   {thematiqueDataList.map(thematiqueData => (
                     <GridListTile key={thematiqueData.title}>
                       <ThematiqueDisplayer thematique={thematiqueData}/>

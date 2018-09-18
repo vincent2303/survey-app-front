@@ -36,7 +36,7 @@ const SoftRadar = ({thematique}) => {
              },
         },
         layout:{
-            padding: 10
+            padding: { bottom: 30}
         }
     };
     thematique.questionList.forEach(question => {

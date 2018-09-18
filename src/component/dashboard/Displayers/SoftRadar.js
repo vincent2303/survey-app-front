@@ -1,7 +1,6 @@
 import React from 'react'
 import { Radar } from 'react-chartjs-2'
 
-
 const SoftRadar = ({thematique}) => {
     const data = {
         labels: [],
@@ -13,7 +12,7 @@ const SoftRadar = ({thematique}) => {
             pointBorderWidth: 2,
             borderWidth: 2,
             lineTension: 0,
-            pointBackgroundColor: thematique.backgroundCOlor,
+            pointBackgroundColor: thematique.backgroundColor,
             borderColor: 'white',
         }]
     }
@@ -30,8 +29,14 @@ const SoftRadar = ({thematique}) => {
                 max: 1,
             },
             pointLabels:{
-                display: false
+                display: true,
+                fontSize: 20,
+                fontColor: 'white',
+                fontStyle: 'lighter'
              },
+        },
+        layout:{
+            padding: 10
         }
     };
     thematique.questionList.forEach(question => {
@@ -41,6 +46,5 @@ const SoftRadar = ({thematique}) => {
     return (
         <Radar data={data} options={options} />
 )}
-
 
 export default SoftRadar

@@ -32,7 +32,7 @@ class AdminMain extends React.Component{
                                 </Typography>
                             </Toolbar>
                         </Grid>
-                        <Grid item sm={9} >
+                        <Grid item sm={6} >
                             <Tabs value={value} onChange={this.handleChange} fullWidth style={{marginTop:'10px'}} >
                                 <Tab label="General Statistics" style={labelStyle} />
                                 <Tab label="Sepecific Survey" style={labelStyle} />

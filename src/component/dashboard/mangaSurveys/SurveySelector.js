@@ -14,7 +14,6 @@ class SurveySelector extends Component {
     }
 
     getSondageById = (sondageId)=>{
-        console.log(this.state.sondageList)
         let newSelectedSondage = this.state.sondageList[0]
         this.state.sondageList.forEach(sondage => {
             if (sondageId === sondage.id) {

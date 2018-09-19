@@ -33,7 +33,7 @@ const sondageList = [
                 questionList:[
                     {
                         id: idGenerator(),
-                        question: 'il y avait il trop de monde?'
+                        question: 'trop de monde?'
                     },
                     {
                         id: idGenerator(),

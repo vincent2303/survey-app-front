@@ -1,8 +1,9 @@
 import axios from 'axios'
-import { Snackbar, Typography, TextField, Radio, Paper, withStyles, CircularProgress, FormGroup, FormControlLabel } from '@material-ui/core';
+import { Snackbar, Typography, TextField, Radio, Paper, withStyles, CircularProgress, FormGroup, FormControlLabel, Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import ErrorBanner from './ErrorBanner';
 import { runInNewContext } from 'vm';
+import green from '@material-ui/core/colors/green';
 
 var React = require('react');
 const jwt = require('jsonwebtoken');
@@ -27,6 +28,9 @@ const styles = theme => ({
       marginBottom: theme.spacing.unit * 6,
       padding: theme.spacing.unit * 3,
     },
+  },
+  submitArea: {
+    marginTop: theme.spacing.unit * 3,
   }
 });
 
@@ -79,7 +83,6 @@ class Sondage extends React.Component {
           user_id:decoded.user_id, 
           sondage_id: decoded.sondage_id,
           token: token,
-          checkedValues: new Map(),
           answeredQuestions: new Map(),
           comments: new Map(),
         };
@@ -174,7 +177,7 @@ class Sondage extends React.Component {
     var sondage = { 
       remplissage_id: this.state.remplissage_id,
       sondage_id : this.state.sondage_id,
-      answeredQuestions: answeredQuestions,
+      answered_questions: answeredQuestions,
       answered_commentaires: comments,
     };
     console.log(sondage);
@@ -219,7 +222,8 @@ class Sondage extends React.Component {
       {headMessage}
       <QuestionsForm loaded={this.state.loaded} thematiqueList={this.state.thematiqueList} 
       handleChange={this.handleChange} handleSubmit={this.handleSubmit} 
-      alreadyAnswered={this.state.alreadyAnswered} answeredQuestions={this.state.answeredQuestions} />
+      alreadyAnswered={this.state.alreadyAnswered} answeredQuestions={this.state.answeredQuestions} 
+      sondageName={this.state.sondageName} classes={classes}/>
       </Paper>
       </main>
     );
@@ -240,7 +244,7 @@ function QuestionsForm(props) {
   //const questionMap = mapping(props.questions);
 
   // le contenu de la variable displayed s'incremente avec les élement html à afficher au cours du parcours des questions
-  var displayed;// = <Typography variant="title" align="center" gutterBottom color="textSecondary"> Sondage :</Typography>;
+  var displayed = <Typography variant="title" align="center" gutterBottom color="textSecondary"> Sondage : {props.sondageName}</Typography>;
   console.log("thematiqueList");
   console.log(props.thematiqueList);
   for (var thematique of props.thematiqueList) {
@@ -269,7 +273,10 @@ function QuestionsForm(props) {
   return(
     <form onSubmit={props.handleSubmit}>
     {displayed}
-    {props.alreadyAnswered ? <h4> You have already answered this survey</h4> : <input type="submit" value="Submit" /> }
+    <div className={props.classes.submitArea}>
+    <Button variant="contained" color="primary" type="submit" disabled={props.alreadyAnswered}> Soumettre </Button>
+    {props.alreadyAnswered ? <Typography variant="caption"> You have already answered this survey</Typography> : <span></span> }
+    </div>
     </form>
   );
 } 
@@ -295,6 +302,7 @@ function QuestionArea(props) {
           <FormControlLabel
           control={
             <Radio 
+              color='default'
               checked={props.value === 0}
               onChange={props.handleChange({id : props.question.id, type: "radioButton", value: 0})}
               />
@@ -304,6 +312,7 @@ function QuestionArea(props) {
           <FormControlLabel
           control={
             <Radio 
+              color='secondary'
               checked={props.value === -1}
               onChange={props.handleChange({id : props.question.id, type: "radioButton", value: -1})}
               />

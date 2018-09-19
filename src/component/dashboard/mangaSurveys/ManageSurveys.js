@@ -10,6 +10,7 @@ const sondageList = [
         name: 'sondage cafet et Lounge',
         thematiqueList: [
             {
+                id: idGenerator(),
                 name: 'Cafeteria',
                 questionList:[
                     {
@@ -27,6 +28,7 @@ const sondageList = [
                 ]
             },
             {
+                id: idGenerator(),
                 name: 'Lounge',
                 questionList:[
                     {
@@ -50,6 +52,7 @@ const sondageList = [
         name: 'sondage bureau',
         thematiqueList: [
             {
+                id: idGenerator(),
                 name: 'bureau',
                 questionList:[
                     {

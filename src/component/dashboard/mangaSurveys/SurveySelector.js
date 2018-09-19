@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import { Grid, Paper, Typography } from '@material-ui/core';
+import { Paper, Typography } from '@material-ui/core';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-
-const name = 'aa'
-const names=['aa', 'bb', 'cc']
+import SondageDisplayer from './SurveyDisplayer';
 
 const titleStyle = { fontFamily: 'Roboto', fontSize: '2.5em', color: '#2c3e50', fontWeight: 100, textAlign:'center'}
 
@@ -17,28 +15,22 @@ class SurveySelector extends Component {
 
     getSondageById = (sondageId)=>{
         console.log(this.state.sondageList)
+        let newSelectedSondage = this.state.sondageList[0]
         this.state.sondageList.forEach(sondage => {
             if (sondageId === sondage.id) {
-                console.log("return getById")
-                console.log(sondage)
-                return sondage
+                newSelectedSondage = sondage
             }
         });
+        return newSelectedSondage
     }
 
     handleChange = (elem)=>{
-        let newSelectedSondage = this.getSondageById(elem.target.value)
-        console.log(newSelectedSondage)
-    }
-
-    voir = ()=>{
-        console.log(this.state)
+        this.setState({selectedSondage: this.getSondageById(elem.target.value)})
     }
 
     render(){
         return(
             <Paper style={{padding: '2vh'}} >
-                <button onClick={this.voir} >dd</button>
                 <Typography style={titleStyle} > Select the next sondage </Typography>
                 <Select
                     value={this.state.selectedSondage.id}
@@ -48,6 +40,7 @@ class SurveySelector extends Component {
                         <MenuItem key={sondage.id} value={sondage.id} >{sondage.name}</MenuItem>
                     ))}
                 </Select>
+                <SondageDisplayer sondage={this.state.selectedSondage} />
             </Paper>
         )
     }

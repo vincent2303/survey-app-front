@@ -44,10 +44,12 @@ class Sondage extends React.Component {
       remplissage_id:'',
       alreadyAnswered: false,
       questions: [],
+      themesQuestions: [],
       loaded: false,
       token: '',
       errorMessage: '',
       error: false,
+      sondageName: '',
     };
 
     //this.handleChange = this.handleChange.bind(this);
@@ -79,24 +81,27 @@ class Sondage extends React.Component {
           token: token,
           checkedValues: new Map(),
           answeredQuestions: new Map(),
+          comments: new Map(),
         };
     axios.get('http://localhost:4200/user/getSondage',{headers:{Authorization: "bearer "+ token}})
       .then(res => {
         if(!res.data.alreadyAnswered){
-          console.log("you didn't already answered", res.data.questionList[0].id)
+          console.log("you didn't already answered");
           this.setState(() => ({
-            questions: res.data.questionList,
+            thematiqueList: res.data.thematiqueList,
             alreadyAnswered: res.data.alreadyAnswered,
-            loaded: true
+            loaded: true,
+            sondageName: res.data.sondageName,
           }));
 
         } else {
           console.log("you already answered")
           this.setState(() => ({
-            questions: res.data.questionList,
+            thematiqueList: res.data.thematiqueList,
             reponses: res.data.reponseList,
             alreadyAnswered: res.data.alreadyAnswered,
             loaded: true,
+            sondageName: res.data.sondageName,
           }), () => {
             console.log(this.state.reponses);
             var answeredQuestions = this.state.answeredQuestions;
@@ -121,8 +126,17 @@ class Sondage extends React.Component {
   handleChange = params => event => {
     console.log("params de handleChange");
     console.log(params);
-    this.state.answeredQuestions.set(params.id, params.value);
-
+    console.log(event.target.value);
+    // if the change is a radioButton :
+    if(params.type === "radioButton"){
+      this.state.answeredQuestions.set(params.id, params.value);
+    } else if (params.type === "comment" && event.target.value) {
+      this.state.comments.set(params.id, event.target.value);
+      
+    } else {
+      console.warn(" L'evènement du DOM n'a pas été reconnu !");
+    }
+    console.log(this.state.comments);
     // React ne détecte pas le changement de contenu du dictionnaire, il faut donc forcer le rendu !
     this.forceUpdate();
   }
@@ -151,10 +165,17 @@ class Sondage extends React.Component {
         answeredQuestions.push({question_id: question_id, answer: answer});
     }
     
+    var commentsMap = this.state.comments;
+    var comments = [];
+    for (var [thematique_id, comment] of commentsMap) {
+      comments.push( {thematique_id: thematique_id, answer: comment});
+    }
+    
     var sondage = { 
       remplissage_id: this.state.remplissage_id,
       sondage_id : this.state.sondage_id,
       answeredQuestions: answeredQuestions,
+      answered_commentaires: comments,
     };
     console.log(sondage);
     axios.post('http://localhost:4200/user/answerSondage',sondage,
@@ -196,7 +217,7 @@ class Sondage extends React.Component {
       <main className={classes.layout}>
       <Paper className={classes.paper}>
       {headMessage}
-      <QuestionsForm loaded={this.state.loaded} questions={this.state.questions} 
+      <QuestionsForm loaded={this.state.loaded} thematiqueList={this.state.thematiqueList} 
       handleChange={this.handleChange} handleSubmit={this.handleSubmit} 
       alreadyAnswered={this.state.alreadyAnswered} answeredQuestions={this.state.answeredQuestions} />
       </Paper>
@@ -216,11 +237,17 @@ function QuestionsForm(props) {
   }
   
   // Mappage des questions par thématiques
-  const questionMap = mapping(props.questions);
+  //const questionMap = mapping(props.questions);
 
   // le contenu de la variable displayed s'incremente avec les élement html à afficher au cours du parcours des questions
   var displayed;// = <Typography variant="title" align="center" gutterBottom color="textSecondary"> Sondage :</Typography>;
-  for (var [theme, questionArray] of questionMap) {
+  console.log("thematiqueList");
+  console.log(props.thematiqueList);
+  for (var thematique of props.thematiqueList) {
+    console.log(thematique);
+    var theme = thematique.name;
+    var questionArray = thematique.questionList;
+    var comment;
     displayed = <div>
                 {displayed}
                  <h3> {theme} </h3>
@@ -229,7 +256,11 @@ function QuestionsForm(props) {
                       handleChange={props.handleChange} value={props.answeredQuestions.get(question.id)} /> )}
                     </ul>
                     <Typography color="textPrimary"> Commentaire : </Typography>
-                    <input type="text"  />
+                    <input 
+                    type="text"
+                    value={comment}
+                    onChange={props.handleChange({id : thematique.id, type: "comment", value: "" })}
+                    />
                  </div> ;
   
   }

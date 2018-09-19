@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import './Admin.css';
+import './ManageUser.css';
 import Adder from './Adder';
 import AdminAdder from './AdminAdder';
 import PropTypes from 'prop-types';
@@ -16,7 +16,7 @@ const styles = {
     margin: 50,
   },
 };
-class Admin extends Component {
+class ManageUser extends Component {
   constructor(props){
     super()
   }
@@ -49,8 +49,8 @@ class Admin extends Component {
   }
 }
 
-Admin.propTypes = {
+ManageUser.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Admin);
+export default withStyles(styles)(ManageUser);

@@ -1,8 +1,9 @@
 import React from 'react'
 import {AppBar, Toolbar, Typography, Grid, Tabs, Tab} from '@material-ui/core';
-import GeneralStat from './GeneralStat'
-import Survey from './Survey';
-import Admin from './Survey/Admin';
+import GeneralStat from './generalStats/GeneralStat'
+import Survey from './specificSurvey/Survey';
+import ManageUser from './manageUsers/ManageUser';
+import SurveyManager from './mangaSurveys/ManageSurveys';
 const admin_name = "Vincent";
 const labelStyle = {
     color:'#2c3e50'
@@ -11,7 +12,7 @@ const labelStyle = {
 class AdminMain extends React.Component{
 
     state = {
-        value: 1,
+        value: 2,
     };
 
     handleChange = (event, value) => {
@@ -31,18 +32,20 @@ class AdminMain extends React.Component{
                                 </Typography>
                             </Toolbar>
                         </Grid>
-                        <Grid item sm={8} >
+                        <Grid item sm={10} >
                             <Tabs value={value} onChange={this.handleChange} fullWidth style={{marginTop:'10px'}} >
                                 <Tab label="General Statistics" style={labelStyle} />
                                 <Tab label="Sepecific Survey" style={labelStyle} />
                                 <Tab label="Create & Manage Survey" style={labelStyle} />
+                                <Tab label="Manage Users" style={labelStyle} />
                             </Tabs>
                         </Grid>
                     </Grid>
                 </AppBar>
                 {value === 0 && <GeneralStat/> }
                 {value === 1 && <Survey/> }
-                {value === 2 && <Admin/>}
+                {value === 2 && <SurveyManager/> }
+                {value === 3 && <ManageUser/> }
             </div>
         )
     }

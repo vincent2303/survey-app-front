@@ -6,12 +6,12 @@ import {
     type_softLine_constructor, 
     type_longSoftLine_constructor, 
     type_doubleCircleLine_constructor 
-} from './chartConfig/chartConfig';
-import SoftLineCircle from './Displayers/SoftLineCircle';
-import SoftBar from './Displayers/SoftBar';
-import SoftLine from './Displayers/SoftLine';
-import LongSoftLine from './Displayers/LongSoftLine';
-import DoubleCircleLine from './Displayers/DoubleCircleLine';
+} from '../chartConfig/chartConfig';
+import SoftLineCircle from '../chartDisplayers/SoftLineCircle';
+import SoftBar from '../chartDisplayers/SoftBar';
+import SoftLine from '../chartDisplayers/SoftLine';
+import LongSoftLine from '../chartDisplayers/LongSoftLine';
+import DoubleCircleLine from '../chartDisplayers/DoubleCircleLine';
 
 const input1 = {
     dataArray: [105, 120, 115, 134, 100, 129, 100],

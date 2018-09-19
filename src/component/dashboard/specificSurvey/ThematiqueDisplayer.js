@@ -1,6 +1,6 @@
 import React from 'react'
 import { Paper, Typography } from '@material-ui/core';
-import SoftRadar from './Displayers/SoftRadar';
+import SoftRadar from '../chartDisplayers/SoftRadar';
 
 const ThematiqueDisplayer = ({thematique}) => {
     return (

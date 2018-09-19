@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router'
 import axios from 'axios';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -38,18 +39,19 @@ class Login extends Component {
     state={
         pseudo:"",
         mp: "",
-        showPassword: false
+        redirect: false
     }
 
     handleClick = ()=>{
         console.log(this.state.pseudo, this.state.password)
         axios.post("http://localhost:4200/admin/login", {pseudo: this.state.pseudo, password: this.state.password}).then(res=>{
             console.log(res);
-            if(res.status != 200){
+            if(res.status !== 200){
                 console.log("error", res.body)
             } else {
                 console.log("succes", res.data)
                 localStorage.setItem('token', res.data.token);
+                this.setState({redirect: true});
             }
         })
     }
@@ -81,7 +83,8 @@ class Login extends Component {
         const { classes } = this.props;
 
         return(
-            <div>
+        <div>
+        {this.state.redirect && <Redirect to="/admin" />}
         <Grid
           container
           justify="center"

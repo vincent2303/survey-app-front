@@ -22,7 +22,6 @@ axios.interceptors.response.use(function (response) {
                 closeOnConfirm: false
             })
             return Promise.reject(error);
-            break;
         case 461:
             swal({
                 title: "Wrong password",
@@ -34,7 +33,6 @@ axios.interceptors.response.use(function (response) {
                 closeOnConfirm: false
             })
             return Promise.reject(error);
-            break;
         case 401:
             swal({
                 title: "Session Expired",
@@ -48,7 +46,6 @@ axios.interceptors.response.use(function (response) {
                 window.location = '/login';
             });
             return Promise.reject(error);
-            break;
         default:
             console.log("no problem");
             return Promise.reject(error);

@@ -139,10 +139,12 @@ class Sondage extends React.Component {
     // if the change is a radioButton :
     if(params.type === "radioButton"){
       this.state.answeredQuestions.set(params.id, params.value);
-    } else if (params.type === "comment" && event.target.value) {
+    } else if (params.type === "comment") {
       this.state.comments.set(params.id, event.target.value);
-      
+      console.log("Writing comment");
+      console.log(event.target.value)
     } else {
+      console.log(params.type);
       console.warn(" L'evènement du DOM n'a pas été reconnu !");
     }
     console.log(this.state.comments);
@@ -224,13 +226,13 @@ class Sondage extends React.Component {
     console.log(this.state);
     return (
       <main className={classes.layout}>
-      <Paper className={classes.paper}>
-      {headMessage}
-      <QuestionsForm loaded={this.state.loaded} thematiqueList={this.state.thematiqueList} 
-      handleChange={this.handleChange} handleSubmit={this.handleSubmit} 
-      alreadyAnswered={this.state.alreadyAnswered} answeredQuestions={this.state.answeredQuestions} 
-      sondageName={this.state.sondageName} classes={classes} comments={this.state.comments}/>
-      </Paper>
+        <Paper className={classes.paper}>
+          {headMessage}
+            <QuestionsForm loaded={this.state.loaded} thematiqueList={this.state.thematiqueList} 
+                handleChange={this.handleChange} handleSubmit={this.handleSubmit} 
+                alreadyAnswered={this.state.alreadyAnswered} answeredQuestions={this.state.answeredQuestions} 
+                sondageName={this.state.sondageName} classes={classes} comments={this.state.comments}/>
+        </Paper>
       </main>
     );
   }
@@ -265,6 +267,7 @@ function QuestionsForm(props) {
     // Pour eviter le warning composant uncontrolled
     if(!props.comments.get(thematique.id)){
       props.comments.set(thematique.id, " ");
+      console.log("Remplacement de '' par '  ' ");
     }
     var comment = props.comments.get(thematique.id);
 

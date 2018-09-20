@@ -5,6 +5,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 
+import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+
+
 const ThematiqueAdder = ({
     thematiqueId,
     thematique,
@@ -21,6 +24,11 @@ const ThematiqueAdder = ({
 
     function handleQuestionAdding(){
         addQuestion(thematiqueId)
+        scroller.scrollTo(thematiqueId, {
+            duration: 1000,
+            delay: 50,
+            smooth: true
+        })
     }
 
     function handleDeleteThematique(){
@@ -59,7 +67,7 @@ const ThematiqueAdder = ({
             />
         ))}
         <br/>
-        <Button variant="contained" onClick={handleQuestionAdding} >
+        <Button variant="contained" onClick={handleQuestionAdding} name={thematiqueId} >
             Add Question
         </Button>
     </Card>

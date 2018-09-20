@@ -4,11 +4,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import idGenerator from '../../../../customFunction/idGenerator'
 import ThematiqueAdder from './ThematiqueAdder';
-
-
+import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 const titleStyle = { fontFamily: 'Roboto', fontSize: '2.5em', color: '#2c3e50', fontWeight: 100, textAlign:'center'}
-
 
 class SurveyAdder extends Component {
 
@@ -29,6 +27,7 @@ class SurveyAdder extends Component {
         let newThematiqueMap = this.state.thematiqueMap
         newThematiqueMap.set(idGenerator(), emptyThematique)
         this.setState({thematiqueMap: newThematiqueMap})
+        scroll.scrollToBottom();
     }
 
     deleteThematique = (thematiqueId)=>{
@@ -68,6 +67,7 @@ class SurveyAdder extends Component {
     render(){
         return(
             <Paper style={{marginTop:'4vh', padding:'2vh'}} >
+                <Button onClick={this.scrollBottom} >scroll but</Button>
                 <Typography style={titleStyle} > Add a Survey </Typography>
                 <TextField
                     id="survey-name"

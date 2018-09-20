@@ -2,17 +2,34 @@ import React, { Component } from 'react'
 import { Paper, Typography, Grid } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import idGenerator from '../../../../customFunction/idGenerator'
 import ThematiqueAdder from './ThematiqueAdder';
 import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 const titleStyle = { fontFamily: 'Roboto', fontSize: '2.5em', color: '#2c3e50', fontWeight: 100, textAlign:'center'}
+const messageMissingSurveyName = "missing the survey name"
+const messageNoThematique = "a survey must have at least one thematique"
+const messageThematiqueWithoutQuestion = "a thematique has no question"
+const messageMissingThematiqueName = "missing a thematique name"
+const messageMissingQuestionText = "missing a question text"
+const messageMissingQuestionKeyWord = "missing a question key word"
 
 class SurveyAdder extends Component {
 
     state={
         name:'',
-        thematiqueMap: new Map()
+        thematiqueMap: new Map(),
+        open: false,
+        missingSurveyName: true,
+        missingThematiqueName: true,
+        missingQuestionText: true,
+        missingQuestionKeyWord: true,
+        noThematique: true,
+        thematiqueWithoutQuestion: true
     }
 
     changeSurveyName = (e)=>{
@@ -64,10 +81,74 @@ class SurveyAdder extends Component {
         this.setState({thematiqueMap: newThematiqueMap})
     }
 
+    postSurvey = ()=>{
+        let missingSurveyName = this.state.name.length===0
+        let noThematique = this.state.thematiqueMap.size===0
+        let missingThematiqueName = false
+        let missingQuestionText = false
+        let missingQuestionKeyWord = false
+        let thematiqueWithoutQuestion = false
+        let survey = {
+            name: this.state.name,
+            thematiqueList: []
+        }
+        this.state.thematiqueMap.forEach(mappedThematique=>{
+            if (!missingThematiqueName && mappedThematique.name.length===0) {
+                missingThematiqueName=true
+            }
+            if (!thematiqueWithoutQuestion && mappedThematique.questionMap.size===0) {
+                thematiqueWithoutQuestion = true
+            }
+            let newThematique = { name:  mappedThematique.name, questionList:[]}
+            mappedThematique.questionMap.forEach(question=>{
+                if (!missingQuestionText && question.text.length===0) {
+                    missingQuestionText=true
+                }
+                if (!missingQuestionKeyWord && question.keyWord.length===0) {
+                    missingQuestionKeyWord=true
+                }
+                newThematique.questionList.push(question)
+            })
+            survey.thematiqueList.push(newThematique)
+        })
+        this.setState({
+            missingSurveyName: missingSurveyName,
+            missingThematiqueName: missingThematiqueName,
+            missingQuestionText: missingQuestionText,
+            missingQuestionKeyWord: missingQuestionKeyWord,
+            noThematique: noThematique, 
+            thematiqueWithoutQuestion: thematiqueWithoutQuestion
+        }, ()=>{
+            if (missingSurveyName||missingThematiqueName||missingQuestionText||missingQuestionKeyWord|| noThematique||thematiqueWithoutQuestion) {
+                this.setState({ open: true });
+            }
+        })
+    }
+    
+    handleClose = () => {
+        this.setState({ open: false });
+    };
+
     render(){
         return(
             <Paper style={{marginTop:'4vh', padding:'2vh'}} >
-                <Button onClick={this.scrollBottom} >scroll but</Button>
+                <Dialog
+                    open={this.state.open}
+                    onClose={this.handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogContent>
+                        <DialogTitle id="alert-dialog-title">Can't post survey</DialogTitle>
+                        {this.state.missingSurveyName && <DialogContentText id="surveyName">{messageMissingSurveyName}</DialogContentText> }
+                        {this.state.missingThematiqueName && <DialogContentText id="thematiqueName">{messageMissingThematiqueName}</DialogContentText> }
+                        {this.state.missingQuestionText && <DialogContentText id="surveyName">{messageMissingQuestionText}</DialogContentText> }
+                        {this.state.missingQuestionKeyWord && <DialogContentText id="surveyName">{messageMissingQuestionKeyWord}</DialogContentText> }
+                        {this.state.noThematique && <DialogContentText id="surveyName">{messageNoThematique}</DialogContentText> }
+                        {this.state.thematiqueWithoutQuestion && <DialogContentText id="surveyName">{messageThematiqueWithoutQuestion}</DialogContentText> }
+                        <Button color="primary" onClick={this.handleClose} >ok</Button>
+                    </DialogContent>
+                </Dialog>
                 <Typography style={titleStyle} > Add a Survey </Typography>
                 <TextField
                     id="survey-name"
@@ -97,7 +178,7 @@ class SurveyAdder extends Component {
                         </Button>
                     </Grid>
                     <Grid item sm={1} >
-                        <Button variant="contained" color="primary" aria-label="Add" >
+                        <Button variant="contained" color="primary" aria-label="post" onClick={this.postSurvey} >
                             Post
                         </Button>
                     </Grid>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, TextField, Button, Grid, Tooltip, IconButton } from '@material-ui/core';
+import { Card, TextField, Grid, Tooltip, IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 const QuestionAdder = ({

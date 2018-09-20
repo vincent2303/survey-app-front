@@ -1,7 +1,7 @@
 import React from 'react'
 import ThematiqueDisplayer from './thematiqueDisplayer';
 
-const SondageDisplayer = ({sondage}) => {
+const SurveyDisplayer = ({sondage}) => {
     return (
         <div>
             {sondage.thematiqueList.map(thematique=>(
@@ -12,4 +12,4 @@ const SondageDisplayer = ({sondage}) => {
 }
 
 
-export default SondageDisplayer
+export default SurveyDisplayer

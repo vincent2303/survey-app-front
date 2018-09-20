@@ -23,14 +23,17 @@ const styles = {
 
 class App extends Component {
   state = {
-    redirect: false,
+    redirect: true,
   };
   constructor(){
     super()
     console.log(window.location.href.includes("login"));
-    if(!window.location.href.includes("login") || !window.location.href.includes("sondage")){
+    if(window.location.href.includes("login") || window.location.href.includes("sondage")){
+      this.state.redirect = false;
+    } else {
       this.state.redirect = true;
     }
+    console.log(this.state.redirect);
   }
 
   handleMenu = event => {
@@ -47,7 +50,7 @@ class App extends Component {
         <Route path="/login" component={Login} />
         <Route path="/sondage" component={Sondage} />
         <Route path="/admin" component={AdminMain} />
-        { !this.state.redirect &&
+        { this.state.redirect &&
         <Redirect to="/admin" />
         }
       </div>

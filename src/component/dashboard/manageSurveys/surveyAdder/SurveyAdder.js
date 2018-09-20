@@ -16,6 +16,10 @@ class SurveyAdder extends Component {
         thematiqueMap: new Map()
     }
 
+    changeSurveyName = (e)=>{
+        this.setState({name: e.target.value})
+    }
+
     addThematique = ()=>{
         let emptyThematique = {
             name: '',
@@ -33,7 +37,7 @@ class SurveyAdder extends Component {
     }
 
     addQuestion = ()=>{
-        console.log(this.state)
+        console.log('add question')
     }
 
     render(){
@@ -44,7 +48,7 @@ class SurveyAdder extends Component {
                     id="survey-name"
                     label="Survey Name"
                     value={this.state.name}
-                    onChange={this.handleChange}
+                    onChange={this.changeSurveyName}
                     margin="normal"
                 />
                 <br/>
@@ -54,6 +58,7 @@ class SurveyAdder extends Component {
                         thematiqueId={key} 
                         thematique={this.state.thematiqueMap.get(key)}
                         changeThematiqueName= {this.changeThematiqueName}
+                        addQuestion={this.addQuestion}
                     />
                 ))}
                 <br/>

@@ -5,16 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Paper, Typography, Grid, GridList, GridListTile } from '@material-ui/core';
 import ThematiqueDisplayer from './ThematiqueDisplayer';
 import CommentsDisplayer from './CommentsDisplayer';
-
-const backgroundColorList= [
-  '#3498db',
-  '#f39c12',
-  '#c0392b',
-  '#16a085',
-  '#8e44ad',
-  '#2980b9',
-  '#f1c40f'
-]
+import backgroundColorList from '../colorSet'
 
 const thematiqueDataList = [
   {

@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Paper, Typography } from '@material-ui/core';
+import { Paper, Typography, Grid } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import idGenerator from '../../../../customFunction/idGenerator'
 import ThematiqueAdder from './ThematiqueAdder';
+
 
 
 const titleStyle = { fontFamily: 'Roboto', fontSize: '2.5em', color: '#2c3e50', fontWeight: 100, textAlign:'center'}
@@ -30,14 +31,38 @@ class SurveyAdder extends Component {
         this.setState({thematiqueMap: newThematiqueMap})
     }
 
+    deleteThematique = (thematiqueId)=>{
+        let newThematiqueMap = this.state.thematiqueMap
+        newThematiqueMap.delete(thematiqueId)
+        this.setState({thematiqueMap: newThematiqueMap})
+    }
+
     changeThematiqueName = (thematiqueId, newName)=>{
         let newThematiqueMap = this.state.thematiqueMap
         newThematiqueMap.get(thematiqueId).name = newName
         this.setState({thematiqueMap: newThematiqueMap})
     }
 
-    addQuestion = ()=>{
-        console.log('add question')
+    addQuestion = (thematiqueId)=>{
+        let emptyQuestion = {
+            text:'',
+            keyWord: ''
+        }
+        let newThematiqueMap = this.state.thematiqueMap
+        newThematiqueMap.get(thematiqueId).questionMap.set(idGenerator(), emptyQuestion)
+        this.setState({thematiqueMap: newThematiqueMap})
+    }
+
+    deletQuestion = (thematiqueId, questionId)=>{
+        let newThematiqueMap = this.state.thematiqueMap
+        newThematiqueMap.get(thematiqueId).questionMap.delete(questionId)
+        this.setState({thematiqueMap: newThematiqueMap})
+    }
+
+    changeQuestion = (thematiqueId, questionId, newQuestion)=>{
+        let newThematiqueMap = this.state.thematiqueMap
+        newThematiqueMap.get(thematiqueId).questionMap.set(questionId, newQuestion)
+        this.setState({thematiqueMap: newThematiqueMap})
     }
 
     render(){
@@ -59,13 +84,24 @@ class SurveyAdder extends Component {
                         thematique={this.state.thematiqueMap.get(key)}
                         changeThematiqueName= {this.changeThematiqueName}
                         addQuestion={this.addQuestion}
+                        changeQuestion = {this.changeQuestion}
+                        deleteThematique = {this.deleteThematique}
+                        deleteQuestion = {this.deletQuestion}
                     />
                 ))}
                 <br/>
-                <Button variant="contained" onClick={this.addThematique} >
-                    Add a thematique
-                </Button>
-
+                <Grid container >
+                    <Grid item sm={11} >
+                        <Button variant="contained" onClick={this.addThematique} >
+                            Add a thematique
+                        </Button>
+                    </Grid>
+                    <Grid item sm={1} >
+                        <Button variant="contained" color="primary" aria-label="Add" >
+                            Post
+                        </Button>
+                    </Grid>
+                </Grid>
             </Paper>
         )
     }

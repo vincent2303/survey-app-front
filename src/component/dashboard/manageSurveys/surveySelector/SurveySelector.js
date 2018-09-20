@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Paper, Typography } from '@material-ui/core';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import SondageDisplayer from './SurveyDisplayer';
+import SurveyDisplayer from './SurveyDisplayer';
 
 const titleStyle = { fontFamily: 'Roboto', fontSize: '2.5em', color: '#2c3e50', fontWeight: 100, textAlign:'center'}
 
@@ -39,7 +39,8 @@ class SurveySelector extends Component {
                         <MenuItem key={sondage.id} value={sondage.id} >{sondage.name}</MenuItem>
                     ))}
                 </Select>
-                <SondageDisplayer sondage={this.state.selectedSondage} />
+                <SurveyDisplayer sondage={this.state.selectedSondage} />
+                
             </Paper>
         )
     }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import idGenerator from '../../../customFunction/idGenerator'
-import SurveySelector from './SurveySelector';
+import SurveySelector from './surveySelector/SurveySelector';
+import SurveyAdder from './surveyAdder/SurveyAdder'
 
 const firstDivStyle = { padding:'3vh', backgroundColor:'#2c3e50' }
 
@@ -76,10 +77,15 @@ const sondageList = [
 const currentSondage = sondageList[0]
 
 class SurveyManager extends Component {
+
+    handleChange=(e)=>{
+        this.setState({text: e.target.value})
+    }
     render(){
         return(
             <div style={firstDivStyle} >
                 <SurveySelector currentSondage={currentSondage} sondageList={sondageList} />
+                <SurveyAdder/>
             </div>
         )
     }

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Typography, Radio, Paper, withStyles, CircularProgress, FormGroup, FormControlLabel, Button } from '@material-ui/core';
+import { Typography, Radio, Paper, withStyles, CircularProgress, FormGroup, FormControlLabel, Button, TextField, Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import ErrorBanner from './ErrorBanner';
 
@@ -13,12 +13,17 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit * 2,
     marginRight: theme.spacing.unit * 2,
     [theme.breakpoints.up(600 + theme.spacing.unit * 2 * 2)]: {
-      width: 600,
+      width: 800,
       marginLeft: 'auto',
       marginRight: 'auto',
     },
   },
+  main: {
+    background: '#cce0ff',
+    flewgrow: 1,
+  },
   paper: {
+    
     marginTop: theme.spacing.unit * 3,
     marginBottom: theme.spacing.unit * 3,
     padding: theme.spacing.unit * 2,
@@ -170,39 +175,63 @@ class Sondage extends React.Component {
   
   handleSubmit(event) {
     console.log("submitting form");
-    var answeredQuestionsMap = this.state.answeredQuestions;
-    var answeredQuestions = [];
-    for (var [question_id, answer] of answeredQuestionsMap) {
-        answeredQuestions.push({question_id: question_id, answer: answer});
-    }
+    var completed =  true;
+
+    //On vérifie que toutes les question ont une réponse 
     
-    var commentsMap = this.state.comments;
-    var comments = [];
-    for (var [thematique_id, comment] of commentsMap) {
-      comments.push( {thematique_id: thematique_id, answer: comment});
-    }
-    
-    var sondage = { 
-      remplissage_id: this.state.remplissage_id,
-      sondage_id : this.state.sondage_id,
-      answered_questions: answeredQuestions,
-      answered_commentaires: comments,
-    };
-    console.log(sondage);
-    axios.post('http://localhost:4200/user/answerSondage',sondage,
-    {headers:{Authorization: "bearer "+ this.state.token}})
-    .then(function (response) {
-        console.log(response);
-        console.log("response status :")
-        console.log(response.status);
-        if (response.status === 200){
-          alert("Questionnaire sucessfuly submited !");
-        } else {
-          alert("An error occured while sending the questionnaire to the server");
+    this.state.thematiqueList.forEach( (thematique) => {
+      thematique.questionList.forEach( (question) => {
+        if(this.state.answeredQuestions.get(question.id) === undefined) {
+          console.log("question non complétée");
+          console.log(question.valeur);
+          completed = false;
         }
-      })
+      });
+    });
+    if(completed){
+
+      var answeredQuestionsMap = this.state.answeredQuestions;
+      var answeredQuestions = [];
+      for (var [question_id, answer] of answeredQuestionsMap) {
+          answeredQuestions.push({question_id: question_id, answer: answer});
+      }
+      
+      var commentsMap = this.state.comments;
+      var comments = [];
+      for (var [thematique_id, comment] of commentsMap) {
+        // Verify that the comment is not empty
+        if(comment && comment !== " "){
+        comments.push( {thematique_id: thematique_id, answer: comment});
+        }
+      }
+      
+      var sondage = { 
+        remplissage_id: this.state.remplissage_id,
+        sondage_id : this.state.sondage_id,
+        answered_questions: answeredQuestions,
+        answered_commentaires: comments,
+      };
+      console.log(sondage);
+      
+      axios.post('http://localhost:4200/user/answerSondage',sondage,
+      {headers:{Authorization: "bearer "+ this.state.token}})
+      .then(function (response) {
+          console.log(response);
+          console.log("response status :")
+          console.log(response.status);
+          if (response.status === 200){
+            alert("Questionnaire sucessfuly submited !");
+          } else {
+            alert("An error occured while sending the questionnaire to the server");
+          }
+        });
+        event.preventDefault();
+      }
+    else {
+      event.preventDefault();
+      alert("Vous devez répondre à toutes les question ! (Les commentaires ne sont pas obligatoires)");
+    }
     
-    event.preventDefault();
   }
 
   render() {
@@ -219,20 +248,28 @@ class Sondage extends React.Component {
       headMessage = <Loading />
     }
     else {
-      headMessage = <Typography variant="display2" align="center" color="textPrimary" gutterBottom> Bonjour {this.state.firstName} </Typography>
+      headMessage = <Typography variant="display3" align="center" color="textPrimary" gutterBottom> Bonjour {this.state.firstName} </Typography>
     }
 
     console.log("state before render :");
     console.log(this.state);
     return (
-      <main className={classes.layout}>
-        <Paper className={classes.paper}>
-          {headMessage}
-            <QuestionsForm loaded={this.state.loaded} thematiqueList={this.state.thematiqueList} 
-                handleChange={this.handleChange} handleSubmit={this.handleSubmit} 
-                alreadyAnswered={this.state.alreadyAnswered} answeredQuestions={this.state.answeredQuestions} 
-                sondageName={this.state.sondageName} classes={classes} comments={this.state.comments}/>
-        </Paper>
+      <main className={classes.main}>
+        <Grid container justify='center'>
+          <Grid item xs={10}>
+            <Paper className={classes.paper}>
+              {headMessage}
+              
+              <QuestionsForm loaded={this.state.loaded} thematiqueList={this.state.thematiqueList} 
+                  handleChange={this.handleChange} handleSubmit={this.handleSubmit} 
+                  alreadyAnswered={this.state.alreadyAnswered} answeredQuestions={this.state.answeredQuestions} 
+                  sondageName={this.state.sondageName} classes={classes} comments={this.state.comments}
+                  classes={classes}
+                  />
+             
+            </Paper>
+        </Grid>
+        </Grid>
       </main>
     );
   }
@@ -252,7 +289,7 @@ function QuestionsForm(props) {
   //const questionMap = mapping(props.questions);
 
   // le contenu de la variable displayed s'incremente avec les élement html à afficher au cours du parcours des questions
-  var displayed = <Typography variant="title" align="center" gutterBottom color="textSecondary"> Sondage : {props.sondageName}</Typography>;
+  var displayed = <Typography variant="display2" align="left" gutterBottom color="textPrimary"> Sondage {props.sondageName}</Typography>;
   console.log("thematiqueList");
   console.log(props.thematiqueList);
   for (var thematique of props.thematiqueList) {
@@ -273,17 +310,25 @@ function QuestionsForm(props) {
 
     displayed = <div>
                 {displayed}
-                 <h3> {theme} </h3>
+                <Grid item style={{margin: 50}}>
+                  <Paper style={{padding: 50, background: '#f9fbff'}} elevation={0}>
+                 <Typography variant="display1" color="textSecondary"> {theme} </Typography>
                     <ul>
                       {questionArray.map( (question) => <QuestionArea key={question.id} question={question} 
                       handleChange={props.handleChange} value={props.answeredQuestions.get(question.id)} /> )}
                     </ul>
-                    <Typography color="textPrimary"> Commentaire : </Typography>
-                    <input 
-                    type="text"
+                   
+                    <TextField
+                    label={`Commentaire pour la thématique ${theme}`}
+                    variant="outlined"
+                    fullWidth
+                    multiline
+                    margin="normal"
                     value={comment}
                     onChange={props.handleChange({id : thematique.id, type: "comment", value: "" })}
                     />
+                  </Paper>
+                  </Grid>
                  </div> ;
   
   }
@@ -291,11 +336,24 @@ function QuestionsForm(props) {
   console.log(displayed);
   return(
     <form onSubmit={props.handleSubmit}>
+    <Grid container direction="column">
     {displayed}
-    <div className={props.classes.submitArea}>
-    <Button variant="contained" color="primary" type="submit" disabled={props.alreadyAnswered}> Soumettre </Button>
-    {props.alreadyAnswered ? <Typography variant="caption"> You have already answered this survey</Typography> : <span></span> }
-    </div>
+    
+      <Grid item>
+        <Grid container justify="flex-end">
+          <Grid item>
+          <Button variant="contained" color="primary" 
+          type="submit" disabled={props.alreadyAnswered} > 
+          Soumettre
+          </Button>
+            {props.alreadyAnswered ? <Typography variant="caption"> You have already answered this survey</Typography> : <span></span> }
+          </Grid>
+          <Grid item>
+            <Button variant="contained" color="secondary" disabled={!props.alreadyAnswered}> Modifier </Button>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
     </form>
   );
 } 
@@ -305,9 +363,10 @@ function QuestionArea(props) {
   console.log(props);
   return (
     <div>
-      <label>
-        {props.question.valeur}
+        <Typography variant="headline" color="textPrimary" align="center">{props.question.valeur}</Typography>  
         <FormGroup row>
+          <Grid container justify="center">
+          <Grid item>
           <FormControlLabel
           control={
             <Radio 
@@ -318,6 +377,8 @@ function QuestionArea(props) {
           }
           label="Satisfait"
           />
+          </Grid>
+          <Grid item>
           <FormControlLabel
           control={
             <Radio 
@@ -328,6 +389,8 @@ function QuestionArea(props) {
           }
           label="Indifférent"
           />
+          </Grid>
+          <Grid item>
           <FormControlLabel
           control={
             <Radio 
@@ -338,8 +401,10 @@ function QuestionArea(props) {
           }
           label="Insatisfait"
           />
+          </Grid>
+          </Grid>
         </FormGroup>
-      </label>
+      
     </div>
   );
 }

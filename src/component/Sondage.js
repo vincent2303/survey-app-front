@@ -174,7 +174,7 @@ class Sondage extends React.Component {
     var sondage = { 
       remplissage_id: this.state.remplissage_id,
       sondage_id : this.state.sondage_id,
-      answeredQuestions: answeredQuestions,
+      answered_questions: answeredQuestions,
       answered_commentaires: comments,
     };
     console.log(sondage);

@@ -7,7 +7,6 @@ import axios from 'axios';
 import swal from 'sweetalert';
 
 axios.interceptors.response.use(function (response) {
-    console.log("intercepting")
     return response;
 }, function (error) {
     switch(error.response.status){

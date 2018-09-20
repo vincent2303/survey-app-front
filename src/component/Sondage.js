@@ -1,9 +1,8 @@
 import axios from 'axios'
-import { Snackbar, Typography, TextField, Radio, Paper, withStyles, CircularProgress, FormGroup, FormControlLabel, Button } from '@material-ui/core';
+import { Typography, Radio, Paper, withStyles, CircularProgress, FormGroup, FormControlLabel, Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import ErrorBanner from './ErrorBanner';
-import { runInNewContext } from 'vm';
-import green from '@material-ui/core/colors/green';
+
 
 var React = require('react');
 const jwt = require('jsonwebtoken');
@@ -69,7 +68,8 @@ class Sondage extends React.Component {
     }else {
 
     try {
-    let token = unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape("token").replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+    var replacedSymbols = '/[/./+/*]/g';
+    let token = unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape("token").replace(replacedSymbols, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
     let decoded = jwt.verify(token, "mon secret");
     console.log("Decoded informations");    
     console.log(decoded);
@@ -105,9 +105,15 @@ class Sondage extends React.Component {
             alreadyAnswered: res.data.alreadyAnswered,
             loaded: true,
             sondageName: res.data.sondageName,
+            commentaires: res.data.commentaireList,
           }), () => {
             console.log(this.state.reponses);
             var answeredQuestions = this.state.answeredQuestions;
+            var comments = this.state.comments;
+            this.state.commentaires.forEach(comment => {
+              comments.set(comment.thematique_id, comment.commentaire);
+            })
+            this.setState({comments: comments});
             this.state.reponses.forEach(reponse => {
               answeredQuestions.set(reponse.question_id, reponse.valeur);
             });
@@ -223,7 +229,7 @@ class Sondage extends React.Component {
       <QuestionsForm loaded={this.state.loaded} thematiqueList={this.state.thematiqueList} 
       handleChange={this.handleChange} handleSubmit={this.handleSubmit} 
       alreadyAnswered={this.state.alreadyAnswered} answeredQuestions={this.state.answeredQuestions} 
-      sondageName={this.state.sondageName} classes={classes}/>
+      sondageName={this.state.sondageName} classes={classes} comments={this.state.comments}/>
       </Paper>
       </main>
     );
@@ -251,7 +257,17 @@ function QuestionsForm(props) {
     console.log(thematique);
     var theme = thematique.name;
     var questionArray = thematique.questionList;
-    var comment;
+    console.log("---- commentaire ----");
+    console.log(props.comments);
+    console.log(thematique);
+    
+
+    // Pour eviter le warning composant uncontrolled
+    if(!props.comments.get(thematique.id)){
+      props.comments.set(thematique.id, " ");
+    }
+    var comment = props.comments.get(thematique.id);
+
     displayed = <div>
                 {displayed}
                  <h3> {theme} </h3>
@@ -325,6 +341,7 @@ function QuestionArea(props) {
   );
 }
 
+/*
 function mapping(questions) {
   var questionMap = new Map();
   var questionArray = [];
@@ -350,7 +367,7 @@ function mapping(questions) {
   console.log(questionMap);
   return (questionMap);
 }
-
+*/
 
 // Fonction pour mettre un effet de chargement :
 function Loading(props) {

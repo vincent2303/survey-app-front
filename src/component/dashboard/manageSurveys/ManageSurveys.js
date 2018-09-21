@@ -24,6 +24,7 @@ class SurveyManager extends Component {
             console.log(this.state.loaded);
         });
     }
+    
     handleChange=(e)=>{
         this.setState({text: e.target.value})
     }

@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Paper, Typography, Grid, GridList, GridListTile } from '@material-ui/core';
+import axios from 'axios';
 import ThematiqueDisplayer from './ThematiqueDisplayer';
 import CommentsDisplayer from './CommentsDisplayer';
 import backgroundColorList from '../colorSet'
@@ -101,15 +102,40 @@ class Survey extends React.Component {
     constructor (props) {
       super(props)
       this.state = {
-        startDate: moment()
+        startDate: moment(),
+        loaded: false,
+        comments: [],
       };
       this.handleDateChange = this.handleDateChange.bind(this);
+    }
+
+    componentDidMount(){
+      this.handleDateChange(moment());
     }
    
     handleDateChange(date) {
       this.setState({
         startDate: date
-      });
+      },
+      () => {
+        const day = this.state.startDate._d.getDate();
+        const month = this.state.startDate._d.getMonth() + 1;
+        const year = this.state.startDate._d.getFullYear();
+        let fullDate = "";
+        if(month.toString().length>1){
+          fullDate = year + "-" + month + "-" + day;
+        } else {
+          fullDate = year + "-0" + month + "-" + day;
+        }
+        console.log(fullDate);
+        axios.get(`http://localhost:4200/admin/getCommentaireJour/${fullDate}`,
+        {headers:{Authorization: "bearer "+ localStorage.getItem('token')}})
+        .then( res => {
+          console.log(res.data);
+            this.setState({comments: res.data});
+            this.setState({loaded: true});
+        });
+      }) 
     }
    
     render() {
@@ -129,7 +155,8 @@ class Survey extends React.Component {
                     </GridListTile>
                   ))}
                 </GridList>
-                <CommentsDisplayer comments={comments} />
+                {!this.state.loaded && <h1>Chargement</h1>}  
+                {this.state.loaded &&  <CommentsDisplayer comments={this.state.comments} />}
               </Grid>
             </Grid>
     )}

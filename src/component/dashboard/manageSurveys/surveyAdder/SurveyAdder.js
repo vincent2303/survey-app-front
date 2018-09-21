@@ -124,7 +124,7 @@ class SurveyAdder extends Component {
                 this.setState({ open: true });
             }
             else{
-                axios.post("http://localhost:4200/admin/testPostSurvey",survey, {headers:{Authorization: "bearer "+ localStorage.getItem('token')}} ).then((res)=>{
+                axios.post("http://localhost:4200/admin/postSondage",survey, {headers:{Authorization: "bearer "+ localStorage.getItem('token')}} ).then((res)=>{
                     console.log(res)
                 })
             }

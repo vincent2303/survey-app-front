@@ -223,7 +223,7 @@ class Sondage extends React.Component {
           console.log(response.status);
           if (response.status === 200){
             this.setState({alreadyAnswered: true});
-            alert("Questionnaire successfuly submited !");
+            alert(response.data.msg);
           } else {
             alert("An error occured while sending the questionnaire to the server");
           }
@@ -313,7 +313,7 @@ function QuestionsForm(props) {
     displayed = <div>
                 {displayed}
                 <Grid item style={{margin: 50}}>
-                  <Paper style={{padding: 50, background: '#f9fbff'}} elevation={0}>
+                  <Paper style={{padding: 50, background: '#f9fbff'}} elevation={1}>
                  <Typography variant="display1" color="textSecondary"> {theme} </Typography>
                     <ul>
                       {questionArray.map( (question) => <QuestionArea key={question.id} question={question} 

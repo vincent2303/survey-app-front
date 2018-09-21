@@ -223,7 +223,7 @@ class Sondage extends React.Component {
           console.log(response.status);
           if (response.status === 200){
             this.setState({alreadyAnswered: true});
-            alert("Questionnaire successfuly submited !");
+            alert(response.data.msg);
           } else {
             alert("An error occured while sending the questionnaire to the server");
           }

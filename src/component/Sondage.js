@@ -148,6 +148,8 @@ class Sondage extends React.Component {
       this.state.comments.set(params.id, event.target.value);
       console.log("Writing comment");
       console.log(event.target.value)
+    } else if (params.type === "modifier") {
+      this.setState({alreadyAnswered: false});
     } else {
       console.log(params.type);
       console.warn(" L'evènement du DOM n'a pas été reconnu !");
@@ -215,12 +217,13 @@ class Sondage extends React.Component {
       
       axios.post('http://localhost:4200/user/answerSondage',sondage,
       {headers:{Authorization: "bearer "+ this.state.token}})
-      .then(function (response) {
+      .then((response) => {
           console.log(response);
           console.log("response status :")
           console.log(response.status);
           if (response.status === 200){
-            alert("Questionnaire sucessfuly submited !");
+            this.setState({alreadyAnswered: true});
+            alert("Questionnaire successfuly submited !");
           } else {
             alert("An error occured while sending the questionnaire to the server");
           }
@@ -264,7 +267,6 @@ class Sondage extends React.Component {
                   handleChange={this.handleChange} handleSubmit={this.handleSubmit} 
                   alreadyAnswered={this.state.alreadyAnswered} answeredQuestions={this.state.answeredQuestions} 
                   sondageName={this.state.sondageName} classes={classes} comments={this.state.comments}
-                  classes={classes}
                   />
              
             </Paper>
@@ -315,11 +317,14 @@ function QuestionsForm(props) {
                  <Typography variant="display1" color="textSecondary"> {theme} </Typography>
                     <ul>
                       {questionArray.map( (question) => <QuestionArea key={question.id} question={question} 
-                      handleChange={props.handleChange} value={props.answeredQuestions.get(question.id)} /> )}
+                      handleChange={props.handleChange} value={props.answeredQuestions.get(question.id)} 
+                      alreadyAnswered={props.alreadyAnswered}
+                      /> )}
                     </ul>
                    
                     <TextField
                     label={`Commentaire pour la thématique ${theme}`}
+                    disabled={props.alreadyAnswered}
                     variant="outlined"
                     fullWidth
                     multiline
@@ -349,7 +354,7 @@ function QuestionsForm(props) {
             {props.alreadyAnswered ? <Typography variant="caption"> You have already answered this survey</Typography> : <span></span> }
           </Grid>
           <Grid item>
-            <Button variant="contained" color="secondary" disabled={!props.alreadyAnswered}> Modifier </Button>
+            <Button variant="contained" color="secondary" disabled={!props.alreadyAnswered} onClick={props.handleChange({type: "modifier"})}> Modifier </Button>
           </Grid>
         </Grid>
       </Grid>
@@ -368,6 +373,7 @@ function QuestionArea(props) {
           <Grid container justify="center">
           <Grid item>
           <FormControlLabel
+          disabled={props.alreadyAnswered}
           control={
             <Radio 
               color='primary'
@@ -380,6 +386,7 @@ function QuestionArea(props) {
           </Grid>
           <Grid item>
           <FormControlLabel
+          disabled={props.alreadyAnswered}
           control={
             <Radio 
               color='default'
@@ -392,6 +399,7 @@ function QuestionArea(props) {
           </Grid>
           <Grid item>
           <FormControlLabel
+          disabled={props.alreadyAnswered}
           control={
             <Radio 
               color='secondary'

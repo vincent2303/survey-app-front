@@ -8,6 +8,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import idGenerator from '../../../../customFunction/idGenerator'
 import ThematiqueAdder from './ThematiqueAdder';
+import axios from 'axios';
 import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 const titleStyle = { fontFamily: 'Roboto', fontSize: '2.5em', color: '#2c3e50', fontWeight: 100, textAlign:'center'}
@@ -121,6 +122,11 @@ class SurveyAdder extends Component {
         }, ()=>{
             if (missingSurveyName||missingThematiqueName||missingQuestionText||missingQuestionKeyWord|| noThematique||thematiqueWithoutQuestion) {
                 this.setState({ open: true });
+            }
+            else{
+                axios.post("http://localhost:4200/admin/testPostSurvey",survey, {headers:{Authorization: "bearer "+ localStorage.getItem('token')}} ).then((res)=>{
+                    console.log(res)
+                })
             }
         })
     }

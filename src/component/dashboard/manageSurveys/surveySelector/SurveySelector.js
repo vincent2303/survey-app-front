@@ -26,8 +26,9 @@ class SurveySelector extends Component {
     handleChange = (elem)=>{
         this.setState({selectedSondage: this.getSondageById(elem.target.value)})
     }
-
+    
     render(){
+        
         return(
             <Paper style={{padding: '2vh'}} >
                 <Typography style={titleStyle} > Select the next sondage </Typography>

@@ -56,44 +56,37 @@ class SingleAdder extends Component {
             <div>
                 <Typography variant="body2">Add single User</Typography>
                 <form className={classes.container} noValidate autoComplete="off">
-                        <TextField
-                        id="outlined-name"
+                    <TextField
+                        id="firstName"
                         label="Firstname"
                         name="firstName"
                         className={classes.textField}
                         onChange={this.handleChange}
                         margin="normal"
                         variant="outlined"
-                        />
-                        <TextField
-                        id="outlined-name"
+                    />
+                    <TextField
+                        id="lastName"
                         label="Lastname"
                         name="lastName"
                         className={classes.textField}
                         onChange={this.handleChange}
                         margin="normal"
                         variant="outlined"
-                        />
-                        <TextField
-                        id="outlined-name"
+                    />
+                    <TextField
+                        id="email"
                         label="Email"
                         name="email"
                         className={classes.textField}
                         onChange={this.handleChange}
                         margin="normal"
                         variant="outlined"
-                        />
-                        <Button variant="contained"  size="small" className={classes.button} onClick={this.handleClick}>
-                            Add
-                        </Button>
-                    </form>
-                {/*<label>firstName</label>
-                <input name="firstName" onChange={this.handleChange} />
-                <label>LastName</label>
-                <input name="lastName" onChange={this.handleChange} />
-                <label>email</label>
-                <input name="email" onChange={this.handleChange} />
-                <button onClick={this.handleClick} >add single user</button>*/}
+                    />
+                    <Button variant="contained"  size="small" className={classes.button} onClick={this.handleClick}>
+                        Add
+                    </Button>
+                </form>
             </div>
         )
     }

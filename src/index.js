@@ -9,6 +9,7 @@ import swal from 'sweetalert';
 axios.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
+    console.log(error);
     switch(error.response.status){
         case 460:
             swal({

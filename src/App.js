@@ -27,13 +27,11 @@ class App extends Component {
   };
   constructor(){
     super()
-    console.log(window.location.href.includes("login"));
-    if(window.location.href.includes("login") || window.location.href.includes("sondage")){
+    if(window.location.href.includes("login") || window.location.href.includes("sondage") || window.location.href.includes("admin")){
       this.state.redirect = false;
     } else {
       this.state.redirect = true;
     }
-    console.log(this.state.redirect);
   }
 
   handleMenu = event => {
@@ -47,12 +45,12 @@ class App extends Component {
     return (
       <Router>
       <div>
+      { this.state.redirect &&
+        <Redirect to="/admin" />
+        }
         <Route path="/login" component={Login} />
         <Route path="/sondage" component={Sondage} />
         <Route path="/admin" component={AdminMain} />
-        { this.state.redirect &&
-        <Redirect to="/admin" />
-        }
       </div>
       </Router>
     );

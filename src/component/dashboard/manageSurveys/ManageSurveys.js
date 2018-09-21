@@ -3,7 +3,7 @@ import idGenerator from '../../../customFunction/idGenerator'
 import SurveySelector from './surveySelector/SurveySelector';
 import SurveyAdder from './surveyAdder/SurveyAdder'
 
-const firstDivStyle = { padding:'3vh', backgroundColor:'#2c3e50' }
+const firstDivStyle = { padding:'3vh', backgroundColor:'#2c3e50', minHeight:"100vh" }
 
 const sondageList = [
     {

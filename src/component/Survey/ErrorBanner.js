@@ -29,7 +29,7 @@ class ErrorBanner extends React.Component {
                 className={this.props.classes.error}
                 message={
                     <span className={this.props.classes.message}>
-                        Test
+                        {this.props.message}
                     </span>
                 }
                 />

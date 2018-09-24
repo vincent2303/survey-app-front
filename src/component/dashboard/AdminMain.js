@@ -1,10 +1,10 @@
 import React from 'react'
 import {AppBar, Toolbar, Typography, Grid, Tabs, Tab} from '@material-ui/core';
+import jwt from 'jsonwebtoken';
 import GeneralStat from './generalStats/GeneralStat'
 import Survey from './specificSurvey/Survey';
 import ManageUser from './manageUsers/ManageUser';
 import SurveyManager from './manageSurveys/ManageSurveys';
-const admin_name = "Vincent";
 const labelStyle = {
     color:'#2c3e50'
 }
@@ -13,7 +13,18 @@ class AdminMain extends React.Component{
 
     state = {
         value: 2,
+        admin_name: "",
     };
+
+    constructor(props){
+        super(props);
+        
+    }
+
+    componentDidMount(){
+        let decoded = jwt.verify(localStorage.getItem('token'), "mon secret");
+        this.setState({admin_name : decoded.pseudo});
+    }
 
     handleChange = (event, value) => {
         this.setState({ value });
@@ -28,7 +39,7 @@ class AdminMain extends React.Component{
                         <Grid item sm={2}>
                             <Toolbar>
                                 <Typography variant="title" style={{color: '#2c3e50', fontFamily: 'Roboto', fontWeight:100}}>
-                                    Welcome {admin_name}
+                                    Welcome {this.state.admin_name}
                                 </Typography>
                             </Toolbar>
                         </Grid>

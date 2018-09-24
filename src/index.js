@@ -9,6 +9,7 @@ import swal from 'sweetalert';
 axios.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
+    console.log(error);
     switch(error.response.status){
         case 460:
             swal({
@@ -34,8 +35,8 @@ axios.interceptors.response.use(function (response) {
             return Promise.reject(error);
         case 401:
             swal({
-                title: "Session Expired",
-                text: "Your session has expired. Would you like to be redirected to the login page?",
+                title: "Token Expired",
+                text: "Your token has expired. Would you like to be redirected to the login page?",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",

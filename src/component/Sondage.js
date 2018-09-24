@@ -213,7 +213,6 @@ class Sondage extends React.Component {
         answered_questions: answeredQuestions,
         answered_commentaires: comments,
       };
-      console.log(sondage);
       
       axios.post('http://localhost:4200/user/answerSondage',sondage,
       {headers:{Authorization: "bearer "+ this.state.token}})

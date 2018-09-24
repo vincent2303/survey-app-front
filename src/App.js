@@ -13,6 +13,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Login from './component/Login.js';
 import Sondage from './component/Sondage.js';
+import Survey from './component/Survey/Survey.js';
 import AdminMain from './component/dashboard/AdminMain.js';
 
 const styles = {
@@ -27,7 +28,7 @@ class App extends Component {
   };
   constructor(){
     super()
-    if(window.location.href.includes("login") || window.location.href.includes("sondage") || window.location.href.includes("admin")){
+    if(window.location.href.includes("login") || window.location.href.includes("survey") || window.location.href.includes("admin")){
       this.state.redirect = false;
     } else {
       this.state.redirect = true;
@@ -50,6 +51,7 @@ class App extends Component {
         }
         <Route path="/login" component={Login} />
         <Route path="/sondage" component={Sondage} />
+        <Route path="/survey" component={Survey} />
         <Route path="/admin" component={AdminMain} />
       </div>
       </Router>

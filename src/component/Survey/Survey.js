@@ -5,12 +5,12 @@ import Loading from './Loading';
 import queryingData from './queryingData';
 import postSurvey from './postSurvey.js';
 import QuestionsForm from './QuestionsForm';
-import Drawer from './Drawer';
+import SettingDialog from './SettingDialog';
 import { Typography, Grid, withStyles, Paper } from '@material-ui/core';
 
 const styles = theme => ({
     root: {
-        backgroundColor: theme.palette.background,
+        backgroundColor: '#cce0ff',
     },
     paper: {
         margin: theme.spacing.unit * 3,
@@ -112,7 +112,7 @@ class Survey extends React.Component {
             : (
             <Grid container justify='space-between' className={this.props.classes.root}>
                 <Grid item xs={1}>
-                    <Drawer />
+                    <SettingDialog state={this.state} />
                 </Grid>
                 <Grid item xs={10}>
                     <Paper className={this.props.classes.paper}>

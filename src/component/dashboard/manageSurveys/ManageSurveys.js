@@ -26,6 +26,7 @@ class SurveyManager extends Component {
     }
     
     getCurrentSondage(sondage_list){
+        this.setState({currentSondage: sondage_list[0]});
         sondage_list.forEach((sondage) => {
             if(sondage.current){
                 this.setState({currentSondage: sondage})

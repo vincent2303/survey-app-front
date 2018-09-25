@@ -8,8 +8,8 @@ const SoftLineCircle = ({data}) => {
     const secondStyle = {color:'white', fontFamily: 'Roboto', fontWeight:100, fontSize:'1em'}
     return (
     <Card style={cardStyle} >
-        <Typography variant='display1' style={firstStyle} >9.382</Typography>
-        <Typography variant='display1' style={secondStyle} >Total answered sondage</Typography>
+        <Typography variant='display1' style={firstStyle} >{data.total}</Typography>
+        <Typography variant='display1' style={secondStyle} >{data.name}</Typography>
         <Line data={data.chartData} options={data.option} />
     </Card>
 )}

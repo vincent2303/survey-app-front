@@ -182,7 +182,7 @@ const type_doubleCircleLine_constructor = function(inputData){ // soft circle gr
                 display: true,
                 ticks: {
                     fontColor: '#2c3e50',
-                    suggestedMin: min,
+                    suggestedMin: 0,
                     suggestedMax: max
                 },
                 gridLines: {

@@ -14,8 +14,9 @@ import SoftLine from '../chartDisplayers/SoftLine';
 import LongSoftLine from '../chartDisplayers/LongSoftLine';
 import DoubleCircleLine from '../chartDisplayers/DoubleCircleLine';
 
+const week = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];
 const input1 = {
-    xLabel: ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'],
+    xLabel: week,
     elementLabel: 'mail envoyé',
     boxColor: '#2980b9',
 }
@@ -40,29 +41,6 @@ const input4 = {
     boxColor: '#c0392b'
 }
 
-const input5 = {
-    dataArray: [30, 50, 30, 40, 60, 50, 60],
-    xLabel: ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'],
-    elementLabel: 'mail envoyé',
-    boxColor: '#ecf0f1'
-}
-
-const input6 = {
-    dataArray: [
-        [30, 50, 30, 40, 60, 50, 60],
-        [15, 36, 19, 24, 33, 46, 37]
-    ],
-    xLabel: ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'],
-    elementLabel: [
-        'mail envoyé',
-        'reponses'
-    ],
-    boxColor: '#ecf0f1'
-}
-
-
-const datad_display_5 = type_longSoftLine_constructor(input5)
-const datad_display_6 = type_doubleCircleLine_constructor(input6)
 
 class GeneralStat extends Component {
 
@@ -75,7 +53,7 @@ class GeneralStat extends Component {
         monthAnswered: [],
         todayRate: Number,
         todaySatis: Number,
-        weekSatis: [],
+        monthSatis: [],
         weekRate: [],
         loaded: false,
         data: [],
@@ -94,7 +72,7 @@ class GeneralStat extends Component {
                 monthAnswered: res.data.monthAnsweredSondage,
                 todayRate: res.data.todayAnsweredSendedRate,
                 todaySatis: res.data.todayAverageSatisfaction,
-                weekSatis: res.data.weekAverageSatisfaction,
+                monthSatis: res.data.monthAverageSatisfaction,
                 weekRate: res.data.weekRate,
 
             }, () => {
@@ -119,11 +97,13 @@ class GeneralStat extends Component {
                 const data4 = this.weekDataConstructor(
                     input4, 
                     type_softBar_constructor,
-                    this.state.weekSatis, 
+                    this.state.monthSatis, 
                     this.state.totalSatis, 
                     "Total satisfaction");
+                const data5 = this.monthSatisfaction(this.state.monthSatis);
+                const data6 = this.monthSA([this.state.monthSent,this.state.monthAnswered]);
                 this.setState({
-                    data: [data1,data2, data3, data4],
+                    data: [data1,data2, data3, data4, data5, data6],
                     loaded: true,
                 })
                 
@@ -138,6 +118,32 @@ class GeneralStat extends Component {
         data1.total = dataTotal;
         data1.name = name;
         return(data1);
+    }
+
+    monthSA(dataList){
+        const input6 = {
+            dataArray: [
+                dataList[0].slice(0,30).reverse(),
+                dataList[1].slice(0,30).reverse(),
+            ],
+            xLabel: ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30'],
+            elementLabel: [
+                'mail envoyé',
+                'reponses'
+            ],
+            boxColor: '#ecf0f1'
+        }
+        return(type_doubleCircleLine_constructor(input6))
+    }
+    
+    monthSatisfaction(dataList){
+        const input5 = {
+            dataArray: dataList.slice(0,30).reverse(),
+            xLabel: ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30'],
+            elementLabel: 'Satisfaction',
+            boxColor: '#ecf0f1'
+        }
+        return(type_longSoftLine_constructor(input5));
     }
 
     render(){
@@ -160,10 +166,10 @@ class GeneralStat extends Component {
                         </Grid>
                     </Grid>
                     <Grid>
-                        <LongSoftLine data= {datad_display_5} />
+                        <LongSoftLine data= {this.state.data[4]} />
                     </Grid>
                     <Grid >
-                        <DoubleCircleLine data= {datad_display_6} />
+                        <DoubleCircleLine data= {this.state.data[5]} />
                     </Grid>
                 </Grid>
                 }

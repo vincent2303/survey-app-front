@@ -13,29 +13,30 @@ import SoftBar from '../chartDisplayers/SoftBar';
 import SoftLine from '../chartDisplayers/SoftLine';
 import LongSoftLine from '../chartDisplayers/LongSoftLine';
 import DoubleCircleLine from '../chartDisplayers/DoubleCircleLine';
+import { cycleWeek, cycleMonth } from './cycle';
 
 const week = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];
 const input1 = {
-    xLabel: week,
+    xLabel: cycleWeek(),
     elementLabel: 'mail envoyé',
     boxColor: '#2980b9',
 }
 
 const input2 = {
-    xLabel: ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'],
+    xLabel: cycleWeek(),
     elementLabel: 'sondage remplis',
     boxColor: '#3498db'
 }
 
 const input3 = {
-    xLabel: ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'],
+    xLabel: cycleWeek(),
     elementLabel: 'mail sent/sondage answered',
     backgroundColor: '#e74c3c',
     boxColor: '#f39c12'
 }
 
 const input4 = {
-    xLabel: ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'],
+    xLabel: cycleWeek(),
     elementLabel: 'satisfaction',
     backgroundColor: '#e74c3c',
     boxColor: '#c0392b'
@@ -91,15 +92,15 @@ class GeneralStat extends Component {
                 const data3 = this.weekDataConstructor(
                     input3, 
                     type_softLine_constructor,
-                    this.state.weekRate, 
-                    this.state.todayRate, 
-                    "Total sondage answer rate");
-                const data4 = this.weekDataConstructor(
-                    input4, 
-                    type_softBar_constructor,
                     this.state.monthSatis, 
                     this.state.totalSatis, 
                     "Total satisfaction");
+                const data4 = this.weekDataConstructor(
+                    input4, 
+                    type_softBar_constructor,
+                    this.state.weekRate, 
+                    this.state.totalRate,
+                    "Total sondage answer rate");
                 const data5 = this.monthSatisfaction(this.state.monthSatis);
                 const data6 = this.monthSA([this.state.monthSent,this.state.monthAnswered]);
                 this.setState({
@@ -126,7 +127,7 @@ class GeneralStat extends Component {
                 dataList[0].slice(0,30).reverse(),
                 dataList[1].slice(0,30).reverse(),
             ],
-            xLabel: ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30'],
+            xLabel: cycleMonth(),
             elementLabel: [
                 'mail envoyé',
                 'reponses'
@@ -139,7 +140,7 @@ class GeneralStat extends Component {
     monthSatisfaction(dataList){
         const input5 = {
             dataArray: dataList.slice(0,30).reverse(),
-            xLabel: ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30'],
+            xLabel: cycleMonth(),
             elementLabel: 'Satisfaction',
             boxColor: '#ecf0f1'
         }
@@ -155,7 +156,7 @@ class GeneralStat extends Component {
                         <Grid item style={{width: '22%'}} >
                             <SoftLineCircle data={this.state.data[0]} />
                         </Grid>
-                        <Grid item style={{width: '22%'}}>
+                        <Grid item style={{width: '22%', height: 'auto'}}>
                             <SoftLineCircle data={this.state.data[1]} />
                         </Grid>
                         <Grid item style={{width: '22%'}}>

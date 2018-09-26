@@ -3,7 +3,7 @@ import { Card, Typography } from '@material-ui/core'
 import { Bar } from 'react-chartjs-2'
 
 const SoftBar = ({data}) => {
-    const cardStyle = {height:'20vh', backgroundColor: data.boxColor, padding: '3vh', paddingBottom: 0}
+    const cardStyle = {height:'25vh', backgroundColor: data.boxColor, padding: '3vh', paddingBottom: 0}
     const firstStyle = {color:'white', fontFamily: 'Roboto', fontWeight:300}
     const secondStyle = {color:'white', fontFamily: 'Roboto', fontWeight:100, fontSize:'1em'}
     return (

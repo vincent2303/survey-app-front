@@ -13,7 +13,6 @@ import SoftBar from '../chartDisplayers/SoftBar';
 import SoftLine from '../chartDisplayers/SoftLine';
 import LongSoftLine from '../chartDisplayers/LongSoftLine';
 import DoubleCircleLine from '../chartDisplayers/DoubleCircleLine';
-import axios from 'axios';
 
 const week = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];
 const input1 = {

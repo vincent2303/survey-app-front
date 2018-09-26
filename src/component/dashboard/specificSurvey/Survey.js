@@ -105,6 +105,8 @@ class Survey extends React.Component {
         startDate: moment(),
         loaded: false,
         comments: [],
+        thematiqueList: [],
+        loaded2: false,
       };
       this.handleDateChange = this.handleDateChange.bind(this);
     }
@@ -118,15 +120,16 @@ class Survey extends React.Component {
         startDate: date
       },
       () => {
-        const day = this.state.startDate._d.getDate();
-        const month = this.state.startDate._d.getMonth() + 1;
+        let day = this.state.startDate._d.getDate();
+        let month = this.state.startDate._d.getMonth() + 1;
         const year = this.state.startDate._d.getFullYear();
         let fullDate = "";
-        if(month.toString().length>1){
-          fullDate = year + "-" + month + "-" + day;
-        } else {
-          fullDate = year + "-0" + month + "-" + day;
+        if(month.toString().length === 1){
+          month = "0" + month;
+        } if(day.toString().length === 1){
+          day = "0" + day;
         }
+        fullDate = year + "-" + month + "-" + day;
         console.log(fullDate);
         axios.get(`http://localhost:4200/admin/getCommentaireJour/${fullDate}`,
         {headers:{Authorization: "bearer "+ localStorage.getItem('token')}})
@@ -134,6 +137,13 @@ class Survey extends React.Component {
           console.log(res.data);
             this.setState({comments: res.data});
             this.setState({loaded: true});
+        });
+        axios.get(`http://localhost:4200/admin/specificStatistics/${year}/${month}/${day}`,
+        {headers:{Authorization: "bearer "+ localStorage.getItem('token')}})
+        .then( res => {
+          console.log(res.data);
+          this.setState({thematiqueList: res.data.thematiqueList});
+          this.setState({loaded2: true});
         });
       }) 
     }
@@ -148,13 +158,15 @@ class Survey extends React.Component {
                 </Paper>
               </Grid>
               <Grid item style={{width:'97%'}} >
+                {!this.state.loaded && <h1>Chargement</h1>}  
+                {this.state.loaded &&  
                 <GridList spacing={20} cellHeight={'auto'} cols={3} style={{marginTop:'10vh'}} >
-                  {thematiqueDataList.map(thematiqueData => (
-                    <GridListTile key={thematiqueData.title}>
+                  {this.state.thematiqueList.map(thematiqueData => (
+                    <GridListTile key={thematiqueData.name}>
                       <ThematiqueDisplayer thematique={thematiqueData}/>
                     </GridListTile>
                   ))}
-                </GridList>
+                </GridList>}
                 {!this.state.loaded && <h1>Chargement</h1>}  
                 {this.state.loaded &&  <CommentsDisplayer comments={this.state.comments} />}
               </Grid>

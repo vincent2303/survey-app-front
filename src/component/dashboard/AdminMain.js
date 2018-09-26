@@ -12,7 +12,7 @@ const labelStyle = {
 class AdminMain extends React.Component{
 
     state = {
-        value: 2,
+        value: 0,
     };
 
     handleChange = (event, value) => {

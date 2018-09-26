@@ -12,6 +12,7 @@ import SoftBar from '../chartDisplayers/SoftBar';
 import SoftLine from '../chartDisplayers/SoftLine';
 import LongSoftLine from '../chartDisplayers/LongSoftLine';
 import DoubleCircleLine from '../chartDisplayers/DoubleCircleLine';
+import axios from 'axios';
 
 const input1 = {
     dataArray: [105, 120, 115, 134, 100, 129, 100],
@@ -71,6 +72,13 @@ const datad_display_5 = type_longSoftLine_constructor(input5)
 const datad_display_6 = type_doubleCircleLine_constructor(input6)
 
 class GeneralStat extends Component {
+
+    componentDidMount(){
+        axios.get('http://localhost:4200/admin/generalStatistics', {headers:{Authorization: "bearer "+ localStorage.getItem('token')}}).then(data=>{
+            console.log(data);
+        })
+    }
+
     render(){
         return(
             <div>

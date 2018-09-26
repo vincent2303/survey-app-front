@@ -136,7 +136,7 @@ const type_longSoftLine_constructor = function(inputData){ // first line (month 
 const type_doubleCircleLine_constructor = function(inputData){ // soft circle graph
     const minMax1 = setYRange(inputData.dataArray[0])
     const minMax2 = setYRange(inputData.dataArray[1])
-    const min = Math.min(minMax1.min, minMax2.min)
+    const min = Math.max(Math.min(minMax1.min, minMax2.min), 0);
     const max = Math.min(minMax1.max, minMax2.max)
     let chartData = {
         labels: inputData.xLabel,
@@ -182,7 +182,7 @@ const type_doubleCircleLine_constructor = function(inputData){ // soft circle gr
                 display: true,
                 ticks: {
                     fontColor: '#2c3e50',
-                    suggestedMin: 0,
+                    suggestedMin: min,
                     suggestedMax: max
                 },
                 gridLines: {

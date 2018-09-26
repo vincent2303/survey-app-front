@@ -19,9 +19,18 @@ class SurveyManager extends Component {
         {headers:{Authorization: "bearer "+ localStorage.getItem('token')}})
         .then( res => {
             this.setState({sondageList: res.data});
-            this.setState({currentSondage: res.data[0]});
+            this.getCurrentSondage(res.data);
             this.setState({loaded: true});
             console.log(this.state.loaded);
+        });
+    }
+    
+    getCurrentSondage(sondage_list){
+        this.setState({currentSondage: sondage_list[0]});
+        sondage_list.forEach((sondage) => {
+            if(sondage.current){
+                this.setState({currentSondage: sondage})
+            }
         });
     }
     handleChange=(e)=>{

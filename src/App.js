@@ -12,7 +12,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 
 import Login from './component/Login.js';
-import Sondage from './component/Sondage.js';
+import Survey from './component/Survey/Survey.js';
 import AdminMain from './component/dashboard/AdminMain.js';
 
 const styles = {
@@ -49,7 +49,7 @@ class App extends Component {
         <Redirect to="/admin" />
         }
         <Route path="/login" component={Login} />
-        <Route path="/sondage" component={Sondage} />
+        <Route path="/sondage" component={Survey} />
         <Route path="/admin" component={AdminMain} />
       </div>
       </Router>

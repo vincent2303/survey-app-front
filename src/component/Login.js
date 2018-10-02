@@ -83,7 +83,7 @@ class Login extends Component {
         const { classes } = this.props;
 
         return(
-        <div>
+        <div style={{marginTop: '30vh'}} >
         {this.state.redirect && <Redirect to="/admin" />}
         <Grid
           container
@@ -91,7 +91,7 @@ class Login extends Component {
           alignItems="center"
         >
           <Grid item>
-          <Card className={classes.card}>
+          <Card className={classes.card} style={{backgroundColor: '#ecf0f1'}} >
             <CardContent>
             <Typography variant="headline" component="h2">Login page</Typography>
             <div>

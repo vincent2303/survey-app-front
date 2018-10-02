@@ -88,7 +88,8 @@ const type_softLine_constructor = function(inputData){ // soft line graph
 }
 
 const type_longSoftLine_constructor = function(inputData){ // first line (month happyness)
-    const {min, max} = setYRange(inputData.dataArray)
+    let {min, max} = setYRange(inputData.dataArray)
+    min = Math.max(min, 0)
     let chartData = {
         labels: inputData.xLabel,
         datasets:[{

@@ -5,7 +5,7 @@ import {
   Route,
   Redirect
 } from 'react-router-dom';
-
+import { CookiesProvider } from 'react-cookie';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -50,7 +50,9 @@ class App extends Component {
         }
         <Route path="/login" component={Login} />
         <Route path="/sondage" component={Survey} />
-        <Route path="/admin" component={AdminMain} />
+        <CookiesProvider>
+          <Route path="/admin" component={AdminMain} />
+        </CookiesProvider>
       </div>
       </Router>
     );

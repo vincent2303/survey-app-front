@@ -15,9 +15,9 @@ class SurveyManager extends Component {
     }
 
     componentDidMount(){
-        axios.get("http://localhost:4200/admin/getSondage",
-        {headers:{Authorization: "bearer "+ localStorage.getItem('token')}})
+        axios.get("http://localhost:4200/admin/getSondage")
         .then( res => {
+            console.log(res);
             this.setState({sondageList: res.data});
             this.getCurrentSondage(res.data);
             this.setState({loaded: true});

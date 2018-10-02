@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
@@ -17,7 +18,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
 
-
+const cookies = new Cookies()
 
 const styles = theme => ({
     root: {
@@ -44,13 +45,14 @@ class Login extends Component {
 
     handleClick = ()=>{
         console.log(this.state.pseudo, this.state.password)
-        axios.post("http://localhost:4200/admin/login", {pseudo: this.state.pseudo, password: this.state.password}).then(res=>{
-            console.log(res);
+        axios({
+            url: "http://localhost:4200/admin/login",
+            data: {pseudo: this.state.pseudo, password: this.state.password},
+            method: 'post',
+            withCredentials: true}).then(res=>{
             if(res.status !== 200){
                 console.log("error", res.body)
             } else {
-                console.log("succes", res.data)
-                localStorage.setItem('token', res.data.token);
                 this.setState({redirect: true});
             }
         })

@@ -6,6 +6,14 @@ import registerServiceWorker from './registerServiceWorker';
 import axios from 'axios';
 import swal from 'sweetalert';
 
+axios.interceptors.request.use(function (config) {
+    config.withCredentials = true;
+    return config;
+}, function(err) {
+    console.log(err);
+    return Promise.reject(err);
+});
+
 axios.interceptors.response.use(function (response) {
     return response;
 }, function (error) {

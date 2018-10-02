@@ -40,8 +40,8 @@ const SoftRadar = ({thematique}) => {
         }
     };
     thematique.questionList.forEach(question => {
-        data.labels.push(question.text)
-        data.datasets[0].data.push(question.average)
+        data.labels.push(question.keyWord)
+        data.datasets[0].data.push(question.avg)
     });
     return (
         <Radar data={data} options={options} />

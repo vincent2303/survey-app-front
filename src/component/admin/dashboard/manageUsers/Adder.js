@@ -35,7 +35,6 @@ class Adder extends Component {
             }
         });
         this.setState({userList: userList})
-        console.log(userList)
     }
 
 
@@ -47,7 +46,6 @@ class Adder extends Component {
     }
 
     postSingleUser = (user)=>{
-        console.log(user)
         axios.post("http://localhost:4200/admin/singlePost", {user: user},{headers:{Authorization: "bearer "+ this.props.token}}).then((res)=>{
             this.setState({singleServerRespons: res.data})
         })

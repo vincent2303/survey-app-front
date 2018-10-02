@@ -163,7 +163,6 @@ function Choices(props){
         ];
     }
 
-    var answer = props.answers.get(props.question.id);
     return(
         <FormGroup row>
           <Grid container justify="center" direction="row">

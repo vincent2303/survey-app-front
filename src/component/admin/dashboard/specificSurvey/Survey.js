@@ -6,97 +6,6 @@ import { Paper, Typography, Grid, GridList, GridListTile } from '@material-ui/co
 import axios from 'axios';
 import ThematiqueDisplayer from './ThematiqueDisplayer';
 import CommentsDisplayer from './CommentsDisplayer';
-import backgroundColorList from '../colorSet'
-
-const thematiqueDataList = [
-  {
-    title: "Cafeteria",
-    backgroundColor: backgroundColorList[0],
-    questionList:[
-      {text: "Bruit", average:0.6},
-      {text: "Aimabilité", average:0.2},
-      {text: "Prix", average:0.8},
-      {text: "Qualité", average:-0.2},
-      {text: "ambiance", average:0.5}
-    ]
-  },
-  {
-    title: "Bureau",
-    backgroundColor: backgroundColorList[1],
-    questionList:[
-      {text: "Temperature", average:0.6},
-      {text: "Confort", average:-0.1},
-      {text: "Ambiance", average:0.8},
-      {text: "Materiel", average:0.8}
-    ]
-  },
-  {
-    title: "Lounge",
-    backgroundColor: backgroundColorList[2],
-    questionList:[
-      {text: "Confort", average:0.2},
-      {text: "Bruit", average:0.3},
-      {text: "Temperature", average:0.7},
-    ]
-  }
-]
-
-const comments=[
-  {
-    thematique: 'Cafeteria',
-    author:{
-      firstName:'Jean',
-      lastName:'Suarez',
-      email:'Jean.Suarez@orange.fr'
-    },
-    text: 'Homines enim eruditos et sobrios ut infaustos et inutiles vitant, eo quoque accedente quod et nomenclatores adsueti haec et talia venditare, mercede accepta lucris quosdam et prandiis inserunt subditicios ignobiles et obscuros.'
-  },
-  {
-    thematique: 'Lounge',
-    author:{
-      firstName:'Paul',
-      lastName:'Belmondeau',
-      email:'Jean.Suarez@orange.fr'
-    },
-    text: 'Homines enim eruditos et sobrios ut infaustos et inutiles vitant, eo quoque accedente quod et nomenclatores adsueti haec et talia venditare, mercede accepta lucris quosdam et prandiis inserunt subditicios ignobiles et obscuros.'
-  },
-  {
-    thematique: 'Lounge',
-    author:{
-      firstName:'Jacques',
-      lastName:'Roger',
-      email:'Jean.Suarez@orange.fr'
-    },
-    text: 'Homines enim eruditos et sobrios ut infaustos et inutiles vitant, eo quoque accedente quod et nomenclatores adsueti haec et talia venditare, mercede accepta lucris quosdam et prandiis inserunt subditicios ignobiles et obscuros.'
-  },
-  {
-    thematique: 'Bureau',
-    author:{
-      firstName:'Martine',
-      lastName:'Laurence',
-      email:'Jean.Suarez@orange.fr'
-    },
-    text: 'Homines enim eruditos et sobrios ut infaustos et inutiles vitant, eo quoque accedente quod et nomenclatores adsueti haec et talia venditare, mercede accepta lucris quosdam et prandiis inserunt subditicios ignobiles et obscuros.'
-  },
-  {
-    thematique: 'Cafeteria',
-    author:{
-      firstName:'Clement',
-      lastName:'Heizenberg',
-      email:'Jean.Suarez@orange.fr'
-    },
-    text: 'Homines enim eruditos et sobrios ut infaustos et inutiles vitant, eo quoque accedente quod et nomenclatores adsueti haec et talia venditare, mercede accepta lucris quosdam et prandiis inserunt subditicios ignobiles et obscuros.'
-  },
-  {
-    thematique: 'Bureau',
-    author:{
-      firstName:'Stephanie',
-      lastName:'Guillotin',
-      email:'Jean.Suarez@orange.fr'
-    },
-    text: 'Homines enim eruditos et sobrios ut infaustos et inutiles vitant, eo quoque accedente quod et nomenclatores adsueti haec et talia venditare, mercede accepta lucris quosdam et prandiis inserunt subditicios ignobiles et obscuros.'
-  }
-]
 
 class Survey extends React.Component {
     constructor (props) {
@@ -130,18 +39,15 @@ class Survey extends React.Component {
           day = "0" + day;
         }
         fullDate = year + "-" + month + "-" + day;
-        console.log(fullDate);
         axios.get(`http://localhost:4200/admin/getCommentaireJour/${fullDate}`,
         {headers:{Authorization: "bearer "+ localStorage.getItem('token')}})
         .then( res => {
-          console.log(res.data);
             this.setState({comments: res.data});
             this.setState({loaded: true});
         });
         axios.get(`http://localhost:4200/admin/specificStatistics/${year}/${month}/${day}`,
         {headers:{Authorization: "bearer "+ localStorage.getItem('token')}})
         .then( res => {
-          console.log(res.data);
           this.setState({thematiqueList: res.data.thematiqueList});
           this.setState({loaded2: true});
         });

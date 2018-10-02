@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles, SnackbarContent, Grid, Paper } from '@material-ui/core';
+import { withStyles, SnackbarContent, Grid } from '@material-ui/core';
 
 const styles = theme => ({
     error: {
@@ -18,9 +18,6 @@ const styles = theme => ({
 });
 
 class ErrorBanner extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (

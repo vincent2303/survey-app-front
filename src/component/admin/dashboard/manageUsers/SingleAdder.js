@@ -94,6 +94,6 @@ class SingleAdder extends Component {
 
 SingleAdder.propTypes = {
     classes: PropTypes.object.isRequired,
-  };
+};
   
-  export default withStyles(styles)(SingleAdder);
+export default withStyles(styles)(SingleAdder);

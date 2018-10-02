@@ -1,6 +1,6 @@
 import React from 'react'
 import {Paper, Typography} from '@material-ui/core';
-import idGenerator from '../../../customFunction/idGenerator'
+import idGenerator from '../../../../customFunction/idGenerator'
 import OneComment from './OneComment';
 
 const CommentsDisplayer = ({comments}) => {

@@ -11,9 +11,9 @@ import { withStyles } from '@material-ui/core/styles';
 
 
 
-import Login from './component/Login.js';
+import Login from './component/admin/Login.js';
 import Survey from './component/Survey/Survey.js';
-import AdminMain from './component/dashboard/AdminMain.js';
+import AdminMain from './component/admin/dashboard/AdminMain.js';
 
 const styles = {
   root: {

@@ -6,7 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import idGenerator from '../../../../customFunction/idGenerator'
+import idGenerator from '../../../../../customFunction/idGenerator'
 import ThematiqueAdder from './ThematiqueAdder';
 import axios from 'axios';
 import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'

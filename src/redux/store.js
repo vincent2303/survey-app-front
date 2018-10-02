@@ -3,7 +3,9 @@ import thunk from 'redux-thunk';
 import rootReducer from './reducers/index.js';
 
 const initialState = {
-    init: ''
+    testState: {
+        test: 'a'
+    }
 };
 
 const middeleware = [thunk]

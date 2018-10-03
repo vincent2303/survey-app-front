@@ -3,7 +3,8 @@ import axios from 'axios';
 import { 
     LOGIN_ACTION, 
     CHANGE_PASSWORD_ACTION, 
-    CHANGE_PSEUDO_ACTION 
+    CHANGE_PSEUDO_ACTION,
+    SHOW_PASSWORD_ACTION
 } from "./adminTypes";
 
 
@@ -33,13 +34,17 @@ const login = (pseudo, password)=> (dispatch)=>{
         withCredentials: true
     })
     .then(res=>{
-        if(res.status !== 200){
+        if(res.status === 200){
             dispatch({
                 type: LOGIN_ACTION,
-                isConnected: true
+                payload: {isConnected: true}
             });
         }
     })
+}
+
+const showPassword = ()=>(dispatch)=>{
+    dispatch
 }
 
 export { changePassword, changePseudo, login }

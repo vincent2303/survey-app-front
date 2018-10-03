@@ -4,7 +4,7 @@ import {
     LOGIN_ACTION, 
     CHANGE_PASSWORD_ACTION, 
     CHANGE_PSEUDO_ACTION 
-} from "./types";
+} from "./adminTypes";
 
 
 const changePseudo = (event)=>(dispatch)=>{

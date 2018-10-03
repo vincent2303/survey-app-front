@@ -42,7 +42,7 @@ class Login extends Component {
     }
 
     handleClick = ()=>{
-        console.log(this.props)
+        this.props.login(this.props.auth.pseudo, this.props.auth.pseudo)
     }
 
     handleClickShowPassword = () => {

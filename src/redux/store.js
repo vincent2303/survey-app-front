@@ -10,7 +10,7 @@ const initialState = {
         password: '',
         isConnected: false,
         booleanShowPassword: false,
-        onPage: 1
+        onPage: 2
     },
     generalStat: {
         totalSent: 0,
@@ -32,6 +32,11 @@ const initialState = {
         comments: [],
         thematiqueList: [],
         loaded2: false,
+    },
+    manageSurvey: {
+        sondageList: [],
+        currentSondage: null,
+        loaded: false,
     }
 };
 

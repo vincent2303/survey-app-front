@@ -1,10 +1,9 @@
 import axios from 'axios';
-import moment from 'moment';
 
 import { GET_SPECIFIC_SURVEY_ACTION } from "./adminTypes";
 
 const handleDateChange = ()=>(dispatch)=> {
-    const date = new Date
+    const date = new Date()
     let day = date.getDate();
     let month = date.getMonth() + 1;
     const year = date.getFullYear();

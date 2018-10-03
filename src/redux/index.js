@@ -2,10 +2,12 @@ import { combineReducers } from 'redux';
 import authReducer from './admin/reducers/authReducer';
 import generalStatReducer from './admin/reducers/generalStatReducer';
 import specificSurveyReducer from './admin/reducers/specificSurveyReducer';
+import manageSurveyReducer from './admin/reducers/manageSurveyReducer';
 
 
 export default combineReducers({
     auth: authReducer,
     generalStat: generalStatReducer,
-    specificSurvey: specificSurveyReducer
+    specificSurvey: specificSurveyReducer,
+    manageSurvey: manageSurveyReducer
 })

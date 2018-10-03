@@ -28,6 +28,8 @@ class Adder extends Component {
     }
 
     uploadUserList = (data)=>{
+        data.splice(0, 1);
+        console.log(data);
         let userList = []
         data.forEach(line => {
             if (line[0]&&line[1]&&line[2]) {

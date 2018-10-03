@@ -1,4 +1,9 @@
-import { CHANGE_PASSWORD_ACTION, CHANGE_PSEUDO_ACTION, LOGIN_ACTION } from '../actions/adminTypes';
+import { 
+    CHANGE_PASSWORD_ACTION, 
+    CHANGE_PSEUDO_ACTION, 
+    LOGIN_ACTION,
+    SHOW_PASSWORD_ACTION
+} from '../actions/adminTypes';
 
 const authReducer = function(state = null, {type, payload}){
     switch (type) {

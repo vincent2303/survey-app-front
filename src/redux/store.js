@@ -1,12 +1,13 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import rootReducer from './reducers/index.js';
+import rootReducer from './index.js';
 
 const initialState = {
     auth: {
         pseudo: '',
         password: '',
-        isConnected: false
+        isConnected: false,
+        showPassword: false
     }
 };
 

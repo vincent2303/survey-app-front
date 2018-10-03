@@ -16,7 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
 import { connect } from 'react-redux';
-import { changePseudo, changePassword, login } from '../../redux/actions/authAction'
+import { changePseudo, changePassword, login } from '../../redux/admin/actions/authAction'
 
 const styles = theme => ({
     root: {
@@ -34,15 +34,12 @@ const styles = theme => ({
     },
   });
 class Login extends Component {
-
     state={
-        pseudo:"",
-        mp: "",
-        isConnected: false
+        showPassword: false
     }
-
     handleClick = ()=>{
-        this.props.login(this.props.auth.pseudo, this.props.auth.pseudo)
+        console.log("login call")
+        this.props.login(this.props.pseudo, this.props.pseudo)
     }
 
     handleClickShowPassword = () => {
@@ -56,11 +53,9 @@ class Login extends Component {
     handleKeyPress = (e)=>{
         if (e.target.name==="pseudo") {
             this.props.changePseudo(e)
-            this.setState({pseudo: e.target.value})
         }
         if (e.target.name==="password") {
             this.props.changePassword(e)
-            this.setState({mp: e.target.value})
         }
     }
 
@@ -69,7 +64,7 @@ class Login extends Component {
 
         return(
         <div style={{marginTop: '30vh'}} >
-        {this.state.isConnected && <Redirect to="/admin" />}
+        {this.props.isConnected && <Redirect to="/admin" />}
         <Grid
           container
           justify="center"
@@ -84,9 +79,7 @@ class Login extends Component {
                 <InputLabel htmlFor="adornment-user">Username</InputLabel>
                 <Input
                     id="adornment-user"
-                    //type={this.state.showPassword ? 'text' : 'password'}
                     type='text'
-                    //value={this.state.mp}
                     onChange={this.handleKeyPress}
                     name="pseudo"
                 />
@@ -125,7 +118,7 @@ class Login extends Component {
 }
 
 const mapStateToProps = state=>{
-    return state
+    return state.auth
 }
 
 const mapActionsToProps = {

@@ -9,8 +9,6 @@ import { CookiesProvider } from 'react-cookie';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-
-
 import Login from './component/admin/Login.js';
 import Survey from './component/Survey/Survey.js';
 import AdminMain from './component/admin/dashboard/AdminMain.js';
@@ -25,6 +23,7 @@ class App extends Component {
   state = {
     redirect: true,
   };
+
   constructor(){
     super()
     if(window.location.href.includes("login") || window.location.href.includes("sondage") || window.location.href.includes("admin")){

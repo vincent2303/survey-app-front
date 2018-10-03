@@ -6,11 +6,13 @@ import registerServiceWorker from './registerServiceWorker';
 import axios from 'axios';
 import swal from 'sweetalert';
 
+import { Provider } from 'react-redux';
+import store from './redux/store';
+
 axios.interceptors.request.use(function (config) {
     config.withCredentials = true;
     return config;
 }, function(err) {
-    console.log(err);
     return Promise.reject(err);
 });
 
@@ -18,7 +20,6 @@ axios.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
     
-    console.log(error);
     try{
     switch(error.response.status){
         case 460:
@@ -57,14 +58,16 @@ axios.interceptors.response.use(function (response) {
             });
             return Promise.reject(error);
         default:
-            console.log("no problem");
             return Promise.reject(error);
     }
 }
 catch(error) {
-    console.log(error);
 }
 });
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+    <Provider store={store}><App /></Provider>, 
+    document.getElementById('root')
+);
+
 registerServiceWorker();

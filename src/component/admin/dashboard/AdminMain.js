@@ -10,7 +10,7 @@ const labelStyle = {
 }
 
 class AdminMain extends React.Component{
-
+    
     state = {
         value: 2,
         admin_name: "",

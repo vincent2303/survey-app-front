@@ -13,9 +13,6 @@ import Login from './component/admin/Login.js';
 import Survey from './component/Survey/Survey.js';
 import AdminMain from './component/admin/dashboard/AdminMain.js';
 
-import { connect } from 'react-redux';
-import testAction from './redux/actions/testAction'
-
 const styles = {
   root: {
     flexGrow: 1,
@@ -26,6 +23,7 @@ class App extends Component {
   state = {
     redirect: true,
   };
+
   constructor(){
     super()
     if(window.location.href.includes("login") || window.location.href.includes("sondage") || window.location.href.includes("admin")){
@@ -64,12 +62,4 @@ App.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state=>{
-  return state
-}
-
-const mapActionsToProps = {
-  testAction: testAction
-}
-
-export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(App));
+export default withStyles(styles)(App);

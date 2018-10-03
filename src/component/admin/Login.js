@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
-import axios from 'axios';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
@@ -15,6 +14,9 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+
+import { connect } from 'react-redux';
+import { changePseudo, changePassword, login } from '../../redux/actions/authAction'
 
 const styles = theme => ({
     root: {
@@ -36,25 +38,12 @@ class Login extends Component {
     state={
         pseudo:"",
         mp: "",
-        redirect: false
+        isConnected: false
     }
 
     handleClick = ()=>{
-        axios({
-            url: "http://localhost:4200/admin/login",
-            data: {pseudo: this.state.pseudo, password: this.state.password},
-            method: 'post',
-            withCredentials: true}).then(res=>{
-            if(res.status !== 200){
-            } else {
-                this.setState({redirect: true});
-            }
-        })
+        console.log(this.props)
     }
-
-    handleChange = prop => event => {
-        this.setState({ [prop]: event.target.value });
-      };
 
     handleClickShowPassword = () => {
         this.setState(state => ({ showPassword: !state.showPassword }));
@@ -66,20 +55,21 @@ class Login extends Component {
 
     handleKeyPress = (e)=>{
         if (e.target.name==="pseudo") {
+            this.props.changePseudo(e)
             this.setState({pseudo: e.target.value})
         }
-        if (e.target.name==="mp") {
+        if (e.target.name==="password") {
+            this.props.changePassword(e)
             this.setState({mp: e.target.value})
         }
     }
 
     render(){
-
         const { classes } = this.props;
 
         return(
         <div style={{marginTop: '30vh'}} >
-        {this.state.redirect && <Redirect to="/admin" />}
+        {this.state.isConnected && <Redirect to="/admin" />}
         <Grid
           container
           justify="center"
@@ -106,8 +96,8 @@ class Login extends Component {
                 <Input
                     id="adornment-password"
                     type={this.state.showPassword ? 'text' : 'password'}
-                    onChange={this.handleChange('password')}
-                    name="mp"
+                    onChange={this.handleKeyPress}
+                    name="password"
                     endAdornment={
                     <InputAdornment position="end">
                         <IconButton
@@ -134,4 +124,14 @@ class Login extends Component {
     }
 }
 
-export default withStyles(styles)(Login)
+const mapStateToProps = state=>{
+    return state
+}
+
+const mapActionsToProps = {
+    changePseudo: changePseudo,
+    changePassword: changePassword,
+    login: login
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(Login))

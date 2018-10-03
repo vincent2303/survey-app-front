@@ -3,8 +3,10 @@ import thunk from 'redux-thunk';
 import rootReducer from './reducers/index.js';
 
 const initialState = {
-    testState: {
-        test: 'a'
+    auth: {
+        pseudo: '',
+        password: '',
+        isConnected: false
     }
 };
 

@@ -7,7 +7,10 @@ const initialState = {
         pseudo: '',
         password: '',
         isConnected: false,
-        showPassword: false
+        booleanShowPassword: false
+    },
+    dashboard:{
+        onPage: 2
     }
 };
 

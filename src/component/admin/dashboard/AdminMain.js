@@ -13,7 +13,6 @@ class AdminMain extends React.Component{
     
     state = {
         value: 2,
-        admin_name: "",
     };
 
     handleChange = (event, value) => {
@@ -36,7 +35,7 @@ class AdminMain extends React.Component{
                         <Grid item sm={2}>
                             <Toolbar>
                                 <Typography variant="title" style={{color: '#2c3e50', fontFamily: 'Roboto', fontWeight:100}}>
-                                    Welcome {this.state.admin_name}
+                                    Welcome
                                 </Typography>
                             </Toolbar>
                         </Grid>

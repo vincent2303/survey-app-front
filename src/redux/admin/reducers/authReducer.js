@@ -22,6 +22,11 @@ const authReducer = function(state = null, {type, payload}){
                 ...state,
                 isConnected: payload.isConnected
             }
+        case SHOW_PASSWORD_ACTION:
+            return {
+                ...state,
+                booleanShowPassword: payload.booleanShowPassword
+            }
         default:
             return state
     }

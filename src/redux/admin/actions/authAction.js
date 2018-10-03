@@ -43,8 +43,11 @@ const login = (pseudo, password)=> (dispatch)=>{
     })
 }
 
-const showPassword = ()=>(dispatch)=>{
-    dispatch
+const showPassword = (previousBooleanShowPassword)=>(dispatch)=>{
+    dispatch({
+        type: SHOW_PASSWORD_ACTION,
+        payload: {booleanShowPassword: !previousBooleanShowPassword}
+    })
 }
 
-export { changePassword, changePseudo, login }
+export { changePassword, changePseudo, login, showPassword }

@@ -15,7 +15,6 @@ import LongSoftLine from '../chartDisplayers/LongSoftLine';
 import DoubleCircleLine from '../chartDisplayers/DoubleCircleLine';
 import { cycleWeek, cycleMonth } from './cycle';
 
-const week = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];
 const input1 = {
     xLabel: cycleWeek(),
     elementLabel: 'mail envoyé',
@@ -63,7 +62,6 @@ class GeneralStat extends Component {
     componentDidMount(){
         axios.get('http://localhost:4200/admin/generalStatistics', {headers:{Authorization: "bearer "+ localStorage.getItem('token')}})
         .then(res => {
-            console.log(res.data);
             this.setState({
                 totalSent: res.data.totalSentSondage,
                 totalAnswered: res.data.totalAnsweredSondage,

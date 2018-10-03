@@ -10,18 +10,16 @@ const firstDivStyle = { padding:'3vh', backgroundColor:'#2c3e50', minHeight:"100
 class SurveyManager extends Component {
     state = {
         sondageList: [],
-        currentSondage: new Object,
+        currentSondage: null,
         loaded: false,
     }
 
     componentDidMount(){
         axios.get("http://localhost:4200/admin/getSondage")
         .then( res => {
-            console.log(res);
             this.setState({sondageList: res.data});
             this.getCurrentSondage(res.data);
             this.setState({loaded: true});
-            console.log(this.state.loaded);
         });
     }
     

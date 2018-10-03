@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
-
+if (Link && Element && Events &&scroll &&scrollSpy) {}
 
 const ThematiqueAdder = ({
     thematiqueId,

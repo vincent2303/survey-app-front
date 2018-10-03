@@ -11,10 +11,10 @@ const postSurvey = function(state, changeState) {
     }
 
     var answered_commentaires = [];
-    for ( var [thematique_id, answer] of state.comments) {
+    for ( var [thematique_id, comment] of state.comments) {
         // On vérifie que le commentaire n'est pas vide :
-        if (answer && answer !== " ") {
-            answered_commentaires.push({thematique_id: thematique_id, answer: answer });
+        if (comment && comment !== " ") {
+            answered_commentaires.push({thematique_id: thematique_id, answer: comment });
         }
     }
 

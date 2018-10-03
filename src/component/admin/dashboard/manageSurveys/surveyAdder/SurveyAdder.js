@@ -6,10 +6,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import idGenerator from '../../../../customFunction/idGenerator'
+import idGenerator from '../../../../../customFunction/idGenerator'
 import ThematiqueAdder from './ThematiqueAdder';
 import axios from 'axios';
 import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+
+// juste pour pas avoir les warning unused
+if (Link && Element && Events && scrollSpy && scroller) {}
 
 const titleStyle = { fontFamily: 'Roboto', fontSize: '2.5em', color: '#2c3e50', fontWeight: 100, textAlign:'center'}
 const messageMissingSurveyName = "missing the survey name"

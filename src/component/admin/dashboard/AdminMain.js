@@ -16,16 +16,6 @@ class AdminMain extends React.Component{
         admin_name: "",
     };
 
-    constructor(props){
-        super(props);
-        
-    }
-
-    componentDidMount(){
-/*         let decoded = jwt.verify(localStorage.getItem('token'), "mon secret");
-        this.setState({admin_name : decoded.pseudo}); */
-    }
-
     handleChange = (event, value) => {
         this.setState({ value });
     };
@@ -33,7 +23,6 @@ class AdminMain extends React.Component{
     handleClick = () => {
         axios.get("http://localhost:4200/admin/logout")
         .then( res => {
-            console.log(res);
             window.location = '/login';
         });
       };

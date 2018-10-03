@@ -12,4 +12,4 @@ const testReducer = function(state = null, {type, payload}){
     }
 }
 
-export default articleReducer
+export default testReducer

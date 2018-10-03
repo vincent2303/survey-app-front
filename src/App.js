@@ -9,11 +9,12 @@ import { CookiesProvider } from 'react-cookie';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-
-
 import Login from './component/admin/Login.js';
 import Survey from './component/Survey/Survey.js';
 import AdminMain from './component/admin/dashboard/AdminMain.js';
+
+import { connect } from 'react-redux';
+import testAction from './redux/actions/testAction'
 
 const styles = {
   root: {
@@ -63,4 +64,12 @@ App.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(App);
+const mapStateToProps = state=>{
+  return state
+}
+
+const mapActionsToProps = {
+  testAction: testAction
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(App));

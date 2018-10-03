@@ -6,6 +6,9 @@ import registerServiceWorker from './registerServiceWorker';
 import axios from 'axios';
 import swal from 'sweetalert';
 
+import { Provider } from 'react-redux';
+import store from './redux/store';
+
 axios.interceptors.request.use(function (config) {
     config.withCredentials = true;
     return config;
@@ -66,5 +69,9 @@ catch(error) {
 }
 });
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+    <Provider store={store}><App /></Provider>, 
+    document.getElementById('root')
+);
+
 registerServiceWorker();

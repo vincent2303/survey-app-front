@@ -4,7 +4,9 @@ import {
     LOGIN_ACTION, 
     CHANGE_PASSWORD_ACTION, 
     CHANGE_PSEUDO_ACTION,
-    SHOW_PASSWORD_ACTION
+    SHOW_PASSWORD_ACTION,
+    CHANGE_DASHBOARD_PAGE_ACTION,
+    LOGOUT_ACTION
 } from "./adminTypes";
 
 
@@ -37,7 +39,8 @@ const login = (pseudo, password)=> (dispatch)=>{
         if(res.status === 200){
             dispatch({
                 type: LOGIN_ACTION,
-                payload: {isConnected: true}
+                payload: 
+                { isConnected: true }
             });
         }
     })
@@ -50,4 +53,18 @@ const showPassword = (previousBooleanShowPassword)=>(dispatch)=>{
     })
 }
 
-export { changePassword, changePseudo, login, showPassword }
+const changeAdminPage = (pageNumber)=>(dispatch)=>{
+    dispatch({
+        type: CHANGE_DASHBOARD_PAGE_ACTION,
+        payload: { onPage: pageNumber}
+    })
+}
+
+const logout = ()=>(dispatch)=>{
+    dispatch({
+        type: LOGOUT_ACTION,
+        payload: {  }
+    })
+}
+
+export { changePassword, changePseudo, login, showPassword, changeAdminPage, logout }

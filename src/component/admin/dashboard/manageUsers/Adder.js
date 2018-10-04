@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import CsvAdder from './CsvAdder';
 import SingleAdder from './SingleAdder';
-import axios from 'axios';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
+import { connect } from 'react-redux';
+import { postSingleUser, uploadUserList, postUser } from '../../../../redux/admin/actions/manageUserAction'
 const styles = {
     card: {
       minWidth: 275,
@@ -17,38 +18,17 @@ const styles = {
 
 class Adder extends Component {
 
-    state = {
-        userList: null,
-        csvServerRespons: null,
-        singleServerRespons: null
-    }
-
-    userConstructeur = (line)=>{
-        return {firstName: line[0], lastName: line[1], email: line[2]}
-    }
-
     uploadUserList = (data)=>{
-        let userList = []
-        data.forEach(line => {
-            if (line[0]&&line[1]&&line[2]) {
-                userList.push(this.userConstructeur(line))
-            }
-        });
-        this.setState({userList: userList})
+        this.props.uploadUserList(data)
     }
 
 
     postUsers = ()=>{
-        axios.post("http://localhost:4200/admin/csvPost", {userList: this.state.userList}).then(res=>{
-            this.setState({csvServerRespons: res.data})
-        })
-        this.setState({userList: null})
+        this.props.postUser(this.props.userList)
     }
 
     postSingleUser = (user)=>{
-        axios.post("http://localhost:4200/admin/singlePost", {user: user}).then((res)=>{
-            this.setState({singleServerRespons: res.data})
-        })
+        this.props.postSingleUser(user)
     }
     
     render(){
@@ -60,12 +40,12 @@ class Adder extends Component {
                     <Typography variant="title">Add User</Typography>
                     <div>
                         <CsvAdder uploadUsers={this.uploadUserList}/>
-                        {this.state.userList && <button onClick={this.postUsers} >add users</button>}
-                        {this.state.csvServerRespons && <p>{this.state.csvServerRespons}</p>}
+                        {this.props.userList && <button onClick={this.postUsers} >add users</button>}
+                        {this.props.csvServerRespons && <p>{this.props.csvServerRespons}</p>}
                     </div>
                     <div>
                         <SingleAdder postSingleUser={this.postSingleUser} />
-                        {this.state.singleServerRespons && <p>{this.state.singleServerRespons}</p>}
+                        {this.props.singleServerRespons && <p>{this.props.singleServerRespons}</p>}
                     </div>
                     </CardContent>
                 </Card>
@@ -78,4 +58,14 @@ Adder.propTypes = {
     classes: PropTypes.object.isRequired,
   };
   
-  export default withStyles(styles)(Adder);
+const mapStateToProps = state=>{
+    return state.manageUser
+}
+
+const mapActionsToProps = {
+    postSingleUser: postSingleUser, 
+    uploadUserList: uploadUserList, 
+    postUser: postUser
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(Adder));

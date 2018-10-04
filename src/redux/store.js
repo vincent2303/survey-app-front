@@ -9,7 +9,7 @@ const initialState = {
         password: '',
         isConnected: false,
         booleanShowPassword: false,
-        onPage: 2
+        onPage: 3
     },
     userAuth: {
         pseudo: '',

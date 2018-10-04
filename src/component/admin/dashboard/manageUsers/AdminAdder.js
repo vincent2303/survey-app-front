@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import axios from 'axios';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -9,6 +8,9 @@ import CardContent from '@material-ui/core/CardContent';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
+import { connect } from 'react-redux';
+
+import {postAdmin} from '../../../../redux/admin/actions/manageUserAction'
 
 const styles = theme => ({
   container: {
@@ -39,10 +41,7 @@ class AdminAdder extends Component {
     }
 
     handleClick = ()=>{
-        axios.post("http://localhost:4200/admin/createAdmin",
-                {pseudo: this.state.pseudo, mp: this.state.mp})
-            .then(res=>{
-        })
+        this.props.postAdmin(this.state.pseudo, this.state.mp)
     }
 
     handleKeyPress = (e)=>{
@@ -97,4 +96,12 @@ AdminAdder.propTypes = {
     classes: PropTypes.object.isRequired,
   };
   
-  export default withStyles(styles)(AdminAdder);
+  const mapStateToProps = state=>{
+    return {}
+}
+
+const mapActionsToProps = {
+    postAdmin: postAdmin
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(AdminAdder));

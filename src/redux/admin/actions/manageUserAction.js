@@ -1,5 +1,10 @@
 import axios from 'axios'
-import { UPLOAD_USERLIST_ACTION, POST_USER_ACTION } from "./adminTypes";
+import { 
+    UPLOAD_USERLIST_ACTION, 
+    POST_USER_ACTION, 
+    POST_SINGLE_USER_ACTION,
+    POST_ADMIN_ACTION
+} from "./adminTypes";
 
 function userConstructeur(line){
     return {firstName: line[0], lastName: line[1], email: line[2]}
@@ -29,3 +34,27 @@ const postUser  = (userList)=>(dispatch)=>{
     })
 
 }
+
+const postSingleUser = (user)=>(dispatch)=>{
+    axios.post("http://localhost:4200/admin/singlePost", {user: user}).then((res)=>{
+        dispatch({
+            type: POST_SINGLE_USER_ACTION,
+            payload: {
+                singleServerRespons: res.data
+            }
+        })
+    })
+}
+
+const postAdmin = (pseudo, mp)=>(dispatch)=>{
+    axios.post("http://localhost:4200/admin/createAdmin",
+    {pseudo: this.state.pseudo, mp: this.state.mp})
+    .then(()=>{
+        dispatch({
+            type: POST_ADMIN_ACTION,
+            payload: 'post admin'
+        })
+    })
+}
+
+export { uploadUserList, postSingleUser, postUser, postAdmin }

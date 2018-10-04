@@ -3,7 +3,6 @@ import thunk from 'redux-thunk';
 import rootReducer from './index.js';
 import moment from 'moment';
 
-
 const initialState = {
     auth: {
         pseudo: '',
@@ -37,7 +36,8 @@ const initialState = {
         sondageList: [],
         currentSondage: null,
         loaded: false,
-    }
+        selectedSondage: {},
+    },
 };
 
 const middeleware = [thunk]

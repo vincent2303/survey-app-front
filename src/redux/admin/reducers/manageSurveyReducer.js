@@ -1,4 +1,4 @@
-import { GET_SONDAGE_DATA_ACTION } from '../actions/adminTypes';
+import { GET_SONDAGE_DATA_ACTION, CHANGE_SONDAGE_SELECTION_ACTION } from '../actions/adminTypes';
 
 const manageSurveyReducer = function(state = null, {type, payload}){
     switch (type) {
@@ -8,6 +8,12 @@ const manageSurveyReducer = function(state = null, {type, payload}){
                 sondageList: payload.sondageList,
                 currentSondage: payload.currentSondage,
                 loaded: payload.loaded,
+                selectedSondage: payload.selectedSondage
+            }
+        case CHANGE_SONDAGE_SELECTION_ACTION:
+            return {
+                ...state,
+                selectedSondage: payload.selectedSondage
             }
         default:
             return state

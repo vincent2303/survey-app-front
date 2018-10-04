@@ -5,18 +5,16 @@ import MenuItem from '@material-ui/core/MenuItem';
 import axios from 'axios';
 import SurveyDisplayer from './SurveyDisplayer';
 
+import { connect } from 'react-redux';
+import { changeSondageSelection } from '../../../../../redux/admin/actions/manageSurveyAction'
+
 const titleStyle = { fontFamily: 'Roboto', fontSize: '2.5em', color: '#2c3e50', fontWeight: 100, textAlign:'center'}
 
 class SurveySelector extends Component {
 
-    state={
-        selectedSondage: this.props.currentSondage,
-        sondageList: this.props.sondageList
-    }
-
     getSondageById = (sondageId)=>{
-        let newSelectedSondage = this.state.sondageList[0]
-        this.state.sondageList.forEach(sondage => {
+        let newSelectedSondage = this.props.sondageList[0]
+        this.props.sondageList.forEach(sondage => {
             if (sondageId === sondage.id) {
                 newSelectedSondage = sondage
             }
@@ -24,12 +22,12 @@ class SurveySelector extends Component {
         return newSelectedSondage
     }
 
-    handleChange = (elem)=>{
-        this.setState({selectedSondage: this.getSondageById(elem.target.value)})
+    changeSondageSelection = (e)=>{
+        this.props.changeSondageSelection(this.getSondageById(e.target.value))
     }
 
     handleClick = (e) => {
-        axios.post("http://localhost:4200/admin/changeNextSondage",this.state.selectedSondage, {headers:{Authorization: "bearer "+ localStorage.getItem('token')}} ).then((res)=>{
+        axios.post("http://localhost:4200/admin/changeNextSondage",this.props.selectedSondage).then((res)=>{
             console.log(res);
         });
     }
@@ -40,14 +38,14 @@ class SurveySelector extends Component {
             <Paper style={{padding: '2vh'}} >
                 <Typography style={titleStyle} > Select the next sondage </Typography>
                 <Select
-                    value={this.state.selectedSondage.id}
-                    onChange={this.handleChange}
+                    value={this.props.selectedSondage.id}
+                    onChange={this.changeSondageSelection}
                 >
                     {this.props.sondageList.map(sondage=>(
                         <MenuItem key={sondage.id} value={sondage.id} >{sondage.name}</MenuItem>
                     ))}
                 </Select>
-                <SurveyDisplayer sondage={this.state.selectedSondage} />
+                <SurveyDisplayer sondage={this.props.selectedSondage} />
                 <Grid
                     container
                     direction="row"
@@ -65,4 +63,12 @@ class SurveySelector extends Component {
     }
 }
 
-export default SurveySelector
+const mapStateToProps = state=>{
+    return state.manageSurvey
+}
+
+const mapActionsToProps = {
+    changeSondageSelection: changeSondageSelection
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(SurveySelector)

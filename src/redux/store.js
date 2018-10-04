@@ -11,6 +11,15 @@ const initialState = {
         booleanShowPassword: false,
         onPage: 2
     },
+    userAuth: {
+        pseudo: '',
+        password: '',
+        isConnected: false,
+        showPassword: false
+    },
+    userMain: {
+        toggleDrawer: false
+    },
     generalStat: {
         totalSent: 0,
         totalAnswered: 0,

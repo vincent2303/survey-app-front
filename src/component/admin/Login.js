@@ -16,7 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
 import { connect } from 'react-redux';
-import { changePseudo, changePassword, login } from '../../redux/admin/actions/authAction'
+import { changePseudo, changePassword, login, showPassword } from '../../redux/admin/actions/authAction'
 
 const styles = theme => ({
     root: {
@@ -38,12 +38,11 @@ class Login extends Component {
         showPassword: false
     }
     handleClick = ()=>{
-        console.log("login call")
         this.props.login(this.props.pseudo, this.props.pseudo)
     }
 
     handleClickShowPassword = () => {
-        this.setState(state => ({ showPassword: !state.showPassword }));
+        this.props.showPassword(this.props.booleanShowPassword)
       };
 
     handleMouseDownPassword = event => {
@@ -61,7 +60,6 @@ class Login extends Component {
 
     render(){
         const { classes } = this.props;
-
         return(
         <div style={{marginTop: '30vh'}} >
         {this.props.isConnected && <Redirect to="/admin" />}
@@ -88,7 +86,7 @@ class Login extends Component {
                 <InputLabel htmlFor="adornment-password">Password</InputLabel>
                 <Input
                     id="adornment-password"
-                    type={this.state.showPassword ? 'text' : 'password'}
+                    type={this.props.booleanShowPassword ? 'text' : 'password'}
                     onChange={this.handleKeyPress}
                     name="password"
                     endAdornment={
@@ -98,7 +96,7 @@ class Login extends Component {
                         onClick={this.handleClickShowPassword}
                         onMouseDown={this.handleMouseDownPassword}
                         >
-                        {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                        {this.props.booleanShowPassword ? <VisibilityOff /> : <Visibility />}
                         </IconButton>
                     </InputAdornment>
                     }
@@ -124,7 +122,8 @@ const mapStateToProps = state=>{
 const mapActionsToProps = {
     changePseudo: changePseudo,
     changePassword: changePassword,
-    login: login
+    login: login,
+    showPassword: showPassword
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(Login))

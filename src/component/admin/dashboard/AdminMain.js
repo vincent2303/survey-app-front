@@ -5,19 +5,19 @@ import GeneralStat from './generalStats/GeneralStat'
 import Survey from './specificSurvey/Survey';
 import ManageUser from './manageUsers/ManageUser';
 import SurveyManager from './manageSurveys/ManageSurveys';
+
+import { connect } from 'react-redux';
+import { changeAdminPage } from '../../../redux/admin/actions/authAction'
+
+
 const labelStyle = {
     color:'#2c3e50'
 }
 
 class AdminMain extends React.Component{
-    
-    state = {
-        value: 2,
-        admin_name: "",
-    };
 
-    handleChange = (event, value) => {
-        this.setState({ value });
+    handleChange = ( event, value) => {
+        this.props.changePage(value)
     };
 
     handleClick = () => {
@@ -28,7 +28,7 @@ class AdminMain extends React.Component{
       };
       
     render(){
-        const { value } = this.state;
+        const value = this.props.onPage;
         return (
             <div>
                 <AppBar position='sticky' style={{backgroundColor: 'white', padding:0, margin:0}} >
@@ -36,7 +36,7 @@ class AdminMain extends React.Component{
                         <Grid item sm={2}>
                             <Toolbar>
                                 <Typography variant="title" style={{color: '#2c3e50', fontFamily: 'Roboto', fontWeight:100}}>
-                                    Welcome {this.state.admin_name}
+                                    Welcome
                                 </Typography>
                             </Toolbar>
                         </Grid>
@@ -64,4 +64,12 @@ class AdminMain extends React.Component{
     }
 } 
 
-export default AdminMain
+const mapStateToProps = state=>{
+    return state.auth
+}
+
+const mapActionsToProps = {
+    changePage: changeAdminPage
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(AdminMain)

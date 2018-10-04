@@ -2,7 +2,9 @@ import {
     CHANGE_PASSWORD_ACTION, 
     CHANGE_PSEUDO_ACTION, 
     LOGIN_ACTION,
-    SHOW_PASSWORD_ACTION
+    SHOW_PASSWORD_ACTION,
+    CHANGE_DASHBOARD_PAGE_ACTION,
+    LOGOUT_ACTION
 } from '../actions/adminTypes';
 
 const authReducer = function(state = null, {type, payload}){
@@ -20,7 +22,22 @@ const authReducer = function(state = null, {type, payload}){
         case LOGIN_ACTION:
             return {
                 ...state,
-                isConnected: payload.isConnected
+                isConnected: payload.isConnected,
+                password: ""
+            }
+        case SHOW_PASSWORD_ACTION:
+            return {
+                ...state,
+                booleanShowPassword: payload.booleanShowPassword
+            }
+        case CHANGE_DASHBOARD_PAGE_ACTION:
+            return {
+                ...state,
+                onPage: payload.onPage
+            }
+        case LOGOUT_ACTION:
+            return {
+                
             }
         default:
             return state

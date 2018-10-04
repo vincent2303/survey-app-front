@@ -5,13 +5,14 @@ import {
   Route,
   Redirect
 } from 'react-router-dom';
-import { CookiesProvider } from 'react-cookie';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 import Login from './component/admin/Login.js';
+import UserLogin from './component/user/Login.js';
 import Survey from './component/Survey/Survey.js';
 import AdminMain from './component/admin/dashboard/AdminMain.js';
+import UserMain from './component/user/main/UserMain.js';
 
 const styles = {
   root: {
@@ -26,7 +27,7 @@ class App extends Component {
 
   constructor(){
     super()
-    if(window.location.href.includes("login") || window.location.href.includes("sondage") || window.location.href.includes("admin")){
+    if(window.location.href.includes("login") || window.location.href.includes("sondage") || window.location.href.includes("admin") || window.location.href.includes("user")){
       this.state.redirect = false;
     } else {
       this.state.redirect = true;
@@ -48,10 +49,10 @@ class App extends Component {
         <Redirect to="/admin" />
         }
         <Route path="/login" component={Login} />
+        <Route path="/userlogin" component={UserLogin} />
         <Route path="/sondage" component={Survey} />
-        <CookiesProvider>
-          <Route path="/admin" component={AdminMain} />
-        </CookiesProvider>
+        <Route path="/admin" component={AdminMain} />
+        <Route path="/user" component={UserMain} />
       </div>
       </Router>
     );

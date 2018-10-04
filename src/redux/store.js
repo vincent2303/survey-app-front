@@ -8,6 +8,15 @@ const initialState = {
         password: '',
         isConnected: false,
         showPassword: false
+    },
+    userAuth: {
+        pseudo: '',
+        password: '',
+        isConnected: false,
+        showPassword: false
+    },
+    userMain: {
+        toggleDrawer: false
     }
 };
 

@@ -39,14 +39,14 @@ class Adder extends Component {
 
 
     postUsers = ()=>{
-        axios.post("http://localhost:4200/admin/csvPost", {userList: this.state.userList}, {headers:{Authorization: "bearer "+ this.props.token}}).then(res=>{
+        axios.post("http://localhost:4200/admin/csvPost", {userList: this.state.userList}).then(res=>{
             this.setState({csvServerRespons: res.data})
         })
         this.setState({userList: null})
     }
 
     postSingleUser = (user)=>{
-        axios.post("http://localhost:4200/admin/singlePost", {user: user},{headers:{Authorization: "bearer "+ this.props.token}}).then((res)=>{
+        axios.post("http://localhost:4200/admin/singlePost", {user: user}).then((res)=>{
             this.setState({singleServerRespons: res.data})
         })
     }

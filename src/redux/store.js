@@ -47,6 +47,11 @@ const initialState = {
         loaded: false,
         selectedSondage: {},
     },
+    manageUser: {
+        userList: null,
+        csvServerRespons: null,
+        singleServerRespons: null
+    }
 };
 
 const middeleware = [thunk]

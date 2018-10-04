@@ -35,5 +35,13 @@ const changeSondageSelection = (sondage)=>(dispatch)=>{
     })
 }
 
+const postSurvey = (survey)=>(dispatch)=>{
+    axios.post("http://localhost:4200/admin/postSondage",survey)
+    dispatch({
+        type: POST_SURVEY_ACTION,
+        payload: "post done"
+    })
+}
 
-export { getSondageData, changeSondageSelection }
+
+export { getSondageData, changeSondageSelection, postSurvey }

@@ -11,6 +11,9 @@ import ThematiqueAdder from './ThematiqueAdder';
 import axios from 'axios';
 import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
+import { connect } from 'react-redux';
+import { postSurvey } from '../../../../../redux/admin/actions/manageSurveyAction';
+
 // juste pour pas avoir les warning unused
 if (Link && Element && Events && scrollSpy && scroller) {}
 
@@ -127,7 +130,7 @@ class SurveyAdder extends Component {
                 this.setState({ open: true });
             }
             else{
-                axios.post("http://localhost:4200/admin/postSondage",survey)
+                this.props.postSurvey(survey)
             }
         })
     }
@@ -195,4 +198,12 @@ class SurveyAdder extends Component {
     }
 }
 
-export default SurveyAdder
+const mapStateToProps = state=>{
+    return state.manageSurvey
+}
+
+const mapActionsToProps = {
+    postSurvey: postSurvey
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(SurveyAdder)

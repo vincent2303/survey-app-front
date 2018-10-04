@@ -40,8 +40,7 @@ class AdminAdder extends Component {
 
     handleClick = ()=>{
         axios.post("http://localhost:4200/admin/createAdmin",
-                {pseudo: this.state.pseudo, mp: this.state.mp},
-                {headers:{Authorization: "bearer "+ this.props.token}})
+                {pseudo: this.state.pseudo, mp: this.state.mp})
             .then(res=>{
         })
     }

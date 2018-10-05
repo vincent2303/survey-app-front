@@ -1,15 +1,16 @@
 import axios from 'axios';
 
 import { 
-    LOGIN_ACTION, 
-    CHANGE_PASSWORD_ACTION, 
-    CHANGE_PSEUDO_ACTION,
-    SHOW_PASSWORD_ACTION
+    USER_LOGIN_ACTION, 
+    USER_CHANGE_PASSWORD_ACTION, 
+    USER_CHANGE_PSEUDO_ACTION,
+    USER_SHOW_PASSWORD_ACTION,
+    REDIRECT_TO_LOGIN_ACTION
 } from "./userTypes";
 
 export function updatePseudo(newPseudo) {
     return {
-        type: CHANGE_PSEUDO_ACTION,
+        type: USER_CHANGE_PSEUDO_ACTION,
         payload: {
             pseudo: newPseudo
         }
@@ -18,7 +19,7 @@ export function updatePseudo(newPseudo) {
 
 export function updatePass(newPass) {
     return {
-        type: CHANGE_PASSWORD_ACTION,
+        type: USER_CHANGE_PASSWORD_ACTION,
         payload: {
             password: newPass
         }
@@ -27,7 +28,7 @@ export function updatePass(newPass) {
 
 export function showPassword(){
     return {
-        type: SHOW_PASSWORD_ACTION,
+        type: USER_SHOW_PASSWORD_ACTION,
     }
 }
 
@@ -36,7 +37,13 @@ const login = (user) => (dispatch) => {
     .then((res) => {
         console.log(res);
         dispatch({
-            type: LOGIN_ACTION,
+            type: REDIRECT_TO_LOGIN_ACTION,
+            payload: {
+                redirect: false
+            }
+        })
+        dispatch({
+            type: USER_LOGIN_ACTION,
             payload: {
                 isConnected: true
             }

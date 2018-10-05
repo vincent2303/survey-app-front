@@ -19,7 +19,10 @@ const initialState = {
         showPassword: false
     },
     userMain: {
-        toggleDrawer: false
+        toggleDrawer: false,
+        selectedPage: 0,
+        redirectToLogin: false,
+        connectedUser: null,
     },
     generalStat: {
         totalSent: 0,

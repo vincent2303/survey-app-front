@@ -46,15 +46,19 @@ axios.interceptors.response.use(function (response) {
             return Promise.reject(error);
         case 401:
             swal({
-                title: "Token Expired",
-                text: "Your token has expired. Would you like to be redirected to the login page?",
+                title: "Session Expired",
+                text: "You are not logged in. You will be redirected to the login page.",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Yes",
                 closeOnConfirm: false
             }).then( function(){
-                window.location = '/login';
+                if(window.location.href.includes('admin')){
+                    window.location = '/login';
+                } if (window.location.href.includes('user')){
+                    window.location = '/userlogin';
+                }
             });
             return Promise.reject(error);
         default:

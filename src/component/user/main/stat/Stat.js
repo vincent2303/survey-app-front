@@ -7,7 +7,7 @@ export class Stat extends Component {
   render() {
     return (
       <div>
-        Stat
+    Stat
       </div>
     )
   }

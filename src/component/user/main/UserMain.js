@@ -7,7 +7,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
-import { SubjectRounded, HomeRounded, EqualizerRounded } from '@material-ui/icons';
+import { SubjectRounded, HomeRounded,EqualizerRounded } from '@material-ui/icons';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -60,7 +60,7 @@ class UserMain extends Component {
 
     onToggleMenu(event){
         this.setState({ anchorEl: event.currentTarget });
-    };
+    }
 
     handleClose = () => {
         this.setState({ anchorEl: null });

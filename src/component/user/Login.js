@@ -42,19 +42,19 @@ class Login extends Component {
         this.onUpdatePass = this.onUpdatePass.bind(this);
         this.onShowPassword = this.onShowPassword.bind(this);
         this.onLogin = this.onLogin.bind(this);
-    };
+    }
 
     onUpdatePseudo(event){
         this.props.onUpdatePseudo(event.target.value);
-    };
+    }
 
     onUpdatePass(event){
         this.props.onUpdatePass(event.target.value);
-    };
+    }
 
     onShowPassword(){
         this.props.onShowPassword();
-    };
+    }
 
     handleMouseDownPassword = event => {
         event.preventDefault();
@@ -62,7 +62,7 @@ class Login extends Component {
 
     onLogin(){
         this.props.onLogin(this.props.user);
-    };
+    }
 
   render() {
       const { classes } = this.props;

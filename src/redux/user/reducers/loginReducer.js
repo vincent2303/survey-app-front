@@ -1,16 +1,16 @@
 import { 
     USER_CHANGE_PASSWORD_ACTION, 
-    USER_CHANGE_PSEUDO_ACTION, 
+    USER_CHANGE_EMAIL_ACTION, 
     USER_LOGIN_ACTION,
     USER_SHOW_PASSWORD_ACTION
 } from '../actions/userTypes';
 
 const loginReducer = function(state = null, {type, payload}){
     switch (type) {
-        case USER_CHANGE_PSEUDO_ACTION:
+        case USER_CHANGE_EMAIL_ACTION:
             return {
                 ...state,
-                pseudo: payload.pseudo
+                email: payload.email
             }
         case USER_CHANGE_PASSWORD_ACTION:
             return {

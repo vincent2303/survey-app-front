@@ -35,10 +35,10 @@ export function switchPage(page) {
     }
 }
 
-const getUser = (user) => (dispatch) => {
-    axios.get('http://localhost:4200/admin/getUser')
+const getUser = () => (dispatch) => {
+    axios.get('http://localhost:4200/userPage/getUser')
     .then((res) => {
-        console.log("bite");
+        console.log(res.data);
         if (res.status === 200){
             dispatch({
                 type: GET_USER_ACTION,

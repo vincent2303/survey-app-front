@@ -9,10 +9,10 @@ const initialState = {
         password: '',
         isConnected: false,
         booleanShowPassword: false,
-        onPage: 3
+        onPage: 2
     },
     userAuth: {
-        pseudo: '',
+        email: '',
         password: '',
         isConnected: false,
         showPassword: false

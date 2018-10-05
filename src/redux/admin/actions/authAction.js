@@ -29,6 +29,7 @@ const changePassword = (event)=>(dispatch)=>{
 }
 
 const login = (pseudo, password)=> (dispatch)=>{
+    console.log(password);
     axios({
         url: "http://localhost:4200/admin/login",
         data: {pseudo: pseudo, password: password},

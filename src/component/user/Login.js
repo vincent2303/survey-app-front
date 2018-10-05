@@ -16,7 +16,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
-import { updatePseudo, updatePass, showPassword, login } from '../../redux/user/actions/loginActions'
+import { updateEmail, updatePass, showPassword, login } from '../../redux/user/actions/loginActions'
 
 const styles = theme => ({
     root: {
@@ -38,14 +38,14 @@ class Login extends Component {
     constructor(props){
         super(props);
         
-        this.onUpdatePseudo = this.onUpdatePseudo.bind(this);
+        this.onUpdateEmail = this.onUpdateEmail.bind(this);
         this.onUpdatePass = this.onUpdatePass.bind(this);
         this.onShowPassword = this.onShowPassword.bind(this);
         this.onLogin = this.onLogin.bind(this);
     }
 
-    onUpdatePseudo(event){
-        this.props.onUpdatePseudo(event.target.value);
+    onUpdateEmail(event){
+        this.props.onUpdateEmail(event.target.value);
     }
 
     onUpdatePass(event){
@@ -81,12 +81,12 @@ class Login extends Component {
             <Typography variant="headline" component="h2">User Login page</Typography>
             <div>
                 <FormControl >
-                <InputLabel htmlFor="adornment-user">Username</InputLabel>
+                <InputLabel htmlFor="adornment-user">Email</InputLabel>
                 <Input
                     id="adornment-user"
                     type='text'
-                    onChange={this.onUpdatePseudo}
-                    name="pseudo"
+                    onChange={this.onUpdateEmail}
+                    name="email"
                 />
                 </FormControl>
                 <FormControl className={classNames(classes.margin, classes.textField)}>
@@ -130,7 +130,7 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapActionsToProps = {
-    onUpdatePseudo: updatePseudo,
+    onUpdateEmail: updateEmail,
     onUpdatePass: updatePass,
     onShowPassword: showPassword,
     onLogin: login,

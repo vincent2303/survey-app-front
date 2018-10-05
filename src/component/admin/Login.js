@@ -38,7 +38,7 @@ class Login extends Component {
         showPassword: false
     }
     handleClick = ()=>{
-        this.props.login(this.props.pseudo, this.props.pseudo)
+        this.props.login(this.props.pseudo, this.props.password)
     }
 
     handleClickShowPassword = () => {

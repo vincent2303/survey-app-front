@@ -21,10 +21,6 @@ class ManageUser extends Component {
     super()
   }
 
-  state = {
-    token: localStorage.getItem('token')
-  }
-
   render() {
     const { classes } = this.props;
     return (
@@ -38,8 +34,8 @@ class ManageUser extends Component {
           <Card className={classes.card}>
             <CardContent>
             <Typography variant="headline" component="h2">Admin page</Typography>
-              <AdminAdder token={this.state.token}/>
-              <Adder token={this.state.token} />
+              <AdminAdder/>
+              <Adder/>
             </CardContent>
           </Card>
           </Grid>

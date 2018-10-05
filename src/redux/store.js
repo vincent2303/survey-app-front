@@ -3,14 +3,13 @@ import thunk from 'redux-thunk';
 import rootReducer from './index.js';
 import moment from 'moment';
 
-
 const initialState = {
     auth: {
         pseudo: '',
         password: '',
         isConnected: false,
         booleanShowPassword: false,
-        onPage: 2
+        onPage: 3
     },
     userAuth: {
         pseudo: '',
@@ -49,6 +48,12 @@ const initialState = {
         sondageList: [],
         currentSondage: null,
         loaded: false,
+        selectedSondage: {},
+    },
+    manageUser: {
+        userList: null,
+        csvServerRespons: null,
+        singleServerRespons: null
     }
 };
 

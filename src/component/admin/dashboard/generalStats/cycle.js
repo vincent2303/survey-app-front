@@ -29,4 +29,30 @@ const cycleMonth =function(){
     return(sortedMonth)
 }
 
-module.exports = {cycleWeek, cycleMonth};
+const input1 = {
+    xLabel: cycleWeek(),
+    elementLabel: 'mail envoyé',
+    boxColor: '#2980b9',
+}
+
+const input2 = {
+    xLabel: cycleWeek(),
+    elementLabel: 'sondage remplis',
+    boxColor: '#3498db'
+}
+
+const input3 = {
+    xLabel: cycleWeek(),
+    elementLabel: 'mail sent/sondage answered',
+    backgroundColor: '#e74c3c',
+    boxColor: '#f39c12'
+}
+
+const input4 = {
+    xLabel: cycleWeek(),
+    elementLabel: 'satisfaction',
+    backgroundColor: '#e74c3c',
+    boxColor: '#c0392b'
+}
+
+module.exports = {cycleWeek, cycleMonth, input1, input2, input3, input4};

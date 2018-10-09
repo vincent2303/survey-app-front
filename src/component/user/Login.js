@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Redirect } from 'react-router'
+import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
@@ -15,8 +16,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
-import { connect } from 'react-redux';
-import { changePseudo, changePassword, login, showPassword } from '../../redux/admin/actions/authAction'
+import { updateEmail, updatePass, showPassword, login } from '../../redux/user/actions/loginActions'
 
 const styles = theme => ({
     root: {
@@ -26,9 +26,6 @@ const styles = theme => ({
     margin: {
       margin: theme.spacing.unit,
     },
-    button: {
-        marginTop: theme.spacing.unit * 3,
-    },
     withoutLabel: {
       marginTop: theme.spacing.unit * 3,
     },
@@ -36,36 +33,43 @@ const styles = theme => ({
       flexBasis: 200,
     },
   });
+
 class Login extends Component {
-    state={
-        showPassword: false
-    }
-    handleClick = ()=>{
-        this.props.login(this.props.pseudo, this.props.password)
+    constructor(props){
+        super(props);
+        
+        this.onUpdateEmail = this.onUpdateEmail.bind(this);
+        this.onUpdatePass = this.onUpdatePass.bind(this);
+        this.onShowPassword = this.onShowPassword.bind(this);
+        this.onLogin = this.onLogin.bind(this);
     }
 
-    handleClickShowPassword = () => {
-        this.props.showPassword(this.props.booleanShowPassword)
-      };
+    onUpdateEmail(event){
+        this.props.onUpdateEmail(event.target.value);
+    }
+
+    onUpdatePass(event){
+        this.props.onUpdatePass(event.target.value);
+    }
+
+    onShowPassword(){
+        this.props.onShowPassword();
+    }
 
     handleMouseDownPassword = event => {
         event.preventDefault();
       };
 
-    handleKeyPress = (e)=>{
-        if (e.target.name==="pseudo") {
-            this.props.changePseudo(e)
-        }
-        if (e.target.name==="password") {
-            this.props.changePassword(e)
-        }
+    onLogin(){
+        this.props.onLogin(this.props.user);
     }
 
-    render(){
-        const { classes } = this.props;
-        return(
+  render() {
+      const { classes } = this.props;
+
+      return(
         <div style={{marginTop: '30vh'}} >
-        {this.props.isConnected && <Redirect to="/user" />}
+        {this.props.user.isConnected && <Redirect to="/user" />}
         <Grid
           container
           justify="center"
@@ -74,14 +78,14 @@ class Login extends Component {
           <Grid item>
           <Card className={classes.card} style={{backgroundColor: '#ecf0f1'}} >
             <CardContent>
-            <Typography variant="headline" component="h2">Login page</Typography>
+            <Typography variant="headline" component="h2">User Login page</Typography>
             <div>
-                <FormControl className={classNames(classes.margin, classes.textField)}>
+                <FormControl  className={classNames(classes.margin, classes.textField)}>
                 <InputLabel htmlFor="adornment-user">Username</InputLabel>
                 <Input
                     id="adornment-user"
                     type='text'
-                    onChange={this.handleKeyPress}
+                    onChange={this.onUpdateEmail}
                     name="pseudo"
                 />
                 </FormControl>
@@ -89,23 +93,23 @@ class Login extends Component {
                 <InputLabel htmlFor="adornment-password">Password</InputLabel>
                 <Input
                     id="adornment-password"
-                    type={this.props.booleanShowPassword ? 'text' : 'password'}
-                    onChange={this.handleKeyPress}
+                    type={this.props.user.showPassword ? 'text' : 'password'}
+                    onChange={this.onUpdatePass}
                     name="password"
                     endAdornment={
                     <InputAdornment position="end">
                         <IconButton
                         aria-label="Toggle password visibility"
-                        onClick={this.handleClickShowPassword}
+                        onClick={this.onShowPassword}
                         onMouseDown={this.handleMouseDownPassword}
                         >
-                        {this.props.booleanShowPassword ? <VisibilityOff /> : <Visibility />}
+                        {this.props.user.showPassword ? <VisibilityOff /> : <Visibility />}
                         </IconButton>
                     </InputAdornment>
                     }
                 />
                 </FormControl>
-                <Button variant="contained" size="small" color="primary" className={classes.button} onClick={this.handleClick}>
+                <Button variant="contained" size="small" color="primary" className={classes.margin} onClick={this.onLogin}>
                     Connect
                 </Button>
             </div>
@@ -115,18 +119,21 @@ class Login extends Component {
       </Grid>
       </div>
         )
-    }
+  }
 }
 
-const mapStateToProps = state=>{
-    return state.auth
-}
+const mapStateToProps = (state, props) => {
+    console.log(state);
+    return {
+        user: state.userAuth,
+    };
+};
 
 const mapActionsToProps = {
-    changePseudo: changePseudo,
-    changePassword: changePassword,
-    login: login,
-    showPassword: showPassword
-}
+    onUpdateEmail: updateEmail,
+    onUpdatePass: updatePass,
+    onShowPassword: showPassword,
+    onLogin: login,
+};
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(Login))

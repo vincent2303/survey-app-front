@@ -11,12 +11,6 @@ const initialState = {
         booleanShowPassword: false,
         onPage: 2
     },
-    userAuth: {
-        pseudo: '',
-        password: '',
-        isConnected: false,
-        showPassword: false
-    },
     userMain: {
         toggleDrawer: false,
         selectedPage: 0,
@@ -49,6 +43,25 @@ const initialState = {
         currentSondage: null,
         loaded: false,
         selectedSondage: {},
+    },
+    userSurvey: {
+        loaded: false,
+        alreadyAnswered: false,
+        sondageName: "",
+        thematiqueList: [],
+        answers: null,
+        comments: null,
+        error: false,
+        errorMessage: "Pas d'erreur",
+        token: null,
+        firstName: null,
+        lastName: null,
+        remplissage_id: null,
+        sondage_id: null,
+        user_id: null,
+        mailIntensity: null,
+        mailIntensityLoaded: false,
+        mailIntensityError: null,
     },
     manageUser: {
         userList: null,

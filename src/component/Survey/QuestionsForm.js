@@ -1,79 +1,94 @@
 import React from 'react';
-import { Typography, Grid, Paper, TextField, FormGroup, FormControlLabel, Radio, Button } from '@material-ui/core';
+import { connect } from 'react-redux';
+
+import {
+ Typography, Grid, Paper, TextField, FormGroup, FormControlLabel, Radio, Button, Snackbar
+} from '@material-ui/core';
+
+import { handleChange } from "../../redux/user/actions/userSurveyActions";
 
 class QuestionsFrom extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = props.state;
-    }
+  constructor(props) {
+    super(props);
+    this.state = { showSnackbar: false, snackbarMessage: "Success"};
+  }
 
-    render() {
-        if(!this.props.state.loaded){
+  validate = (message) => {
+      this.setState({showSnackbar: true, snackbarMessage: message});
+  }
+
+  render() {
+        if(!this.props.loaded){
             return null;
-        } else {
+        } 
         return (
             <div>
                 <Typography variant="display2" align="left" gutterBottom color="textPrimary">
-                    Sondage {this.props.state.sondageName}
+                    Sondage {this.props.sondageName}
                 </Typography>
-                <form onSubmit={this.props.handleSubmit}>
+                <form onSubmit={this.props.handleChange({ type: 'submit'}, this.validate)}>
                     <Grid container direction="column">
                         <Thematiques 
-                                thematiqueList={this.props.state.thematiqueList}
-                                alreadyAnswered={this.props.state.alreadyAnswered}
-                                comments={this.props.state.comments}
-                                answers={this.props.state.answers}
+                                thematiqueList={this.props.thematiqueList}
+                                alreadyAnswered={this.props.alreadyAnswered}
+                                comments={this.props.comments}
+                                answers={this.props.answers}
                                 handleChange={this.props.handleChange}
                             />
                             <Grid item>
                                 <AnswerButtons 
-                                    alreadyAnswered={this.props.state.alreadyAnswered}
+                                    alreadyAnswered={this.props.alreadyAnswered}
                                     handleChange={this.props.handleChange}
                                 />
                             </Grid>
                     </Grid>
                 </form>
+                <Snackbar 
+                    open={this.state.showSnackbar}
+                    message={this.state.snackbarMessage}
+                    autoHideDuration={6000}
+                    onClose={() => {this.setState({ showSnackbar: false }); }}
+                    />
             </div>
         );
-        }
+        
     }
 }
 
-function AnswerButtons(props){
-
-    return(
-        <Grid container justify="flex-end">
-            <Grid item>
-                <Button 
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    disabled={props.alreadyAnswered}
+function AnswerButtons(props) {
+  return (
+      <Grid container justify="flex-end">
+          <Grid item>
+              <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  disabled={props.alreadyAnswered}
                 >
                     Soumettre
                 </Button>
             </Grid>
-            <Grid item>
-                <Button 
-                    variant="contained"
-                    color="secondary"
-                    disabled={!props.alreadyAnswered}
-                    onClick={props.handleChange({type: "modifier"})}
-                    >
+          <Grid item>
+              <Button
+                  variant="contained"
+                  color="secondary"
+                  disabled={!props.alreadyAnswered}
+                  onClick={props.handleChange({ type: 'modify' })}
+                >
                     Modifier
                 </Button>
             </Grid>
         </Grid>
-    )
+  );
 }
 
 function Thematiques(props) {
-    return (
-        <div>
-        <ul>
-        {
-            props.thematiqueList.map( (theme) => 
-                <Grid item style={{margin: 50}} key={"Grid"+theme.id}>
+  return (
+      <div>
+          <ul>
+          {
+            props.thematiqueList.map(theme => (
+<Grid item style={{margin: 50}} key={"Grid"+theme.id}>
                     <Paper style={{padding: 50, background: '#f9fbff'}} elevation={1} key={"Paper"+theme.id}>
                         <h1> {theme.name} </h1>
                         <QuestionArea 
@@ -92,41 +107,35 @@ function Thematiques(props) {
                             />
                     </Paper>
                 </Grid>
-            )
+))
         }
         </ul>
-        
+
         </div>
-    );
+  );
 }
-function CommentArea(props){
-    // Il faut s'assurer que l'entrée comment pour ce theme existe
-    // Afin d'éviter le changement d'état du composant 
-    // de controlled a uncontrolled
-    if(!props.comments.get(props.theme.id)){
-        props.comments.set(props.theme.id, " ");
-    }
-    var comment = props.comments.get(props.theme.id);
+function CommentArea(props) {
 
-    return(
-        <TextField
-                        label={`Commentaire pour la thématique ${props.theme.name}`}
-                        disabled={props.alreadyAnswered}
-                        variant="outlined"
-                        fullWidth
-                        multiline
-                        margin="normal"
-                        value={comment}
-                        onChange={props.handleChange({id : props.theme.id, type: "comment", value: "" })}
-                    />
-    )
+  let comment = props.comments.get(props.theme.id);
+  return (
+      <TextField
+          label={`Commentaire pour la thématique ${props.theme.name}`}
+          disabled={props.alreadyAnswered}
+          variant="outlined"
+          fullWidth
+          multiline
+          margin="normal"
+          value={comment}
+          onChange={props.handleChange({ id: props.theme.id, type: 'comment'})}
+        />
+  );
 }
 
-function QuestionArea(props){
-    return (
-        <ul>
-        {props.questions.map( (question) => 
-            <div key={"div"+question.id}>
+function QuestionArea(props) {
+  return (
+      <ul>
+          {props.questions.map(question => (
+<div key={"div"+question.id}>
             <Typography 
             key={"title"+question.id}
             variant="headline" 
@@ -142,33 +151,38 @@ function QuestionArea(props){
                 alreadyAnswered={props.alreadyAnswered}
             />
             </div>
-
-        )}
+))}
         </ul>
-    );
+  );
 }
 
-function Choices(props){
-    var choices;
-    // On essaye de récupérer les choix internes de la question
-    if(props.question.choices){
-        choices = props.question.choices;
-    }
-    // Sinon on met les choix par défaut 
-    else {
-        choices = [
-            {id: 0, label: "Satisfait", value: 1, color: 'primary'},
-            {id: 1, label: "Indifférent", value: 0, color: 'default'},
-            {id: 2, label: "Insatisfait", value: -1,  color: 'secondary'},
-        ];
-    }
+function Choices(props) {
+  let choices;
+  // On essaye de récupérer les choix internes de la question
+  if (props.question.choices) {
+    choices = props.question.choices;
+  }
+  // Sinon on met les choix par défaut
+  else {
+    choices = [
+      { 
+id: 0, label: 'Satisfait', value: 1, color: 'primary' 
+},
+      {
+ id: 1, label: 'Indifférent', value: 0, color: 'default'
+ },
+      {
+ id: 2, label: 'Insatisfait', value: -1, color: 'secondary' 
+},
+    ];
+  }
 
-    return(
-        <FormGroup row>
+  return (
+      <FormGroup row>
           <Grid container justify="center" direction="row">
             <ul>
-                {choices.map( (choice) => 
-                <Grid item key={"item"+choice.id}>
+              {choices.map(choice => (
+<Grid item key={"item"+choice.id}>
                     <FormControlLabel
                         key={"FormControle"+choice.id} 
                         disabled={props.alreadyAnswered}
@@ -183,12 +197,23 @@ function Choices(props){
                         }
                     />
                 </Grid>
-                )}
+))}
             </ul>
           </Grid>
         </FormGroup>
-    );
+  );
 }
 
+const mapActionToProps = {
+    handleChange: handleChange
+};
 
-export default QuestionsFrom;
+const mapStateToprops = (state) => ({
+    loaded: state.userSurvey.loaded,
+    sondageName: state.userSurvey.sondageName,
+    comments: state.userSurvey.comments,
+    answers: state.userSurvey.answers,
+    alreadyAnswered: state.userSurvey.alreadyAnswered,
+    thematiqueList: state.userSurvey.thematiqueList,
+})
+export default connect(mapStateToprops, mapActionToProps)(QuestionsFrom);

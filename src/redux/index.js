@@ -5,6 +5,7 @@ import userMainReducer from './user/reducers/userMainReducer';
 import generalStatReducer from './admin/reducers/generalStatReducer';
 import specificSurveyReducer from './admin/reducers/specificSurveyReducer';
 import manageSurveyReducer from './admin/reducers/manageSurveyReducer';
+import userSurveyReducer from './user/reducers/userSurveyReducer';
 
 export default combineReducers({
     auth: authReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
     specificSurvey: specificSurveyReducer,
     manageSurvey: manageSurveyReducer,
     userAuth: loginReducer ,
-    userMain: userMainReducer
+    userMain: userMainReducer,
+    userSurvey: userSurveyReducer,
 })

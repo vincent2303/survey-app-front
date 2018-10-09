@@ -4,7 +4,6 @@ import {
     LOGIN_ACTION,
     SHOW_PASSWORD_ACTION,
     CHANGE_DASHBOARD_PAGE_ACTION,
-    LOGOUT_ACTION
 } from '../actions/adminTypes';
 
 const authReducer = function(state = null, {type, payload}){
@@ -34,10 +33,6 @@ const authReducer = function(state = null, {type, payload}){
             return {
                 ...state,
                 onPage: payload.onPage
-            }
-        case LOGOUT_ACTION:
-            return {
-                
             }
         default:
             return state

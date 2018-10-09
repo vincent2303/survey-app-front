@@ -7,6 +7,7 @@ import {
     GET_USER_ACTION,
     USER_LOGIN_ACTION,
 } from "./userTypes";
+import { LOGOUT_ACTION } from "../../admin/actions/adminTypes";
 
 export function toggleDrawer(open) {
     return {
@@ -68,10 +69,8 @@ const logout = () => (dispatch) => {
     axios.get('http://localhost:4200/user/logout')
     .then((res =>{
         dispatch({
-            type: USER_LOGIN_ACTION,
-            payload: {
-                isConnected: false
-            }
+            type: LOGOUT_ACTION,
+            payload: { }
         })
         dispatch({
             type: GET_USER_ACTION,

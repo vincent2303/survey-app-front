@@ -9,12 +9,6 @@ import {
     LOGOUT_ACTION
 } from "./adminTypes";
 
-import { 
-    USER_LOGIN_ACTION, 
-    REDIRECT_TO_LOGIN_ACTION,
-} from "../../user/actions/userTypes";
-
-
 const changePseudo = (event)=>(dispatch)=>{
     dispatch({
         type: CHANGE_PSEUDO_ACTION,
@@ -48,12 +42,6 @@ const login = (pseudo, password)=> (dispatch)=>{
                 payload: 
                 { isConnected: true }
             });
-            dispatch({
-                type: USER_LOGIN_ACTION,
-                payload: {
-                    isConnected: true
-                }
-            });
         }
     })
 }
@@ -73,10 +61,13 @@ const changeAdminPage = (pageNumber)=>(dispatch)=>{
 }
 
 const logout = ()=>(dispatch)=>{
-    dispatch({
-        type: LOGOUT_ACTION,
-        payload: {  }
-    })
+    axios.get("http://localhost:4200/login/logout").then( () => {
+        window.location = '/login';
+        dispatch({
+            type: LOGOUT_ACTION,
+            payload: { }
+        })
+    });
 }
 
 export { changePassword, changePseudo, login, showPassword, changeAdminPage, logout }

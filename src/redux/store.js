@@ -68,4 +68,4 @@ const store = createStore(
     )
 );
 
-export default store
+export { store, initialState };

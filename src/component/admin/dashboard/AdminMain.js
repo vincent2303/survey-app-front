@@ -7,7 +7,7 @@ import ManageUser from './manageUsers/ManageUser';
 import SurveyManager from './manageSurveys/ManageSurveys';
 
 import { connect } from 'react-redux';
-import { changeAdminPage } from '../../../redux/admin/actions/authAction'
+import { changeAdminPage, logout } from '../../../redux/admin/actions/authAction'
 
 
 const labelStyle = {
@@ -21,10 +21,7 @@ class AdminMain extends React.Component{
     };
 
     handleClick = () => {
-        axios.get("http://localhost:4200/admin/logout")
-        .then( res => {
-            window.location = '/login';
-        });
+        this.props.onLogout();
       };
       
     render(){
@@ -69,7 +66,8 @@ const mapStateToProps = state=>{
 }
 
 const mapActionsToProps = {
-    changePage: changeAdminPage
+    changePage: changeAdminPage,
+    onLogout: logout
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(AdminMain)

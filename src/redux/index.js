@@ -7,7 +7,9 @@ import specificSurveyReducer from './admin/reducers/specificSurveyReducer';
 import manageSurveyReducer from './admin/reducers/manageSurveyReducer';
 import manageUserReducer from './admin/reducers/manageUserReducer';
 
-export default combineReducers({
+import { initialState } from './store'
+
+const appReducer = combineReducers({
     auth: authReducer,
     generalStat: generalStatReducer,
     specificSurvey: specificSurveyReducer,
@@ -16,3 +18,12 @@ export default combineReducers({
     userMain: userMainReducer,
     manageUser: manageUserReducer
 })
+
+const rootReducer = (state, action) => {
+    if (action.type === 'LOGOUT_ACTION') {
+        state = initialState
+      }
+    return appReducer(state, action);
+};
+
+export default rootReducer;

@@ -26,6 +26,9 @@ const styles = theme => ({
     margin: {
       margin: theme.spacing.unit,
     },
+    button: {
+        marginTop: theme.spacing.unit * 3,
+    },
     withoutLabel: {
       marginTop: theme.spacing.unit * 3,
     },
@@ -73,7 +76,7 @@ class Login extends Component {
             <CardContent>
             <Typography variant="headline" component="h2">Login page</Typography>
             <div>
-                <FormControl >
+                <FormControl className={classNames(classes.margin, classes.textField)}>
                 <InputLabel htmlFor="adornment-user">Username</InputLabel>
                 <Input
                     id="adornment-user"

@@ -86,7 +86,7 @@ class UserMain extends Component {
     return (
         <div>
       <div className={classes.root}>
-        <AppBar position='static' style={{backgroundColor: '#4286f4', padding:0, margin:0}} >
+        <AppBar position='sticky' style={{backgroundColor: '#4286f4', padding:0, margin:0}} >
             <Toolbar>
                 <IconButton className={classes.menuButton} onClick={this.onToggleDrawer(true)} color="inherit" aria-label="Menu">
                 <MenuIcon />

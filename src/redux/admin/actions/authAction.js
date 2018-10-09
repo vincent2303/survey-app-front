@@ -27,6 +27,25 @@ const changePassword = (event)=>(dispatch)=>{
     })
 }
 
+const checkLogin = () => (dispatch) => {
+    axios.get('http://localhost:4200/login/check').then( (res) => {
+        console.log(res.data);
+        if (res.data){
+            dispatch({
+                type: LOGIN_ACTION,
+                payload: 
+                { isConnected: true }
+            });
+        } else {
+            dispatch({
+                type: LOGIN_ACTION,
+                payload: 
+                { isConnected: false }
+            });
+        }
+    });  
+}
+
 const login = (pseudo, password)=> (dispatch)=>{
     console.log(password);
     axios({
@@ -70,4 +89,4 @@ const logout = ()=>(dispatch)=>{
     });
 }
 
-export { changePassword, changePseudo, login, showPassword, changeAdminPage, logout }
+export { changePassword, changePseudo, login, showPassword, changeAdminPage, logout, checkLogin }

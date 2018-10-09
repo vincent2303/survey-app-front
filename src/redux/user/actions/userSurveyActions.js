@@ -10,7 +10,7 @@ let serverUrl = env.serverUrl;
 
 // Cette action récupèr le sondage de l'utilisateur
 const getSurvey = (token) => (dispatch) => {
-    axios.get(serverUrl+'/user/getSondage', { headers: { Authorization: "bearer " + token } })
+    axios.get(serverUrl+'/survey/getSondage', { headers: { Authorization: "bearer " + token } })
     .then( (res) => {
         let answers = makeAnswerMap(res.data);
         let comments = makeCommentMap(res.data);
@@ -90,7 +90,7 @@ export { readUrlToken };
 
 const getMailIntensity = (token, next = () => {} ) => (dispatch) => {
     if (token) {
-    axios.get(serverUrl+'/user/getMailIntensity', { headers: { Authorization: "bearer " + token } })
+    axios.get(serverUrl+'/survey/getMailIntensity', { headers: { Authorization: "bearer " + token } })
     .then( (res) => {
         dispatch({
             type: GET_MAIL_INTENSITY,
@@ -118,7 +118,7 @@ export { getMailIntensity };
 
 const postMailIntensity = (inputMailIntensity, token, user_id, next = () => {} ) => () => (dispatch) => {
     var body = { newIntensity: inputMailIntensity, user_id: user_id };
-    axios.post(serverUrl+'/user/changeFreq', body, {headers:{Authorization: "bearer "+ token}})
+    axios.post(serverUrl+'/survey/changeFreq', body, {headers:{Authorization: "bearer "+ token}})
     .then( (res) => {
         next(res.data.msg);
     })
@@ -169,7 +169,7 @@ const handleChange  = (params, next = () => {} ) => (dispatch, getState) => (eve
                 
                 if (allQuestionsAnswered(getState().userSurvey.thematiqueList, getState().userSurvey.answers)) {
                     var surveyBody = arrangeSurveyData(getState().userSurvey);
-                    axios.post(serverUrl+'/user/answerSondage', surveyBody, { headers: { Authorization: "bearer "+ getState().userSurvey.token }})
+                    axios.post(serverUrl+'/survey/answerSondage', surveyBody, { headers: { Authorization: "bearer "+ getState().userSurvey.token }})
                     .then( (res) => {
                         dispatch({
                             type: SET_ALREADY_ANSWERED,

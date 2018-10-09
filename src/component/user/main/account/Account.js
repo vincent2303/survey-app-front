@@ -63,13 +63,58 @@ export class Account extends Component {
               </Card>
             </Grid>
             <Grid item>
-              <TextField
-                id="standard-name"
-                label="Name"
-                className={classes.textField}
-        
-                margin="normal"
-              />
+              <Grid
+                container
+                direction="row"
+                justify="flex-start"
+                alignItems="flex-start"
+              >
+                <Grid item>
+                  <TextField
+                    id="standard-name"
+                    label="Firstname"
+                    className={classes.textField}
+                    value={this.props.user.firstName}
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid item>
+                  <TextField
+                    id="standard-name"
+                    label="Lastname"
+                    className={classes.textField}
+                    value={this.props.user.lastName}
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid item>
+                  <TextField
+                    id="standard-name"
+                    label="Email"
+                    className={classes.textField}
+                    value={this.props.user.email}
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid item>
+                  <TextField
+                    id="standard-name"
+                    label="Pseudo"
+                    className={classes.textField}
+                    value={this.props.user.pseudo}
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid item>
+                  <TextField
+                    id="standard-name"
+                    label="Password"
+                    className={classes.textField}
+                    value={this.props.user.password}
+                    margin="normal"
+                  />
+                </Grid>
+              </Grid>
             </Grid>
            </Grid>
         </Paper>

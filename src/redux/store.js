@@ -11,12 +11,6 @@ const initialState = {
         booleanShowPassword: false,
         onPage: 2
     },
-    userAuth: {
-        pseudo: '',
-        password: '',
-        isConnected: false,
-        showPassword: false
-    },
     userMain: {
         toggleDrawer: false,
         selectedPage: 0,

@@ -19,7 +19,6 @@ import Home from './home/Home';
 import Stat from './stat/Stat';
 import Account from './account/Account';
 import Survey from '../../Survey/Survey';
-import AdminMain from '../../admin/dashboard/AdminMain';
 
 const styles = theme => ({
     labelStyle :{

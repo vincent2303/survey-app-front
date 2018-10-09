@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 import Login from './component/admin/Login.js';
-import UserLogin from './component/user/Login.js';
 import Survey from './component/Survey/Survey.js';
 import AdminMain from './component/admin/dashboard/AdminMain.js';
 import UserMain from './component/user/main/UserMain.js';
@@ -46,10 +45,9 @@ class App extends Component {
       <Router>
       <div>
       { this.state.redirect &&
-        <Redirect to="/admin" />
+        <Redirect to="/user" />
         }
         <Route path="/login" component={Login} />
-        <Route path="/userlogin" component={UserLogin} />
         <Route path="/sondage" component={Survey} />
         <Route path="/admin" component={AdminMain} />
         <Route path="/user" component={UserMain} />

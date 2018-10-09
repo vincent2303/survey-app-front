@@ -16,22 +16,8 @@ class SurveyManager extends Component {
 
     componentDidMount(){
         this.props.getSondageData()
-        // axios.get("http://localhost:4200/admin/getSondage")
-        // .then( res => {
-        //     this.setState({sondageList: res.data});
-        //     this.getCurrentSondage(res.data);
-        //     this.setState({loaded: true});
-        // });
     }
     
-    // getCurrentSondage(sondage_list){
-    //     this.setState({currentSondage: sondage_list[0]});
-    //     sondage_list.forEach((sondage) => {
-    //         if(sondage.current){
-    //             this.setState({currentSondage: sondage})
-    //         }
-    //     });
-    // }
     render(){
         return(
             <div style={firstDivStyle} >

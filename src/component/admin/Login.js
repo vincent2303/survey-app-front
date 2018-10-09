@@ -26,6 +26,9 @@ const styles = theme => ({
     margin: {
       margin: theme.spacing.unit,
     },
+    button: {
+        marginTop: theme.spacing.unit * 3,
+    },
     withoutLabel: {
       marginTop: theme.spacing.unit * 3,
     },
@@ -38,7 +41,7 @@ class Login extends Component {
         showPassword: false
     }
     handleClick = ()=>{
-        this.props.login(this.props.pseudo, this.props.pseudo)
+        this.props.login(this.props.pseudo, this.props.password)
     }
 
     handleClickShowPassword = () => {
@@ -62,7 +65,7 @@ class Login extends Component {
         const { classes } = this.props;
         return(
         <div style={{marginTop: '30vh'}} >
-        {this.props.isConnected && <Redirect to="/admin" />}
+        {this.props.isConnected && <Redirect to="/user" />}
         <Grid
           container
           justify="center"
@@ -73,7 +76,7 @@ class Login extends Component {
             <CardContent>
             <Typography variant="headline" component="h2">Login page</Typography>
             <div>
-                <FormControl >
+                <FormControl className={classNames(classes.margin, classes.textField)}>
                 <InputLabel htmlFor="adornment-user">Username</InputLabel>
                 <Input
                     id="adornment-user"

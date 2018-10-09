@@ -7,7 +7,7 @@ import axios from 'axios';
 import swal from 'sweetalert';
 
 import { Provider } from 'react-redux';
-import store from './redux/store';
+import { store } from './redux/store';
 
 axios.interceptors.request.use(function (config) {
     config.withCredentials = true;
@@ -21,8 +21,9 @@ axios.interceptors.response.use(function (response) {
 }, function (error) {
     
     try{
-    switch(error.response.status){
-        case 460:
+        console.log(error.response.data.message);
+    switch(error.response.data.message){
+        case "Wrong username":
             swal({
                 title: "Wrong username",
                 text: "The username you entered does not exist",
@@ -33,7 +34,7 @@ axios.interceptors.response.use(function (response) {
                 closeOnConfirm: false
             })
             return Promise.reject(error);
-        case 461:
+        case "Wrong password":
             swal({
                 title: "Wrong password",
                 text: "The password you entered is not correct",
@@ -44,17 +45,43 @@ axios.interceptors.response.use(function (response) {
                 closeOnConfirm: false
             })
             return Promise.reject(error);
-        case 401:
+        case "Not logged in":
+            console.log(error.response.data.message);
             swal({
-                title: "Token Expired",
-                text: "Your token has expired. Would you like to be redirected to the login page?",
+                title: "Session Expired",
+                text: "You are not logged in. You will be redirected to the login page.",
                 type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes",
-                closeOnConfirm: false
-            }).then( function(){
+                buttons: true,
+            }).then( () => {
                 window.location = '/login';
+            });
+            return Promise.reject(error);
+        case "Not authorized":
+            swal({
+                title: "Unauthorized",
+                text: "You do not have authorization. You can be redirected to the user page or the login page.",
+                type: "warning",
+                buttons: {
+                    login: {
+                        text:'Login',
+                        value: 'login',
+                    },
+                    user: {
+                        text:'User page',
+                        value: 'user',
+                    },
+                }
+            }).then( value => {
+                switch(value){
+                    case 'login':
+                        window.location = '/login';
+                        break;
+                    case 'user':
+                        window.location = '/user';
+                        break;
+                    default:
+                        window.location = '/login';
+                }
             });
             return Promise.reject(error);
         default:
@@ -62,6 +89,7 @@ axios.interceptors.response.use(function (response) {
     }
 }
 catch(error) {
+    console.log(error);
 }
 });
 

@@ -9,7 +9,6 @@ import {
     LOGOUT_ACTION
 } from "./adminTypes";
 
-
 const changePseudo = (event)=>(dispatch)=>{
     dispatch({
         type: CHANGE_PSEUDO_ACTION,
@@ -29,8 +28,9 @@ const changePassword = (event)=>(dispatch)=>{
 }
 
 const login = (pseudo, password)=> (dispatch)=>{
+    console.log(password);
     axios({
-        url: "http://localhost:4200/admin/login",
+        url: "http://localhost:4200/login",
         data: {pseudo: pseudo, password: password},
         method: 'post',
         withCredentials: true
@@ -61,10 +61,13 @@ const changeAdminPage = (pageNumber)=>(dispatch)=>{
 }
 
 const logout = ()=>(dispatch)=>{
-    dispatch({
-        type: LOGOUT_ACTION,
-        payload: {  }
-    })
+    axios.get("http://localhost:4200/login/logout").then( () => {
+        window.location = '/login';
+        dispatch({
+            type: LOGOUT_ACTION,
+            payload: { }
+        })
+    });
 }
 
 export { changePassword, changePseudo, login, showPassword, changeAdminPage, logout }

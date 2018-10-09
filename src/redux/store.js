@@ -3,7 +3,6 @@ import thunk from 'redux-thunk';
 import rootReducer from './index.js';
 import moment from 'moment';
 
-
 const initialState = {
     auth: {
         pseudo: '',
@@ -19,7 +18,10 @@ const initialState = {
         showPassword: false
     },
     userMain: {
-        toggleDrawer: false
+        toggleDrawer: false,
+        selectedPage: 0,
+        redirectToLogin: false,
+        connectedUser: null,
     },
     generalStat: {
         totalSent: 0,
@@ -46,6 +48,7 @@ const initialState = {
         sondageList: [],
         currentSondage: null,
         loaded: false,
+        selectedSondage: {},
     },
     userSurvey: {
         loaded: false,
@@ -65,6 +68,11 @@ const initialState = {
         mailIntensity: null,
         mailIntensityLoaded: false,
         mailIntensityError: null,
+    },
+    manageUser: {
+        userList: null,
+        csvServerRespons: null,
+        singleServerRespons: null
     }
 };
 
@@ -79,4 +87,4 @@ const store = createStore(
     )
 );
 
-export default store
+export { store, initialState };

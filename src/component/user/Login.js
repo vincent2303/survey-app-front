@@ -16,7 +16,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
-import { updatePseudo, updatePass, showPassword, login } from '../../redux/user/actions/loginActions'
+import { updateEmail, updatePass, showPassword, login } from '../../redux/user/actions/loginActions'
 
 const styles = theme => ({
     root: {
@@ -38,23 +38,23 @@ class Login extends Component {
     constructor(props){
         super(props);
         
-        this.onUpdatePseudo = this.onUpdatePseudo.bind(this);
+        this.onUpdateEmail = this.onUpdateEmail.bind(this);
         this.onUpdatePass = this.onUpdatePass.bind(this);
         this.onShowPassword = this.onShowPassword.bind(this);
         this.onLogin = this.onLogin.bind(this);
-    };
+    }
 
-    onUpdatePseudo(event){
-        this.props.onUpdatePseudo(event.target.value);
-    };
+    onUpdateEmail(event){
+        this.props.onUpdateEmail(event.target.value);
+    }
 
     onUpdatePass(event){
         this.props.onUpdatePass(event.target.value);
-    };
+    }
 
     onShowPassword(){
         this.props.onShowPassword();
-    };
+    }
 
     handleMouseDownPassword = event => {
         event.preventDefault();
@@ -62,7 +62,7 @@ class Login extends Component {
 
     onLogin(){
         this.props.onLogin(this.props.user);
-    };
+    }
 
   render() {
       const { classes } = this.props;
@@ -80,12 +80,12 @@ class Login extends Component {
             <CardContent>
             <Typography variant="headline" component="h2">User Login page</Typography>
             <div>
-                <FormControl >
+                <FormControl  className={classNames(classes.margin, classes.textField)}>
                 <InputLabel htmlFor="adornment-user">Username</InputLabel>
                 <Input
                     id="adornment-user"
                     type='text'
-                    onChange={this.onUpdatePseudo}
+                    onChange={this.onUpdateEmail}
                     name="pseudo"
                 />
                 </FormControl>
@@ -109,7 +109,7 @@ class Login extends Component {
                     }
                 />
                 </FormControl>
-                <Button variant="contained" size="small" color="primary" className={classes.button} onClick={this.onLogin}>
+                <Button variant="contained" size="small" color="primary" className={classes.margin} onClick={this.onLogin}>
                     Connect
                 </Button>
             </div>
@@ -130,7 +130,7 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapActionsToProps = {
-    onUpdatePseudo: updatePseudo,
+    onUpdateEmail: updateEmail,
     onUpdatePass: updatePass,
     onShowPassword: showPassword,
     onLogin: login,

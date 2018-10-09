@@ -62,7 +62,7 @@ class Login extends Component {
         const { classes } = this.props;
         return(
         <div style={{marginTop: '30vh'}} >
-        {this.props.isConnected && <Redirect to="/admin" />}
+        {this.props.isConnected && <Redirect to="/user" />}
         <Grid
           container
           justify="center"

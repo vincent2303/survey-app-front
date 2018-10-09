@@ -36,7 +36,7 @@ export function switchPage(page) {
 }
 
 const getUser = () => (dispatch) => {
-    axios.get('http://localhost:4200/userPage/getUser')
+    axios.get('http://localhost:4200/user/getUser')
     .then((res) => {
         console.log(res.data);
         if (res.status === 200){
@@ -65,7 +65,7 @@ const getUser = () => (dispatch) => {
 }
 
 const logout = () => (dispatch) => {
-    axios.get('http://localhost:4200/admin/logout')
+    axios.get('http://localhost:4200/user/logout')
     .then((res =>{
         dispatch({
             type: USER_LOGIN_ACTION,

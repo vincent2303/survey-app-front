@@ -23,6 +23,11 @@ const styles = theme => ({
     labelStyle :{
         color:'#2c3e50'
     },
+    firstDivStyle :{
+         padding:'3vh', 
+         backgroundColor:'#2c3e50', 
+         minHeight:"100vh",
+    },
     root: {
         flexGrow: 1,
       },
@@ -84,7 +89,7 @@ class UserMain extends Component {
     const open = Boolean(anchorEl);
     return (
         <div>
-        {this.props.redirectToLogin && <Redirect to="/userlogin" />}
+        {this.props.redirectToLogin && <Redirect to="/login" />}
       <div className={classes.root}>
         <AppBar position='static' style={{backgroundColor: '#4286f4', padding:0, margin:0}} >
             <Toolbar>
@@ -95,7 +100,7 @@ class UserMain extends Component {
                 {this.props.selectedPage === 1 && <Typography className={classes.pageTitle} variant="title" align="center">  Survey </Typography>}
                 {this.props.selectedPage === 2 && <Typography className={classes.pageTitle} variant="title" align="center">  Stat </Typography>}
                 {this.props.selectedPage === 3 && <Typography className={classes.pageTitle} variant="title" align="center">  Account </Typography>}
-                {this.props.connectedUser && <Typography color="inherit">Welcome {this.props.connectedUser}</Typography>}
+                {this.props.connectedUser && <Typography color="inherit">Welcome {this.props.connectedUser.lastName}</Typography>}
                 {this.props.isConnected ?
                 <div>
                     <IconButton
@@ -155,10 +160,12 @@ class UserMain extends Component {
             </ListItem>
             </List>
         </Drawer>
-        {this.props.selectedPage === 0 && <Home/> }
-        {this.props.selectedPage === 1 && <Survey/> }
-        {this.props.selectedPage === 2 && <Stat/> }
-        {this.props.selectedPage === 3 && <Account/> }
+        <div className={classes.firstDivStyle}>
+            {this.props.selectedPage === 0 && <Home/> }
+            {this.props.selectedPage === 1 && <Survey/> }
+            {this.props.selectedPage === 2 && <Stat/> }
+            {this.props.selectedPage === 3 && <Account/> }
+        </div>
       </div>
       </div>
     )

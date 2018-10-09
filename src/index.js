@@ -49,15 +49,26 @@ axios.interceptors.response.use(function (response) {
                 title: "Session Expired",
                 text: "You are not logged in. You will be redirected to the login page.",
                 type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes",
-                closeOnConfirm: false
-            }).then( function(){
-                if(window.location.href.includes('admin')){
-                    window.location = '/login';
-                } if (window.location.href.includes('user')){
-                    window.location = '/userlogin';
+                buttons: {
+                    login: {
+                        text:'Login',
+                        value: 'login',
+                    },
+                    user: {
+                        text:'User page',
+                        value: 'user',
+                    },
+                }
+            }).then( value => {
+                switch(value){
+                    case 'login':
+                        window.location = '/login';
+                        break;
+                    case 'user':
+                        window.location = '/user';
+                        break;
+                    default:
+                        window.location = '/login';
                 }
             });
             return Promise.reject(error);

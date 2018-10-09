@@ -12,7 +12,7 @@ const initialState = {
         onPage: 2
     },
     userAuth: {
-        email: '',
+        pseudo: '',
         password: '',
         isConnected: false,
         showPassword: false

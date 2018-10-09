@@ -9,6 +9,11 @@ import {
     LOGOUT_ACTION
 } from "./adminTypes";
 
+import { 
+    USER_LOGIN_ACTION, 
+    REDIRECT_TO_LOGIN_ACTION,
+} from "../../user/actions/userTypes";
+
 
 const changePseudo = (event)=>(dispatch)=>{
     dispatch({
@@ -31,7 +36,7 @@ const changePassword = (event)=>(dispatch)=>{
 const login = (pseudo, password)=> (dispatch)=>{
     console.log(password);
     axios({
-        url: "http://localhost:4200/admin/login",
+        url: "http://localhost:4200/login",
         data: {pseudo: pseudo, password: password},
         method: 'post',
         withCredentials: true
@@ -42,6 +47,12 @@ const login = (pseudo, password)=> (dispatch)=>{
                 type: LOGIN_ACTION,
                 payload: 
                 { isConnected: true }
+            });
+            dispatch({
+                type: USER_LOGIN_ACTION,
+                payload: {
+                    isConnected: true
+                }
             });
         }
     })

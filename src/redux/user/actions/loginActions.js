@@ -8,11 +8,11 @@ import {
     REDIRECT_TO_LOGIN_ACTION
 } from "./userTypes";
 
-export function updateEmail(newEmail) {
+export function updateEmail(newPseudo) {
     return {
         type: USER_CHANGE_EMAIL_ACTION,
         payload: {
-            email: newEmail
+            pseudo: newPseudo
         }
     }
 }
@@ -33,7 +33,7 @@ export function showPassword(){
 }
 
 const login = (user) => (dispatch) => {
-    axios.post('http://localhost:4200/userPage/login',{email: user.email, password: user.password})
+    axios.post('http://localhost:4200/login',{pseudo: user.pseudo, password: user.password})
     .then((res) => {
         console.log(res);
         dispatch({

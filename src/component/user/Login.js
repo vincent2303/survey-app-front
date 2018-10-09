@@ -80,13 +80,13 @@ class Login extends Component {
             <CardContent>
             <Typography variant="headline" component="h2">User Login page</Typography>
             <div>
-                <FormControl >
-                <InputLabel htmlFor="adornment-user">Email</InputLabel>
+                <FormControl  className={classNames(classes.margin, classes.textField)}>
+                <InputLabel htmlFor="adornment-user">Username</InputLabel>
                 <Input
                     id="adornment-user"
                     type='text'
                     onChange={this.onUpdateEmail}
-                    name="email"
+                    name="pseudo"
                 />
                 </FormControl>
                 <FormControl className={classNames(classes.margin, classes.textField)}>
@@ -109,7 +109,7 @@ class Login extends Component {
                     }
                 />
                 </FormControl>
-                <Button variant="contained" size="small" color="primary" className={classes.button} onClick={this.onLogin}>
+                <Button variant="contained" size="small" color="primary" className={classes.margin} onClick={this.onLogin}>
                     Connect
                 </Button>
             </div>

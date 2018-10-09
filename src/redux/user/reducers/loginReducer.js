@@ -10,7 +10,7 @@ const loginReducer = function(state = null, {type, payload}){
         case USER_CHANGE_EMAIL_ACTION:
             return {
                 ...state,
-                email: payload.email
+                pseudo: payload.pseudo
             }
         case USER_CHANGE_PASSWORD_ACTION:
             return {

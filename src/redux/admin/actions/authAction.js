@@ -36,6 +36,18 @@ const checkLogin = () => (dispatch) => {
                 payload: 
                 { isConnected: true }
             });
+            dispatch({
+                type: 'GET_USER_ACTION',
+                payload: {
+                    connectedUser: res.data
+                }
+            });
+            dispatch({
+                type: 'GET_ACCOUNT_ACTION',
+                payload: {
+                    connectedUser: res.data
+                }
+            });
         } else {
             dispatch({
                 type: LOGIN_ACTION,
@@ -60,6 +72,18 @@ const login = (pseudo, password)=> (dispatch)=>{
                 type: LOGIN_ACTION,
                 payload: 
                 { isConnected: true }
+            });
+            dispatch({
+                type: 'GET_USER_ACTION',
+                payload: {
+                    connectedUser: res.data
+                }
+            });
+            dispatch({
+                type: 'GET_ACCOUNT_ACTION',
+                payload: {
+                    connectedUser: res.data
+                }
             });
         }
     })

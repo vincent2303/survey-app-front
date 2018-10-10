@@ -1,8 +1,12 @@
 import { 
     TOGGLE_DRAWER_ACTION,
     SWITCH_PAGE_ACTION,
-    REDIRECT_TO_LOGIN_ACTION,
     GET_USER_ACTION,
+    UPDATE_FIRSTNAME_ACTION,
+    UPDATE_LASTNAME_ACTION,
+    UPDATE_PSEUDO_ACTION,
+    UPDATE_EMAIL_ACTION,
+    UPDATE_PASSWORD_ACTION,
 } from '../actions/userTypes';
 
 const userMainReducer = function(state = null, {type, payload}){
@@ -17,16 +21,12 @@ const userMainReducer = function(state = null, {type, payload}){
                 ...state,
                 selectedPage: payload.page
             }
-        case REDIRECT_TO_LOGIN_ACTION:
-            return {
-                ...state,
-                redirectToLogin: payload.redirect
-            }
         case GET_USER_ACTION:
             return {
                 ...state,
                 connectedUser: payload.connectedUser
             }
+        
         default:
             return state
     }

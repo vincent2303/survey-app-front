@@ -13,7 +13,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
-import { toggleDrawer, switchPage, getUser} from '../../../redux/user/actions/userMainActions';
+import { toggleDrawer, switchPage } from '../../../redux/user/actions/userMainActions';
 import { logout } from '../../../redux/admin/actions/authAction';
 import Home from './home/Home';
 import Stat from './stat/Stat';
@@ -45,11 +45,17 @@ const styles = theme => ({
       },
       button: {
         margin: theme.spacing.unit,
-      }
+      },
+      appBar :{
+        backgroundColor: '#4286f4',
+        padding:0, 
+        margin:0
+    }   
 });
 class UserMain extends Component {
     state = {
         anchorEl: null,
+        redirectAdmin: false,
     };
     
     constructor(props){
@@ -57,10 +63,6 @@ class UserMain extends Component {
 
         this.onListItemClick = this.onListItemClick.bind(this);
         this.onToggleMenu = this.onToggleMenu.bind(this);
-    }
-
-    componentDidMount(){
-        this.props.getUser();
     }
 
     onToggleMenu(event){
@@ -79,6 +81,11 @@ class UserMain extends Component {
         this.props.onListItemClick(pageNb);
     }
 
+    onRedirectAdmin = () => {
+        console.log("bit");
+        this.setState({redirectAdmin: true});
+    }
+
   render() {
     const { classes } = this.props;
     const { anchorEl } = this.state;
@@ -86,7 +93,7 @@ class UserMain extends Component {
     return (
         <div>
       <div className={classes.root}>
-        <AppBar position='sticky' style={{backgroundColor: '#4286f4', padding:0, margin:0}} >
+        <AppBar position='sticky' className={classes.appBar} >
             <Toolbar>
                 <IconButton className={classes.menuButton} onClick={this.onToggleDrawer(true)} color="inherit" aria-label="Menu">
                 <MenuIcon />
@@ -155,7 +162,7 @@ class UserMain extends Component {
             <ListItem
                 button
                 selected={this.props.selectedPage === 4}
-                onClick={this.onListItemClick(4)}
+                onClick={this.onRedirectAdmin}
             >
                 <ListItemText primary="Admin" />
                 <LockRounded/>
@@ -167,7 +174,7 @@ class UserMain extends Component {
             {this.props.selectedPage === 1 && <Survey/> }
             {this.props.selectedPage === 2 && <Stat/> }
             {this.props.selectedPage === 3 && <Account/> }
-            {this.props.selectedPage === 4 && <Redirect to="/admin" /> }
+            {this.state.redirectAdmin && <Redirect to="/admin" /> }
         </div>
       </div>
       </div>
@@ -186,7 +193,6 @@ const mapStateToProps = (state, props) => {
 const mapActionsToProps = {
     onToggleDrawer: toggleDrawer,
     onListItemClick: switchPage,
-    getUser: getUser,
     onLogout: logout,
     
 };

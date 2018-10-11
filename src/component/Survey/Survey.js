@@ -7,7 +7,7 @@ import Loading from './Loading';
 import QuestionsForm from './QuestionsForm';
 import SettingDialog from './SettingDialog';
 
-import { getSurvey, readUrlToken } from '../../redux/user/actions/userSurveyActions';
+import { getSurvey, readUrlToken, getToken } from '../../redux/user/actions/userSurveyActions';
 
 const styles = theme => ({
     root: {
@@ -23,8 +23,23 @@ class Survey extends React.Component {
 
     constructor(props) {
         super(props);
-        props.readUrlToken(window.location.href, props.getSurvey)
+        
+        console.log("token :", props.token);
+        console.log("isConnected :", props.isConnected);
+        // On récupère un token si l'utilisateur est connecté et qu'il n'en a pas 
+        if (!props.token){
+            if(props.isConnected) {
+                props.getToken(props.getSurvey);
+            }
+            else {
+                props.readUrlToken(window.location.href, props.getSurvey);
+            }
+        }
+        else {
+            props.getSurvey(props.token);
+        }
     }
+        
 
     render () {
 
@@ -66,18 +81,20 @@ class Survey extends React.Component {
 
 const mapActionToProps = {
     getSurvey: getSurvey,
-    readUrlToken: readUrlToken
+    readUrlToken: readUrlToken,
+    getToken: getToken,
 };
 
 const mapStateToProps = (state) => ({
-    //-----------------------
-    state: state,
-    //------------------------
+
     userSurvey: state.userSurvey,
+    token: state.userSurvey.token,
     loaded: state.userSurvey.loaded,
     firstName: state.userSurvey.firstName,
     error: state.userSurvey.error,
     errorMessage: state.userSurvey.errorMessage,
+
+    isConnected: state.auth.isConnected,
 
 });
 

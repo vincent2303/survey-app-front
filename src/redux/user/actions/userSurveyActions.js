@@ -10,6 +10,7 @@ let serverUrl = env.serverUrl;
 
 // Cette action récupèr le sondage de l'utilisateur
 const getSurvey = (token) => (dispatch) => {
+    console.log("Getting the fucking survey");
     axios.get(serverUrl+'/survey/getSondage', { headers: { Authorization: "bearer " + token } })
     .then( (res) => {
         let answers = makeAnswerMap(res.data);
@@ -40,7 +41,29 @@ const getSurvey = (token) => (dispatch) => {
 export { getSurvey };
 
 
+const getToken = (next = () => {}) => (dispatch) => {
+    axios.get(serverUrl+'/user/getToken')
+    .then( (res) => {
+        let decoded = jwt.decode(res.data.token);
+        dispatch({
+            type: READ_URL_TOKEN,
+            payload: Object.assign(decoded, { token: res.data.token }),
+        });
+        next(res.data.token);
+    })
+    .catch ( (error) => {
+        console.warn("Le serveur a rencontré un problème au cours de la création du token utilisateur, erreur:", error.message);
+        dispatch({
+            type: SHOW_ERROR,
+            payload: {
+                error: true,
+                errorMessage: "Le serveur a rencontré un problème au cours de la création du token utilisateur",
+            }
+        });
+    });
+}
 
+export { getToken };
 
 const readUrlToken = (urlArg, next = (token) => {}) => (dispatch) => {
     let token;

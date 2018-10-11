@@ -17,6 +17,9 @@ const initialState = {
         redirectToLogin: false,
         connectedUser: null,
     },
+    account: {
+        connectedUser: null,
+    },
     generalStat: {
         totalSent: 0,
         totalAnswered: 0,

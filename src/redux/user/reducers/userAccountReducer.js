@@ -5,6 +5,7 @@ import {
     UPDATE_PSEUDO_ACTION,
     UPDATE_EMAIL_ACTION,
     UPDATE_PASSWORD_ACTION,
+    UPDATE_USER_PHOTO_ACTION,
 } from '../actions/userTypes';
 
 const userAccountReducer = function(state = null, {type, payload}){
@@ -52,6 +53,14 @@ const userAccountReducer = function(state = null, {type, payload}){
                 connectedUser:{
                     ...state.connectedUser,
                     password: payload.password,
+                }
+            }
+        case UPDATE_USER_PHOTO_ACTION:
+            return {
+                ...state,
+                connectedUser:{
+                    ...state.connectedUser,
+                    photo: payload.photo,
                 }
             }
         default:

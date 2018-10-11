@@ -44,8 +44,8 @@ class SettingDialog extends React.Component {
         
         return(
             <div>
-                <Button variant="contained" color="primary" 
-                style={{margin: 20}} onClick={this.showDialog(true)}
+                <Button variant="contained"
+                style={{margin: 20, backgroundColor: '#4286f4'}} onClick={this.showDialog(true)}
                 disabled={!this.props.mailIntensityLoaded}
                 >
                   <Icon>settings</Icon> Fréquence Mail

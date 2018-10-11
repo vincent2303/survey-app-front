@@ -11,11 +11,11 @@ import { getSurvey, readUrlToken, getToken } from '../../redux/user/actions/user
 
 const styles = theme => ({
     root: {
-        backgroundColor: '#cce0ff',
+        backgroundColor: '#2c3e50',
     },
     paper: {
-        margin: theme.spacing.unit * 3,
-        padding: theme.spacing.unit * 3,
+        margin: theme.spacing.unit,
+        padding: theme.spacing.unit * 2,
     }
 });
 
@@ -23,12 +23,12 @@ class Survey extends React.Component {
 
     constructor(props) {
         super(props);
-        
+
         console.log("token :", props.token);
         console.log("isConnected :", props.isConnected);
         // On récupère un token si l'utilisateur est connecté et qu'il n'en a pas 
-        if (!props.token){
-            if(props.isConnected) {
+        if (!props.token) {
+            if (props.isConnected) {
                 props.getToken(props.getSurvey);
             }
             else {
@@ -39,40 +39,38 @@ class Survey extends React.Component {
             props.getSurvey(props.token);
         }
     }
-        
 
-    render () {
+
+    render() {
 
 
         let headDisplay;
         // Si les données n'ont pas encore été récupérées, on affiche loading
-        if(!this.props.loaded) {
+        if (!this.props.loaded) {
             headDisplay = <Loading />;
         }
         else {
-            headDisplay = <Typography variant="display3" align="center" color="textPrimary" gutterBottom> Bonjour {this.props.firstName} </Typography>
+            headDisplay = <Typography variant="headline" align="center" color="textPrimary" gutterBottom> Bonjour {this.props.firstName} </Typography>
         }
         return (
             <div>
-            {this.props.error ? 
-                ( headDisplay = <ErrorBanner message={this.props.errorMessage}/> )
-            : (
-            <Grid container justify='space-between' className={this.props.classes.root}>
-                <Grid item xs={1}>
-                    <SettingDialog />
-                </Grid>
-                <Grid item xs={10}>
-                    <Paper className={this.props.classes.paper}>
-                    {headDisplay}
-                    <QuestionsForm />
-                    </Paper>
-                </Grid>
-                <Grid item xs={1}>
+                {this.props.error ?
+                    (headDisplay = <ErrorBanner message={this.props.errorMessage} />)
+                    : (
+                        <Grid container direction='column'>
+                            <Grid item>
+                                <SettingDialog />
+                            </Grid>
+                            <Grid item>
 
-                </Grid>
-            </Grid>
-            )
-            }
+                                <Paper className={this.props.classes.paper}>
+                                    {headDisplay}
+                                    <QuestionsForm />
+                                </Paper>
+                            </Grid>
+                        </Grid>
+                    )
+                }
             </div>
         );
     }
@@ -98,4 +96,4 @@ const mapStateToProps = (state) => ({
 
 });
 
-export default connect(mapStateToProps, mapActionToProps) (withStyles(styles)(Survey));
+export default connect(mapStateToProps, mapActionToProps)(withStyles(styles)(Survey));

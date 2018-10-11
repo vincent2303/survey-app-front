@@ -1,41 +1,16 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
-import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import FormControl from '@material-ui/core/FormControl';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-
+import Particles from 'react-particles-js';
 import { connect } from 'react-redux';
 import { changePseudo, changePassword, login, showPassword } from '../../redux/admin/actions/authAction'
+import img from '../../img/login.jpg'
 
-const styles = theme => ({
-    root: {
-      display: 'flex',
-      flexWrap: 'wrap',
-    },
-    margin: {
-      margin: theme.spacing.unit,
-    },
-    button: {
-        marginTop: theme.spacing.unit * 3,
-    },
-    withoutLabel: {
-      marginTop: theme.spacing.unit * 3,
-    },
-    textField: {
-      flexBasis: 200,
-    },
-  });
+import CustomInput from './CustomInput'
+import Btn from './Btn'
+
+const particleConfig = require('./options')
+
 class Login extends Component {
     state={
         showPassword: false
@@ -62,60 +37,108 @@ class Login extends Component {
     }
 
     render(){
-        const { classes } = this.props;
         return(
-        <div style={{marginTop: '30vh'}} >
-        {this.props.isConnected && <Redirect to="/user" />}
-        <Grid
-          container
-          justify="center"
-          alignItems="center"
-        >
-          <Grid item>
-          <Card className={classes.card} style={{backgroundColor: '#ecf0f1'}} >
-            <CardContent>
-            <Typography variant="headline" component="h2">Login page</Typography>
-            <div>
-                <FormControl className={classNames(classes.margin, classes.textField)}>
-                <InputLabel htmlFor="adornment-user">Username</InputLabel>
-                <Input
-                    id="adornment-user"
-                    type='text'
-                    onChange={this.handleKeyPress}
-                    name="pseudo"
+            <div style={{
+                height: '100vh',
+                width: '100vw',
+                backgroundImage: `url(${img})`,
+                backgroundSize: 'cover',
+                backgroundPosition: '50% 50%',
+                backgroundRepeat: 'no-repeat',
+              }} >
+                {this.props.isConnected && <Redirect to="/user" />}
+                <Grid
+                  container
+                  justify= 'center'
+                  alignItems = 'center'
+                  spacing={32}
+                  style={{
+                  position: 'absolute',
+                  top: '30vh',
+                  zIndex:1,
+                }}>
+                  <Grid item >
+                    <CustomInput placeHolder='Pseudo' keyPress={this.handleKeyPress} />
+                  </Grid>
+                  <Grid item >
+                    <CustomInput placeHolder='Password' keyPress={this.handleKeyPress} />
+                  </Grid>
+                  <Grid item >
+                    <Btn onClick={this.handleClick} />
+                  </Grid>
+                </Grid>
+                <Particles 
+                  params={particleConfig}
+                  style={{
+                      filter: 'brightness(200%)',
+                      marginTop: '5vh'
+                    }}
                 />
-                </FormControl>
-                <FormControl className={classNames(classes.margin, classes.textField)}>
-                <InputLabel htmlFor="adornment-password">Password</InputLabel>
-                <Input
-                    id="adornment-password"
-                    type={this.props.booleanShowPassword ? 'text' : 'password'}
-                    onChange={this.handleKeyPress}
-                    name="password"
-                    endAdornment={
-                    <InputAdornment position="end">
-                        <IconButton
-                        aria-label="Toggle password visibility"
-                        onClick={this.handleClickShowPassword}
-                        onMouseDown={this.handleMouseDownPassword}
-                        >
-                        {this.props.booleanShowPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                    </InputAdornment>
-                    }
-                />
-                </FormControl>
-                <Button variant="contained" size="small" color="primary" className={classes.button} onClick={this.handleClick}>
-                    Connect
-                </Button>
-            </div>
-            </CardContent>
-          </Card>
-          </Grid>
-      </Grid>
-      </div>
+              </div>
         )
     }
+
+
+    // render(){
+    //     const { classes } = this.props;
+    //     return(
+    //     <div>
+    //     {this.props.isConnected && <Redirect to="/user" />}
+    //     <Grid
+    //       container
+    //       justify="center"
+    //       alignItems="center"
+    //       style={{marginTop: '30vh'}}
+    //     >
+    //       <Grid item>
+    //       <Card className={classes.card} style={{backgroundColor: '#ecf0f1'}} >
+    //         <CardContent>
+    //         <Typography variant="headline" component="h2">Login page</Typography>
+    //         <div>
+    //             <FormControl className={classNames(classes.margin, classes.textField)}>
+    //             <InputLabel htmlFor="adornment-user">Username</InputLabel>
+    //             <Input
+    //                 id="adornment-user"
+    //                 type='text'
+    //                 onChange={this.handleKeyPress}
+    //                 name="pseudo"
+    //             />
+    //             </FormControl>
+    //             <FormControl className={classNames(classes.margin, classes.textField)}>
+    //             <InputLabel htmlFor="adornment-password">Password</InputLabel>
+    //             <Input
+    //                 id="adornment-password"
+    //                 type={this.props.booleanShowPassword ? 'text' : 'password'}
+    //                 onChange={this.handleKeyPress}
+    //                 name="password"
+    //                 endAdornment={
+    //                 <InputAdornment position="end">
+    //                     <IconButton
+    //                     aria-label="Toggle password visibility"
+    //                     onClick={this.handleClickShowPassword}
+    //                     onMouseDown={this.handleMouseDownPassword}
+    //                     >
+    //                     {this.props.booleanShowPassword ? <VisibilityOff /> : <Visibility />}
+    //                     </IconButton>
+    //                 </InputAdornment>
+    //                 }
+    //             />
+    //             </FormControl>
+    //             <Button variant="contained" size="small" color="primary" className={classes.button} onClick={this.handleClick}>
+    //                 Connect
+    //             </Button>
+    //         </div>
+    //         </CardContent>
+    //       </Card>
+    //       </Grid>
+    //     </Grid>
+    //     <Particles 
+    //         params={particlesOptions}
+    //         style={{ backgroundColor:'red', width: '30%'}}
+    //     />
+    //   </div>
+    //     )
+    // }
 }
 
 const mapStateToProps = state=>{
@@ -129,4 +152,4 @@ const mapActionsToProps = {
     showPassword: showPassword
 }
 
-export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(Login))
+export default connect(mapStateToProps, mapActionsToProps)(Login)

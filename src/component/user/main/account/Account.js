@@ -10,7 +10,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
-import { updateAccount, sendUpdate } from '../../../../redux/user/actions/userAccountActions';
+import Input from '@material-ui/core/Input';
+import { updateAccount, sendUpdate, updatePhoto } from '../../../../redux/user/actions/userAccountActions';
 
 const styles = theme => ({
   root: {
@@ -37,6 +38,8 @@ export class Account extends Component {
 
   constructor(props){
     super(props)
+
+    this.updatePhoto = this.updatePhoto.bind(this);
   }
 
   handleKeyPress = (e)=>{
@@ -45,6 +48,17 @@ export class Account extends Component {
 
   onSubmitChange = () => {
     this.props.submitChange(this.props.user)
+  }
+
+  updatePhoto = (event) => {
+    console.log(event.target.result);
+    this.props.updatePhoto(event.target.result);
+  }
+
+  onImageUpload = (e) => {
+    var reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = this.updatePhoto;
   }
 
   render() {
@@ -73,8 +87,8 @@ export class Account extends Component {
                     className={classes.media}
                   />
                   <CardActions>
-                    <Button size="small" color="primary">
-                      Change
+                    <Button size="small" color="primary" >
+                      <input type="file" onInput={this.onImageUpload} accept=".jpg, .jpeg, .png" />
                     </Button>
                   </CardActions>
                 </Card>
@@ -164,6 +178,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   onUpdateUser : updateAccount,
   submitChange : sendUpdate,
+  updatePhoto : updatePhoto,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Account))

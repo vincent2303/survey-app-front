@@ -7,6 +7,9 @@ import {
     UPDATE_PSEUDO_ACTION,
     UPDATE_EMAIL_ACTION,
     UPDATE_PASSWORD_ACTION,
+    GET_ACCOUNT_ACTION,
+    GET_USER_ACTION,
+    UPDATE_USER_PHOTO_ACTION,
 } from "./userTypes";
 
 export function updateAccount(data) {
@@ -51,18 +54,35 @@ export function updateAccount(data) {
     }
 }
 
+const updatePhoto = (updatedPhoto) => (dispatch) => {
+    console.log(updatedPhoto);
+    axios.post('http://localhost:4200/user/updatePhoto', {photo: updatedPhoto})
+    .then( res => {
+        if(res.status === 200){
+            dispatch({
+                type: UPDATE_USER_PHOTO_ACTION,
+                payload: {
+                    photo: res.data.photo
+                }
+            });
+            console.log("updated photo")
+        } else {
+            console.log("error updating photo");
+        }
+    })
+}
 const sendUpdate = (updatedUser) => (dispatch) => {
     axios.post('http://localhost:4200/user/updateUser', {updatedUser: updatedUser})
     .then( res => {
         if(res.status === 200){
             dispatch({
-                type: 'GET_USER_ACTION',
+                type: GET_USER_ACTION,
                 payload: {
                     connectedUser: res.data
                 }
             });
             dispatch({
-                type: 'GET_ACCOUNT_ACTION',
+                type: GET_ACCOUNT_ACTION,
                 payload: {
                     connectedUser: res.data
                 }
@@ -73,5 +93,5 @@ const sendUpdate = (updatedUser) => (dispatch) => {
     })
 }
 
-export { sendUpdate };
+export { updatePhoto, sendUpdate };
 

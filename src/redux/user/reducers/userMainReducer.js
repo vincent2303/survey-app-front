@@ -2,11 +2,6 @@ import {
     TOGGLE_DRAWER_ACTION,
     SWITCH_PAGE_ACTION,
     GET_USER_ACTION,
-    UPDATE_FIRSTNAME_ACTION,
-    UPDATE_LASTNAME_ACTION,
-    UPDATE_PSEUDO_ACTION,
-    UPDATE_EMAIL_ACTION,
-    UPDATE_PASSWORD_ACTION,
 } from '../actions/userTypes';
 
 const userMainReducer = function(state = null, {type, payload}){

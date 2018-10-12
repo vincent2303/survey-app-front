@@ -22,7 +22,7 @@ const CustomInput = (props) => {
         <div>
             {
                 props.placeHolder==='Password' ? 
-                <Input onChange={props.keyPress} className={classes.input} placeholder={props.placeHolder} type='password' /> : <Input onChange={props.keyPress} className={classes.input} placeholder={props.placeHolder}/>
+                <Input onChange={props.keyPress} className={classes.input} placeholder={props.placeHolder} type='password' autoComplete='off' /> : <Input onChange={props.keyPress} className={classes.input} placeholder={props.placeHolder} autoComplete='off'/>
             }
         </div>
   )

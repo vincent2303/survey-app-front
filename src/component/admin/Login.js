@@ -15,23 +15,20 @@ class Login extends Component {
     state={
         showPassword: false
     }
+
     handleClick = ()=>{
         this.props.login(this.props.pseudo, this.props.password)
     }
-
-    handleClickShowPassword = () => {
-        this.props.showPassword(this.props.booleanShowPassword)
-      };
 
     handleMouseDownPassword = event => {
         event.preventDefault();
       };
 
     handleKeyPress = (e)=>{
-        if (e.target.name==="pseudo") {
+        if (e.target.type==="text") {
             this.props.changePseudo(e)
         }
-        if (e.target.name==="password") {
+        if (e.target.type==="password") {
             this.props.changePassword(e)
         }
     }

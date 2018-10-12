@@ -29,7 +29,6 @@ const changePassword = (event)=>(dispatch)=>{
 
 const checkLogin = () => (dispatch) => {
     axios.get('http://localhost:4200/login/check').then( (res) => {
-        console.log(res.data);
         if (res.data){
             dispatch({
                 type: LOGIN_ACTION,
@@ -59,14 +58,13 @@ const checkLogin = () => (dispatch) => {
 }
 
 const login = (pseudo, password)=> (dispatch)=>{
-    console.log(password);
     axios({
         url: "http://localhost:4200/login",
         data: {pseudo: pseudo, password: password},
         method: 'post',
-        withCredentials: true
     })
     .then(res=>{
+        console.log(res)
         if(res.status === 200){
             dispatch({
                 type: LOGIN_ACTION,

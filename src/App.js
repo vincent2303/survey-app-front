@@ -5,15 +5,15 @@ import {
   Route,
   Redirect
 } from 'react-router-dom';
-
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 
+import { checkLogin } from './redux/admin/actions/authAction' 
 
-
-import Login from './component/Login.js';
-import Sondage from './component/Sondage.js';
-import AdminMain from './component/dashboard/AdminMain.js';
+import Login from './component/admin/Login.js';
+import Survey from './component/Survey/Survey.js';
+import AdminMain from './component/admin/dashboard/AdminMain.js';
+import UserMain from './component/user/main/UserMain.js';
 
 const styles = {
   root: {
@@ -25,9 +25,13 @@ class App extends Component {
   state = {
     redirect: true,
   };
-  constructor(){
-    super()
-    if(window.location.href.includes("login") || window.location.href.includes("sondage") || window.location.href.includes("admin")){
+
+  constructor(props){
+    super(props)
+    if(!window.location.href.includes("login") && !window.location.href.includes("sondage")){
+      props.checkLogin();
+    }
+    if(window.location.href.includes("login") || window.location.href.includes("sondage") || window.location.href.includes("admin") || window.location.href.includes("user")){
       this.state.redirect = false;
     } else {
       this.state.redirect = true;
@@ -42,23 +46,29 @@ class App extends Component {
     this.setState({ anchorEl: null });
   };
   render() {
+
     return (
       <Router>
       <div>
       { this.state.redirect &&
-        <Redirect to="/admin" />
+        <Redirect to="/user" />
         }
         <Route path="/login" component={Login} />
-        <Route path="/sondage" component={Sondage} />
+        <Route path="/sondage" component={Survey} />
         <Route path="/admin" component={AdminMain} />
+        <Route path="/user" component={UserMain} />
       </div>
       </Router>
     );
   }
 }
-
-App.propTypes = {
-  classes: PropTypes.object.isRequired,
+const mapStateToProps = () => {
+  return {
+  }
 };
 
-export default withStyles(styles)(App);
+const mapActionsToProps = {
+  checkLogin: checkLogin
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(App));
